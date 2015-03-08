@@ -43,8 +43,7 @@ public class Repository {
 			List<String> raw = run(new String[] { "git", "log", "--pretty=format:\"%H;%an;%ae;%ar;%s\"" }); 
 			
 			for (String s : raw) {
-				System.out.println(s);
-				Commit c = new Commit(s);
+				Commit c = new Commit(this, s);
 				commits.add(c);
 			}
 			
