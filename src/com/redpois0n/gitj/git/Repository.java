@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
 public class Repository {
@@ -40,10 +42,53 @@ public class Repository {
 				commits.clear();
 			}
 			
-			List<String> raw = run(new String[] { "git", "log", "--pretty=format:\"%H;%an;%ae;%ar;%s\"" }); 
+			List<String> raw = run(new String[] { "git", "log", "--pretty=format:\"Commit;%H;%an;%ae;%ar;%s\"", "--stat", "-p" }); 
+			Enumeration<String> e = Collections.enumeration(raw);
 			
-			for (String s : raw) {
+			String s = e.nextElement();
+			
+			while (e.hasMoreElements()) {
+				List<Diff> diffs = new ArrayList<Diff>();
+				
+				System.out.println("Raw commit data: " + s);
 				Commit c = new Commit(this, s);
+
+				while ((s = e.nextElement()).contains("|")) {
+					String sdiff = s.split("|")[0].trim();
+					Diff diff = new Diff();
+					System.out.println("Diff created: " + s);
+				}
+								
+				String changes = s;
+				System.out.println("Changes: " + changes);
+				
+				s = e.nextElement();
+				
+				while (s.startsWith("diff --git")) {
+					System.out.println("Diff: " + s);
+
+					List<String> code = new ArrayList<String>();
+					
+					s = e.nextElement();
+					
+					while (!s.startsWith("diff --git")) {
+						String codeline = s;
+						
+						if (e.hasMoreElements()) {
+							s = e.nextElement();
+						}
+
+						if (s.startsWith("Commit;") || !e.hasMoreElements()) {
+							break;
+						} else {
+							System.out.println("Code: " + s);
+							code.add(s);
+						}
+					}
+					
+					//s = e.nextElement();
+				}
+				
 				commits.add(c);
 			}
 			
@@ -72,7 +117,9 @@ public class Repository {
 		String line;
 		
 		while ((line = reader.readLine()) != null) {
-			lines.add(line);
+			if (line.length() > 0) {
+				lines.add(line);
+			}
 		}
 		
 		reader.close();
