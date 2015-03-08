@@ -40,10 +40,12 @@ public class Repository {
 				commits.clear();
 			}
 			
-			List<String> raw = run(new String[] { "git", "log", "--pretty-format:\"%H;%an;%ae;%ar;%s\"" }); 
+			List<String> raw = run(new String[] { "git", "log", "--pretty=format:\"%H;%an;%ae;%ar;%s\"" }); 
 			
 			for (String s : raw) {
 				System.out.println(s);
+				Commit c = new Commit(s);
+				commits.add(c);
 			}
 			
 			return commits;
@@ -75,7 +77,7 @@ public class Repository {
 		}
 		
 		reader.close();
-	
+			
 		return lines;
 	}
 
