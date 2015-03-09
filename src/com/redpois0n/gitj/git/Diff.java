@@ -15,8 +15,8 @@ public class Diff {
 		this.file = file;
 	}
 	
-	public Diff(String file) {
-		this.file = new File(file);
+	public Diff(Commit parent, String file) {
+		this(parent, new File(file));
 	}
 	
 	public void addChunk(Chunk c) {
