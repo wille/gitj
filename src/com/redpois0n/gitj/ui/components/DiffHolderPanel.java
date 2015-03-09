@@ -23,6 +23,8 @@ public class DiffHolderPanel extends JPanel {
 		grid.gridx = 0;
 		grid.gridy = getComponentCount();
 		add(panel, grid);
+		
+		revalidate();
 	}
 	
 	public void clear() {

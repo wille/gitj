@@ -75,6 +75,7 @@ public class MainPanel extends JPanel {
 	public class CommitChangeListener implements CommitClickedListener {
 		@Override
 		public void onClick(Commit c) {
+			diffHolderPanel.clear();
 			loadDiffs(c.getDiffs());
 		}
 	}
