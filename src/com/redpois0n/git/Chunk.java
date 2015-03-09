@@ -25,9 +25,9 @@ public class Chunk {
 	public void addRawLine(String s) {
 		CodeLine.Type type;
 		
-		if (s.startsWith("+ ")) {
+		if (s.startsWith("+")) {
 			type = CodeLine.Type.ADDED;
-		} else if (s.startsWith("- ")) {
+		} else if (s.startsWith("-")) {
 			type = CodeLine.Type.REMOVED;
 		} else {
 			type = CodeLine.Type.NORMAL;
