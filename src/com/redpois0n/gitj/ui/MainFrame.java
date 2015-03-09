@@ -13,6 +13,10 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.redpois0n.git.Repository;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -26,6 +30,17 @@ public class MainFrame extends JFrame {
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		
+		JMenu mnRepository = new JMenu("Repository");
+		menuBar.add(mnRepository);
+		
+		JMenuItem mntmRefresh = new JMenuItem("Refresh");
+		mntmRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				reloadCurrentRepo();
+			}
+		});
+		mnRepository.add(mntmRefresh);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -76,6 +91,24 @@ public class MainFrame extends JFrame {
 		}
 		
 		return null;
+	}
+	
+	public MainPanel getSelectedPanel() {
+		Component c = tabbedPane.getSelectedComponent();
+		
+		if (c instanceof MainPanel) {
+			return (MainPanel) c;
+		}
+		
+		return null;
+	}
+	
+	public void reloadCurrentRepo() {
+		MainPanel mp = getSelectedPanel();
+		
+		if (mp != null) {
+			mp.reload();
+		}
 	}
 	
 	@Override
