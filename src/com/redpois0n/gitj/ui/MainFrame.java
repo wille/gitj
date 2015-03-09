@@ -7,9 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.redpois0n.gitj.git.Commit;
-import com.redpois0n.gitj.git.Diff;
-import com.redpois0n.gitj.git.Repository;
+import com.redpois0n.git.Commit;
+import com.redpois0n.git.Diff;
+import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.ui.components.JCommitPane;
 
 import javax.swing.GroupLayout;

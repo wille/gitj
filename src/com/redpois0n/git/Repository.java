@@ -1,4 +1,4 @@
-package com.redpois0n.gitj.git;
+package com.redpois0n.git;
 
 import java.io.BufferedReader;
 import java.io.File;

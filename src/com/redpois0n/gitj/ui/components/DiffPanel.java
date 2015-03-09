@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import com.redpois0n.gitj.git.Diff;
+import com.redpois0n.git.Diff;
 
 @SuppressWarnings("serial")
 public class DiffPanel extends JPanel {

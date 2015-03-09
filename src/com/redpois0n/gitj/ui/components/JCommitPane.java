@@ -9,8 +9,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import com.redpois0n.gitj.git.Commit;
-import com.redpois0n.gitj.git.Repository;
+import com.redpois0n.git.Commit;
+import com.redpois0n.git.Repository;
 
 @SuppressWarnings("serial")
 public class JCommitPane extends JScrollPane {

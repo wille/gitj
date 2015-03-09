@@ -4,7 +4,7 @@ import java.io.File;
 
 import javax.swing.UIManager;
 
-import com.redpois0n.gitj.git.Repository;
+import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.ui.MainFrame;
 
 public class Main {
