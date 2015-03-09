@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui.components;
 
 import java.awt.Component;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -20,18 +21,59 @@ public class JCommitPane extends JScrollPane {
 	public static final int INDEX_AUTHOR = 2;
 	public static final int INDEX_COMMIT = 3;
 	
-	public JCommitPane(Repository repo) {
-		JTable list = new JTable(new CommitTableModel());
-		list.setDefaultRenderer(Object.class, new CommitRenderer());
+	private List<Commit> commits;
+	private JTable table;
+	private CommitTableModel model;
+	
+	public JCommitPane(Repository repo) throws Exception {
+		this(repo.getCommits());
+	}
+	
+	public JCommitPane(List<Commit> commits) {
+		this.commits = commits;
+		this.model = new CommitTableModel();
+		this.table = new JTable(model);
+		
+		table.setDefaultRenderer(Object.class, new CommitRenderer());
+		
+		super.setViewportView(table);
+		
+		reload();
+	}
+	
+	public void reload() {
+		clear();
+		
+		for (Commit c : commits) {
+			model.addRow(new Object[] { c });
+		}
+	}
+	
+	public void clear() {
+		while (table.getRowCount() > 0) {
+			model.removeRow(0);
+		}
 	}
 	
 	public class CommitRenderer extends DefaultTableCellRenderer {
 		
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			if (value instanceof Commit) {
-				Commit c = (Commit) value;
+			if (table.getValueAt(row, 0) instanceof Commit) {
+				Commit c = (Commit) table.getValueAt(row, 0);
 				JLabel label = new JLabel();
+				
+				if (column == INDEX_DESCRIPTION) {
+					label.setText(c.getComment());
+				} else if (column == INDEX_DATE) {
+					label.setText(c.getWhen());
+				} else if (column == INDEX_AUTHOR) {
+					label.setText(c.getDisplayAuthor());
+				} else if (column == INDEX_COMMIT) {
+					label.setText(c.getDisplayCommit());
+				} else {
+					throw new IndexOutOfBoundsException();
+				}
 				
 				return label;
 			} else {
