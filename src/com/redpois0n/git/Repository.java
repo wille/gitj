@@ -134,5 +134,13 @@ public class Repository {
 			
 		return lines;
 	}
+	
+	public File getFolder() {
+		return this.folder;
+	}
+	
+	public String getName() {
+		return getFolder().getName();
+	}
 
 }
