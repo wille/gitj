@@ -80,7 +80,7 @@ public class MainFrame extends JFrame {
 	
 	@Override
 	public void setTitle(String title) {
-		super.setTitle("jgit - " + title);
+		super.setTitle("gitj - " + title);
 	}
 	
 	public class TabChangeListener implements ChangeListener {
