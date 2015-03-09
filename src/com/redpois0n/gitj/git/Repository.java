@@ -74,8 +74,6 @@ public class Repository {
 					Chunk current = null;
 					
 					while (!(s = e.nextElement()).startsWith("diff --git")) {
-						String codeline = s;
-
 						if (s.startsWith("Commit;") || !e.hasMoreElements()) {
 							break;
 						} else if (s.startsWith("@@ ")) {
