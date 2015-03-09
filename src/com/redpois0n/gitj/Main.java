@@ -18,7 +18,9 @@ public class Main {
 			
 			File dir = new File(".");
 			Repository repository = new Repository(dir);
-			repository.getCommits();
+
+			frame.loadRepository(repository);
+		
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
