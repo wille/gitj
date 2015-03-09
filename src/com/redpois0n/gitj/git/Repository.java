@@ -49,7 +49,7 @@ public class Repository {
 			
 			while (e.hasMoreElements()) {				
 				System.out.println("Raw commit data: " + s);
-				Commit c = new Commit(this, s);
+				Commit c = new Commit(this, s.replace("Commit;", ""));
 
 				while ((s = e.nextElement()).contains("|")) {
 					//String sdiff = s.split("|")[0].trim();
