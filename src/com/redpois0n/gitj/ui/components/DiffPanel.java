@@ -61,16 +61,18 @@ public class DiffPanel extends JPanel {
 				
 				System.out.println(line.getType().name());
 				
-				g.fillRect(0, y, prefWidth, metrics.getHeight());
+				g.fillRect(0, y, prefWidth, metrics.getHeight() + 2);
 				
 				g.setColor(Color.black);
-				g.drawString(line.getLine(), 0, y);
+				g.drawString(line.getLine(), 0, y + metrics.getHeight());
 				
 				y += metrics.getHeight() + 2;
 			}
 		}
 		
-		Dimension d = new Dimension(prefWidth, prefHeight);
+		g.drawRect(0, 0, getWidth(), getHeight());
+		
+		Dimension d = new Dimension(prefWidth + 1, prefHeight + 1);
 		super.setSize(d);
 		super.setPreferredSize(d);
 	}
