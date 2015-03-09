@@ -30,12 +30,13 @@ public class MainPanel extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		splitPaneMain = new JSplitPane();
+		splitPaneMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		
 		add(splitPaneMain, BorderLayout.CENTER);
 		
 		jcommitPane = new JCommitPane(repository.getCommits(true));
 		
-		splitPaneMain.setRightComponent(jcommitPane);
+		splitPaneMain.setLeftComponent(jcommitPane);
 	}
 	
 	public Repository getRepository() {
