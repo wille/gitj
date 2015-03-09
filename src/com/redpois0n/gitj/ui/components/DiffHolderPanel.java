@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui.components;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -22,10 +23,10 @@ public class DiffHolderPanel extends JPanel {
 		GridBagConstraints grid = new GridBagConstraints();
 		grid.gridx = 0;
 		grid.gridy = getComponentCount();
+		grid.anchor = GridBagConstraints.WEST;
 		add(panel, grid);
 		
-		revalidate();
-		repaint();
+		super.setPreferredSize(new Dimension(0, 0)); // todo
 	}
 	
 	public void clear() {

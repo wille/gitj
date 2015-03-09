@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.redpois0n.git.Commit;
@@ -25,6 +27,7 @@ public class MainPanel extends JPanel {
 	private JSplitPane splitPaneLow;
 	private JCommitPane jcommitPane;
 	private DiffHolderPanel diffHolderPanel;
+	private JScrollPane scrollPaneDiffs;
 	
 	/**
 	 * Repository tab
@@ -54,8 +57,12 @@ public class MainPanel extends JPanel {
 		splitPaneMain.setRightComponent(splitPaneLow);
 		
 		diffHolderPanel = new DiffHolderPanel();
+		scrollPaneDiffs = new JScrollPane();
+		scrollPaneDiffs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPaneDiffs.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPaneDiffs.setViewportView(diffHolderPanel);
 		
-		splitPaneLow.setRightComponent(diffHolderPanel);
+		splitPaneLow.setRightComponent(scrollPaneDiffs);
 	}
 	
 	public void reload() throws Exception {
@@ -67,9 +74,11 @@ public class MainPanel extends JPanel {
 	}
 	
 	public void loadDiffs(List<Diff> diffs) {
-		for (Diff diff : diffs) {
+		for (Diff diff : diffs) {		
 			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
 		}
+				
+		diffHolderPanel.revalidate();
 	}
 	
 	public class CommitChangeListener implements CommitClickedListener {
