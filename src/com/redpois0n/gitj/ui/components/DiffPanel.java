@@ -1,5 +1,6 @@
 package com.redpois0n.gitj.ui.components;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -50,17 +51,27 @@ public class DiffPanel extends JPanel {
 		for (Chunk chunk : diff.getChunks()) {
 			y += 10;
 			for (CodeLine line : chunk.getLines()) {		
-				y += metrics.getHeight() + 2;
+				if (line.getType() == CodeLine.Type.ADDED) {
+					g.setColor(Color.green);
+				} else if (line.getType() == CodeLine.Type.REMOVED) {
+					g.setColor(Color.red);
+				} else {
+					g.setColor(Color.white);
+				}
 				
-				g.drawString(line.getLine(), 5, y);
+				System.out.println(line.getType().name());
+				
+				g.fillRect(0, y, prefWidth, metrics.getHeight());
+				
+				g.setColor(Color.black);
+				g.drawString(line.getLine(), 0, y);
+				
+				y += metrics.getHeight() + 2;
 			}
 		}
 		
 		Dimension d = new Dimension(prefWidth, prefHeight);
 		super.setSize(d);
 		super.setPreferredSize(d);
-		
-		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
-
 	}
 }
