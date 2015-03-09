@@ -47,9 +47,7 @@ public class Repository {
 			
 			String s = e.nextElement();
 			
-			while (e.hasMoreElements()) {
-				List<Diff> diffs = new ArrayList<Diff>();
-				
+			while (e.hasMoreElements()) {				
 				System.out.println("Raw commit data: " + s);
 				Commit c = new Commit(this, s);
 
@@ -67,9 +65,9 @@ public class Repository {
 				while (s.startsWith("diff --git")) {
 					System.out.println("Diff: " + s);
 
-					String sdiff = s.substring(s.lastIndexOf(" b/"), s.length()).trim();
-					
+					String sdiff = s.substring(s.lastIndexOf(" b/"), s.length()).trim();		
 					Diff diff = new Diff(c, sdiff);
+					c.addDiff(diff);
 					
 					s = e.nextElement();
 					
