@@ -8,6 +8,7 @@ import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.ui.components.DiffHolderPanel;
 import com.redpois0n.gitj.ui.components.JCommitPane;
 
 @SuppressWarnings("serial")
@@ -16,7 +17,9 @@ public class MainPanel extends JPanel {
 	private JFrame parent;
 	private Repository repository;
 	private JSplitPane splitPaneMain;
+	private JSplitPane splitPaneLow;
 	private JCommitPane jcommitPane;
+	private DiffHolderPanel diffHolderPanel;
 	
 	/**
 	 * Repository tab
@@ -38,6 +41,15 @@ public class MainPanel extends JPanel {
 		jcommitPane = new JCommitPane(repository.getCommits(true));
 		
 		splitPaneMain.setLeftComponent(jcommitPane);
+		
+		splitPaneLow = new JSplitPane();
+		splitPaneLow.setResizeWeight(0.5);
+		
+		splitPaneMain.setRightComponent(splitPaneLow);
+		
+		diffHolderPanel = new DiffHolderPanel();
+		
+		splitPaneLow.setRightComponent(diffHolderPanel);
 	}
 	
 	public void reload() throws Exception {
