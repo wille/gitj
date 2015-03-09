@@ -28,6 +28,10 @@ public class Commit {
 		this.authorEmail = authorEmail;
 		this.when = when;
 		this.comment = comment;
+		
+		if (this.comment.endsWith("---")) {
+			this.comment = comment.substring(0, comment.length() - 3);
+		}
 	}
 	
 	public void addDiff(Diff diff) {

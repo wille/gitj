@@ -4,20 +4,14 @@ import java.awt.BorderLayout;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
 import com.redpois0n.git.Commit;
-import com.redpois0n.git.Diff;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.ui.components.JCommitPane;
-
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.BoxLayout;
-import javax.swing.JMenuBar;
-import javax.swing.JToolBar;
-import javax.swing.JSplitPane;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
