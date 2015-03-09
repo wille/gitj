@@ -69,9 +69,11 @@ public class Repository {
 
 					String sdiff = s.substring(s.lastIndexOf(" b/"), s.length()).trim();
 					
-					Diff diff = new Diff(sdiff);
+					Diff diff = new Diff(c, sdiff);
 					
 					s = e.nextElement();
+					
+					Chunk current = null;
 					
 					while (!(s = e.nextElement()).startsWith("diff --git")) {
 						String codeline = s;
@@ -79,13 +81,22 @@ public class Repository {
 						if (s.startsWith("Commit;") || !e.hasMoreElements()) {
 							break;
 						} else if (s.startsWith("@@ ")) {
-							System.out.println("Chunk: " + s);
-
-							s = s.substring(s.indexOf("@@", 3) + 2, s.length());
-						}
+							String chunk = s.substring(0, s.indexOf("@@", 3)).trim();
 							
-						System.out.println("Code: " + s);
-							//code.add(s);				
+							System.out.println("Chunk: " + chunk);				
+							
+							s = " " + s.substring(s.indexOf("@@", 3) + 2, s.length());
+
+							current = new Chunk(diff, chunk);
+							diff.addChunk(current);
+						}
+						
+						if (current != null) {
+							current.addRawLine(s);		
+							System.out.println("Code: " + s);
+						} else {
+							System.out.println("!Code: " + s);
+						}										
 					}
 					
 				}

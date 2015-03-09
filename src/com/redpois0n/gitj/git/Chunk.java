@@ -6,10 +6,12 @@ import java.util.List;
 public class Chunk {
 	
 	private Diff parent;
+	private String name;
 	private List<CodeLine> codelines = new ArrayList<CodeLine>();
 	
-	public Chunk(Diff parent) {
+	public Chunk(Diff parent, String name) {
 		this.parent = parent;
+		this.name = name;
 	}
 	
 	public void addLine(CodeLine cl) {
@@ -20,12 +22,34 @@ public class Chunk {
 		codelines.add(new CodeLine(type, s));
 	}
 	
+	public void addRawLine(String s) {
+		CodeLine.Type type;
+		
+		if (s.startsWith("+ ")) {
+			type = CodeLine.Type.ADDED;
+		} else if (s.startsWith("- ")) {
+			type = CodeLine.Type.REMOVED;
+		} else {
+			type = CodeLine.Type.NORMAL;
+		}
+		
+		if (s.length() > 2) {
+			s = s.substring(2, s.length());
+		}
+		
+		addLine(type, s);
+	}
+	
 	public List<CodeLine> getLines() {
 		return codelines;
 	}
 
 	public Diff getParent() {
 		return parent;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }
