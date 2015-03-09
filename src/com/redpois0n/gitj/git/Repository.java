@@ -72,19 +72,17 @@ public class Repository {
 					
 					while (!(s = e.nextElement()).startsWith("diff --git")) {
 						String codeline = s;
-						
-						if (e.hasMoreElements()) {
-							//s = e.nextElement();
-						}
 
 						if (s.startsWith("Commit;") || !e.hasMoreElements()) {
 							break;
 						} else if (s.startsWith("@@ ")) {
 							System.out.println("Chunk: " + s);
-						} else {
-							System.out.println("Code: " + s);
-							//code.add(s);
+
+							s = s.substring(s.indexOf("@@", 3) + 2, s.length());
 						}
+							
+						System.out.println("Code: " + s);
+							//code.add(s);				
 					}
 					
 				}
