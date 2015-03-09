@@ -1,14 +1,19 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
+import com.redpois0n.git.Commit;
+import com.redpois0n.git.Diff;
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.ui.components.CommitClickedListener;
 import com.redpois0n.gitj.ui.components.DiffHolderPanel;
+import com.redpois0n.gitj.ui.components.DiffPanel;
 import com.redpois0n.gitj.ui.components.JCommitPane;
 
 @SuppressWarnings("serial")
@@ -39,6 +44,7 @@ public class MainPanel extends JPanel {
 		add(splitPaneMain, BorderLayout.CENTER);
 		
 		jcommitPane = new JCommitPane(repository.getCommits(true));
+		jcommitPane.addListener(new CommitChangeListener());
 		
 		splitPaneMain.setLeftComponent(jcommitPane);
 		
@@ -58,6 +64,19 @@ public class MainPanel extends JPanel {
 	
 	public Repository getRepository() {
 		return this.repository;
+	}
+	
+	public void loadDiffs(List<Diff> diffs) {
+		for (Diff diff : diffs) {
+			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
+		}
+	}
+	
+	public class CommitChangeListener implements CommitClickedListener {
+		@Override
+		public void onClick(Commit c) {
+			loadDiffs(c.getDiffs());
+		}
 	}
 
 }

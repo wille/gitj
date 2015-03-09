@@ -1,6 +1,9 @@
 package com.redpois0n.gitj.ui.components;
 
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -21,6 +24,8 @@ public class JCommitPane extends JScrollPane {
 	public static final int INDEX_AUTHOR = 2;
 	public static final int INDEX_COMMIT = 3;
 	
+	private List<CommitClickedListener> listeners = new ArrayList<CommitClickedListener>();
+	
 	private List<Commit> commits;
 	private JTable table;
 	private CommitTableModel model;
@@ -37,6 +42,21 @@ public class JCommitPane extends JScrollPane {
 		table.setDefaultRenderer(Object.class, new CommitRenderer());
 		
 		super.setViewportView(table);
+		
+		table.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent evt) {
+		        int row = table.getSelectedRow();
+		        
+		        if (row != -1) {
+		        	Commit c = (Commit) table.getValueAt(row, 0);
+		        	
+		        	for (CommitClickedListener l : listeners) {
+		        		l.onClick(c);
+		        	}
+		        }
+		    }
+		});
 		
 		reload(commits);
 	}
@@ -55,6 +75,14 @@ public class JCommitPane extends JScrollPane {
 		while (table.getRowCount() > 0) {
 			model.removeRow(0);
 		}
+	}
+	
+	public void addListener(CommitClickedListener l) {
+		listeners.add(l);
+	}
+	
+	public void removeListener(CommitClickedListener l) {
+		listeners.remove(l);
 	}
 	
 	public class CommitRenderer extends DefaultTableCellRenderer {
