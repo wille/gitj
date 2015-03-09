@@ -25,6 +25,7 @@ public class DiffHolderPanel extends JPanel {
 		add(panel, grid);
 		
 		revalidate();
+		repaint();
 	}
 	
 	public void clear() {
