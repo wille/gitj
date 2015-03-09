@@ -69,6 +69,7 @@ public class Repository {
 
 					String sdiff = s.substring(s.lastIndexOf(" b/"), s.length()).trim();
 					
+					Diff diff = new Diff(sdiff);
 					
 					s = e.nextElement();
 					
