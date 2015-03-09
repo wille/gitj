@@ -37,6 +37,14 @@ public class Commit {
 	public List<Diff> getDiffs() {
 		return diffs;
 	}
+
+	public String getDisplayAuthor() {
+		return getAuthorName() + " <" + getAuthorEmail() + ">";
+	}
+
+	public String getDisplayCommit() {
+		return getHash().substring(0, 6);
+	}
 	
 	public Repository getRepository() {
 		return repo;
