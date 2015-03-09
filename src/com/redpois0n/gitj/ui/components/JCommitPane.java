@@ -38,10 +38,12 @@ public class JCommitPane extends JScrollPane {
 		
 		super.setViewportView(table);
 		
-		reload();
+		reload(commits);
 	}
 	
-	public void reload() {
+	public void reload(List<Commit> commits) {
+		this.commits = commits;
+		
 		clear();
 		
 		for (Commit c : commits) {

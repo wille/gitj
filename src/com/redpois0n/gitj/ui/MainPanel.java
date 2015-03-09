@@ -40,8 +40,8 @@ public class MainPanel extends JPanel {
 		splitPaneMain.setLeftComponent(jcommitPane);
 	}
 	
-	public void reload() {
-		jcommitPane.reload();
+	public void reload() throws Exception {
+		jcommitPane.reload(repository.getCommits(true));
 	}
 	
 	public Repository getRepository() {

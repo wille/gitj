@@ -25,4 +25,8 @@ public class Main {
 			ex.printStackTrace();
 		}
 	}
+
+	public static void displayError(Exception e) {
+		
+	}
 }

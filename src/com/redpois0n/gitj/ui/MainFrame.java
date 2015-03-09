@@ -13,8 +13,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.Main;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -107,7 +110,12 @@ public class MainFrame extends JFrame {
 		MainPanel mp = getSelectedPanel();
 		
 		if (mp != null) {
-			mp.reload();
+			try {
+				mp.reload();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Main.displayError(e);
+			}
 		}
 	}
 	
