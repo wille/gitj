@@ -63,30 +63,30 @@ public class Repository {
 				System.out.println("Changes: " + changes);
 				
 				s = e.nextElement();
-				
+								
 				while (s.startsWith("diff --git")) {
 					System.out.println("Diff: " + s);
 
-					List<String> code = new ArrayList<String>();
 					
 					s = e.nextElement();
 					
-					while (!s.startsWith("diff --git")) {
+					while (!(s = e.nextElement()).startsWith("diff --git")) {
 						String codeline = s;
 						
 						if (e.hasMoreElements()) {
-							s = e.nextElement();
+							//s = e.nextElement();
 						}
 
 						if (s.startsWith("Commit;") || !e.hasMoreElements()) {
 							break;
+						} else if (s.startsWith("@@ ")) {
+							System.out.println("Chunk: " + s);
 						} else {
 							System.out.println("Code: " + s);
-							code.add(s);
+							//code.add(s);
 						}
 					}
 					
-					//s = e.nextElement();
 				}
 				
 				commits.add(c);
