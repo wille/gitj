@@ -78,6 +78,11 @@ public class MainFrame extends JFrame {
 		return null;
 	}
 	
+	@Override
+	public void setTitle(String title) {
+		super.setTitle("jgit - " + title);
+	}
+	
 	public class TabChangeListener implements ChangeListener {
 		
 		@Override
@@ -89,6 +94,5 @@ public class MainFrame extends JFrame {
 			}
 		}
 	}
-	
 	
 }
