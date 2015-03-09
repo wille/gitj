@@ -18,7 +18,7 @@ public class DiffHolderPanel extends JPanel {
 		setLayout(gridBagLayout);
 	}
 	
-	public void addDiffPane(DiffPanel panel) {
+	public void addDiffPanel(DiffPanel panel) {
 		GridBagConstraints grid = new GridBagConstraints();
 		grid.gridx = 0;
 		grid.gridy = getComponentCount();

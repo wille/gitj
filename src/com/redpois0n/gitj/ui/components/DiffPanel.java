@@ -11,7 +11,7 @@ public class DiffPanel extends JPanel {
 	
 	private Diff diff;
 	
-	private DiffPanel(Diff diff) {
+	public DiffPanel(Diff diff) {
 		this.diff = diff;
 	}
 
