@@ -59,9 +59,10 @@ public class JCommitPane extends JScrollPane {
 		
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+			JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			
 			if (table.getValueAt(row, 0) instanceof Commit) {
 				Commit c = (Commit) table.getValueAt(row, 0);
-				JLabel label = new JLabel();
 				
 				if (column == INDEX_DESCRIPTION) {
 					label.setText(c.getComment());
@@ -75,10 +76,9 @@ public class JCommitPane extends JScrollPane {
 					throw new IndexOutOfBoundsException();
 				}
 				
-				return label;
-			} else {
-				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			}
+			
+			return label;
 		}
 	}
 	
