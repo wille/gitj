@@ -33,8 +33,8 @@ public class Chunk {
 			type = CodeLine.Type.NORMAL;
 		}
 		
-		if (s.length() > 2) {
-			s = s.substring(2, s.length());
+		if (s.length() > 0) {
+			s = s.substring(1, s.length());
 		}
 		
 		addLine(type, s);
