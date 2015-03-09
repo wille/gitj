@@ -54,9 +54,9 @@ public class Repository {
 				Commit c = new Commit(this, s);
 
 				while ((s = e.nextElement()).contains("|")) {
-					String sdiff = s.split("|")[0].trim();
-					Diff diff = new Diff();
-					System.out.println("Diff created: " + s);
+					//String sdiff = s.split("|")[0].trim();
+					//Diff diff = new Diff();
+					//System.out.println("Diff created: " + s);
 				}
 								
 				String changes = s;
@@ -67,6 +67,8 @@ public class Repository {
 				while (s.startsWith("diff --git")) {
 					System.out.println("Diff: " + s);
 
+					String sdiff = s.substring(s.lastIndexOf(" b/"), s.length()).trim();
+					
 					
 					s = e.nextElement();
 					
