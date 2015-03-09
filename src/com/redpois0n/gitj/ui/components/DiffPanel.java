@@ -58,9 +58,7 @@ public class DiffPanel extends JPanel {
 				} else {
 					g.setColor(Color.white);
 				}
-				
-				System.out.println(line.getType().name());
-				
+								
 				g.fillRect(0, y, prefWidth, metrics.getHeight() + 2);
 				
 				g.setColor(Color.black);
