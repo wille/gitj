@@ -90,6 +90,11 @@ public class JCommitPane extends JScrollPane {
 			}
 		}
 		
+		@Override
+		public boolean isCellEditable(int i, int i1) {
+			return false;
+		}
+		
 	}
 
 }

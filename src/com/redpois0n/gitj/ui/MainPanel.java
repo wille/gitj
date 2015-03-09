@@ -30,6 +30,7 @@ public class MainPanel extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		splitPaneMain = new JSplitPane();
+		splitPaneMain.setResizeWeight(0.5);
 		splitPaneMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		
 		add(splitPaneMain, BorderLayout.CENTER);
