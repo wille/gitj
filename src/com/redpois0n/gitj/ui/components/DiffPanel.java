@@ -18,6 +18,9 @@ public class DiffPanel extends JPanel {
 	
 	private Diff diff;
 	
+	private int prefWidth;
+	private int prefHeight;
+	
 	public DiffPanel(Diff diff) {
 		this.diff = diff;
 	}
@@ -28,24 +31,23 @@ public class DiffPanel extends JPanel {
 		
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
-		int prefWidth = 0;
-		int prefHeight = 0;
-		
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		
-		for (Chunk chunk : diff.getChunks()) {
-			prefHeight += 10;
-			for (CodeLine line : chunk.getLines()) {
-				int sw = metrics.stringWidth(line.getLine());
-				
-				if (sw > prefWidth) {
-					prefWidth = sw;
+		if (prefWidth == 0 || prefHeight == 0) {
+			for (Chunk chunk : diff.getChunks()) {
+				prefHeight += 10;
+				for (CodeLine line : chunk.getLines()) {
+					int sw = metrics.stringWidth(line.getLine());
+					
+					if (sw > prefWidth) {
+						prefWidth = sw;
+					}
+					
+					prefHeight += metrics.getHeight() + 2;
 				}
-				
-				prefHeight += metrics.getHeight() + 2;
 			}
 		}
-		
+						
 		int y = 0;
 		
 		for (Chunk chunk : diff.getChunks()) {
@@ -70,8 +72,19 @@ public class DiffPanel extends JPanel {
 		
 		g.drawRect(0, 0, getWidth(), getHeight());
 		
-		Dimension d = new Dimension(prefWidth + 1, prefHeight + 1);
-		super.setSize(d);
-		super.setPreferredSize(d);
+		super.setSize(getDimension());
+		super.setPreferredSize(getDimension());
+	}
+	
+	public Dimension getDimension() {
+		return new Dimension(prefWidth, prefHeight);
+	}
+	
+	public int getPrefWidth() {
+		return prefWidth;
+	}
+	
+	public int getPrefHeight() {
+		return prefHeight;
 	}
 }

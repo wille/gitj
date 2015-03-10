@@ -26,7 +26,41 @@ public class DiffHolderPanel extends JPanel {
 		grid.anchor = GridBagConstraints.WEST;
 		add(panel, grid);
 		
-		super.setPreferredSize(new Dimension(0, 0)); // todo
+		repaint();
+		
+		Runnable r = new Runnable() {
+			public void run() {
+				try {
+					Thread.sleep(100L);
+				} catch (Exception ex) { }
+				
+				int width = 0;
+				int height = 0;
+				
+				do {
+					for (Component c : getComponents()) {
+						if (c instanceof DiffPanel) {
+							DiffPanel dp = (DiffPanel) c;
+							
+							Dimension d = dp.getDimension();
+							
+							height += dp.getPrefHeight();
+							
+							if (dp.getPrefWidth() > width) {
+								width = (int) dp.getPrefWidth();
+							}
+						}
+					}
+				} while (width == 0 && height == 0);
+				
+				System.out.println(width + ", " + height);
+				
+				setSize(new Dimension(width, height));
+				setPreferredSize(new Dimension(width, height));
+			}
+		};
+		
+		new Thread(r).start();
 	}
 	
 	public void clear() {
