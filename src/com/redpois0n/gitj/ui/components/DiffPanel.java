@@ -82,12 +82,19 @@ public class DiffPanel extends JPanel {
 		g.setColor(COLOR_PANEL_BORDER);
 		g.drawRect(0, 25, 20, prefHeight);
 						
-		int y = 16;
+		int y = 20;
 		
 		List<Chunk> chunks = diff.getChunks();
 		
 		for (Chunk chunk : chunks) {
-			y += 10;
+			y += 5;
+			g.setColor(Color.black);
+			g.drawString(chunk.getName(), 23, y + metrics.getHeight());
+			g.setColor(COLOR_PANEL_BORDER);
+			g.drawRect(20, y, prefWidth - 20, 5 + metrics.getHeight());
+
+			y += 6 + metrics.getHeight();
+			
 			for (CodeLine line : chunk.getLines()) {		
 				if (line.getType() == CodeLine.Type.ADDED) {
 					g.setColor(COLOR_ADDED);
