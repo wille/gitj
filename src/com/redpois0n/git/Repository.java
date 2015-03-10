@@ -88,7 +88,7 @@ public class Repository {
 						if (s.startsWith("Commit;") || !e.hasMoreElements()) {
 							break;
 						} else if (s.startsWith("@@ ")) {
-							String chunk = s.substring(0, s.indexOf("@@", 3)).trim();
+							String chunk = s.substring(0, s.indexOf("@@", 3) + 2).trim();
 							
 							System.out.println("Chunk: " + chunk);				
 							
