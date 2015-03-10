@@ -42,7 +42,7 @@ public class Repository {
 				commits.clear();
 			}
 			
-			List<String> raw = run(new String[] { "git", "log", "--pretty=format:\"Commit;%H;%an;%ae;%ar;%s\"", "--stat", "-p" }); 
+			List<String> raw = run(new String[] { "git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--stat", "-p" }); 
 			Enumeration<String> e = Collections.enumeration(raw);
 			
 			String s = e.nextElement();
