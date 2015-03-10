@@ -147,9 +147,13 @@ public class Repository {
 	}
 	
 	public boolean hasUnstagedFiles() throws Exception {
-		List<String> raw = run(new String[] { "git", "status", "--short" }); 
+		List<String> raw = getStatus(); 
 				
 		return raw.size() > 0;
+	}
+	
+	public List<String> getStatus() throws Exception {
+		return run(new String[] { "git", "status", "--short", "--porcelain" });
 	}
 	
 	public void init() throws Exception {
