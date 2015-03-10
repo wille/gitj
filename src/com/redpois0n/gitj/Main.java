@@ -31,6 +31,6 @@ public class Main {
 	}
 	
 	public static void print(String s) {
-		Main.print(s);
+		System.out.println(s);
 	}
 }
