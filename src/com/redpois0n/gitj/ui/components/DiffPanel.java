@@ -40,7 +40,7 @@ public class DiffPanel extends JPanel {
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		
 		if (prefWidth == 0 || prefHeight == 0) {
-			prefHeight += 21;
+			prefHeight += 11;
 			
 			for (Chunk chunk : diff.getChunks()) {
 				prefHeight += 10;
@@ -62,20 +62,20 @@ public class DiffPanel extends JPanel {
 		
 		// Top diff file table
 		g.setColor(COLOR_PANEL);
-		g.fillRect(10, 10, prefWidth, 20);
+		g.fillRect(0, 0, prefWidth, 20);
 		g.setColor(COLOR_PANEL_BORDER);
-		g.drawRect(10, 10, prefWidth, 20);
+		g.drawRect(0, 0, prefWidth, 20);
 		
 		g.setColor(Color.gray);
-		g.drawString(diff.getFile().getAbsolutePath(), 14, 24);
+		g.drawString(diff.getFile().getAbsolutePath(), 4, 2 + metrics.getHeight());
 		
 		// Left line number table
 		g.setColor(COLOR_PANEL);
-		g.fillRect(10, 30, 20, prefHeight);
+		g.fillRect(0, 20, 20, prefHeight);
 		g.setColor(COLOR_PANEL_BORDER);
-		g.drawRect(10, 30, 20, prefHeight);
+		g.drawRect(0, 20, 20, prefHeight);
 						
-		int y = 21;
+		int y = 11;
 		
 		List<Chunk> chunks = diff.getChunks();
 		
@@ -90,10 +90,10 @@ public class DiffPanel extends JPanel {
 					g.setColor(Color.white);
 				}
 								
-				g.fillRect(31, y, prefWidth, metrics.getHeight() + 2);
+				g.fillRect(21, y, prefWidth, metrics.getHeight() + 2);
 				
 				g.setColor(Color.black);
-				g.drawString(line.getFixedLine(), 33, y + metrics.getHeight());
+				g.drawString(line.getFixedLine(), 23, y + metrics.getHeight());
 				
 				y += metrics.getHeight() + 2;
 			}

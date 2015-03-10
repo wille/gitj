@@ -6,11 +6,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class DiffHolderPanel extends JPanel {
 	
 	public DiffHolderPanel() {
+		setBorder(new EmptyBorder(10, 10, 10, 10));
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0 };
