@@ -41,9 +41,7 @@ public class DiffHolderPanel extends JPanel {
 					for (Component c : getComponents()) {
 						if (c instanceof DiffPanel) {
 							DiffPanel dp = (DiffPanel) c;
-							
-							Dimension d = dp.getDimension();
-							
+														
 							height += dp.getPrefHeight();
 							
 							if (dp.getPrefWidth() > width) {

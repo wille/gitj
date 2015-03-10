@@ -66,10 +66,21 @@ public class Repository {
 					System.out.println("Diff: " + s);
 
 					String sdiff = s.substring(s.lastIndexOf(" b/"), s.length()).trim();		
-					Diff diff = new Diff(c, sdiff);
-					c.addDiff(diff);
-					
+										
 					s = e.nextElement();
+					
+					Diff.Type type;
+					
+					if (s.startsWith("deleted")) {
+						type = Diff.Type.DELETED;
+					} else if (s.startsWith("new")) {
+						type = Diff.Type.NEW;
+					} else {
+						type = Diff.Type.EDITED;
+					}
+					
+					Diff diff = new Diff(c, sdiff, type);
+					c.addDiff(diff);
 					
 					Chunk current = null;
 					
