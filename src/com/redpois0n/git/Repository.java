@@ -65,7 +65,7 @@ public class Repository {
 				while (s.startsWith("diff --git")) {
 					System.out.println("Diff: " + s);
 
-					String sdiff = s.substring(s.lastIndexOf(" b/"), s.length()).trim();		
+					String sdiff = s.substring(s.lastIndexOf(" b/") + 3, s.length()).trim();		
 										
 					s = e.nextElement();
 					
@@ -79,7 +79,7 @@ public class Repository {
 						type = Diff.Type.EDITED;
 					}
 					
-					Diff diff = new Diff(c, sdiff, type);
+					Diff diff = new Diff(c, new File(folder, sdiff), type);
 					c.addDiff(diff);
 					
 					Chunk current = null;
