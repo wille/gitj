@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.util.List;
 
@@ -62,9 +63,16 @@ public class PanelSummary extends JPanel {
 			if (obj instanceof Diff) {
 				Diff diff = (Diff) obj;
 				
-				JLabel label = new JLabel();
+				JLabel label = (JLabel) super.getListCellRendererComponent(list, diff.getFile().getAbsolutePath(), index, isSelected, cellHasFocus);;
 				label.setText(diff.getFile().getAbsolutePath());
 				label.setIcon(new ImageIcon(IconUtils.getIcon(diff.getType())));
+				label.setForeground(Color.black);
+				
+				if (isSelected) {
+					label.setBackground(new Color(191, 205, 219));
+				} else {
+					label.setBackground(Color.white);
+				}
 				
 				return label;
 			}
