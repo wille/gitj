@@ -52,9 +52,7 @@ public class DiffHolderPanel extends JPanel {
 						}
 					}
 				} while (width == 0 && height == 0);
-				
-				System.out.println(width + ", " + height);
-				
+								
 				setSize(new Dimension(width, height));
 				setPreferredSize(new Dimension(width, height));
 			}
