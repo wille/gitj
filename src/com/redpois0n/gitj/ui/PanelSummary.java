@@ -48,7 +48,6 @@ public class PanelSummary extends JPanel {
 		list = new JFileList();
 		list.setModel(model);
 		list.setFixedCellHeight(25);
-		list.setCellRenderer(new DiffListRenderer());
 		JScrollPane scrollList = new JScrollPane();
 		scrollList.setBorder(null);
 		scrollList.setViewportView(list);
@@ -73,34 +72,6 @@ public class PanelSummary extends JPanel {
 		sb.append("</html>");
 		
 		textPane.setText(sb.toString());
-	}
-	
-	@SuppressWarnings("rawtypes")
-	public class DiffListRenderer extends DefaultListCellRenderer {
-		
-		@Override
-		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-			Object obj = value;
-		
-			if (obj instanceof JFileListEntry) {
-				JFileListEntry diff = (JFileListEntry) obj;
-				
-				JLabel label = (JLabel) super.getListCellRendererComponent(list, diff.getText(), index, isSelected, cellHasFocus);;
-
-				label.setIcon(diff.getIcon());
-				label.setForeground(Color.black);
-				
-				if (isSelected) {
-					label.setBackground(new Color(191, 205, 219));
-				} else {
-					label.setBackground(Color.white);
-				}
-				
-				return label;
-			}
-			
-			return null;
-		}
 	}
 
 }
