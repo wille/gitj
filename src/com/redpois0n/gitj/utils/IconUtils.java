@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 
-import com.redpois0n.git.Diff.Type;
+import com.redpois0n.git.Change;
+import com.redpois0n.git.Diff;
 
 public class IconUtils {
 	
@@ -33,16 +34,24 @@ public class IconUtils {
 		return icon;
 	}
 
-	public static Image getIcon(Type type) {
+	public static Image getIconFromDiffType(Diff.Type type) {
 		String s;
 		
-		if (type == Type.DELETED) {
+		if (type == Diff.Type.DELETED) {
 			s = "deleted";
-		} else if (type == Type.NEW) {
+		} else if (type == Diff.Type.NEW) {
 			s = "added";
 		} else {
 			s = "modified";
 		}
+		
+		return getIcon(s).getImage();
+	}
+	
+	public static Image getIconFrom(Change.Type type) {
+		String s;
+		
+		
 		
 		return getIcon(s).getImage();
 	}

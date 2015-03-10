@@ -74,7 +74,7 @@ public class DiffPanel extends JPanel {
 		g.setColor(Color.gray);
 		g.drawString(diff.getFile().getAbsolutePath(), 20, 4 + metrics.getHeight());
 		
-		g.drawImage(IconUtils.getIcon(diff.getType()), 2, 5, null);
+		g.drawImage(IconUtils.getIconFromDiffType(diff.getType()), 2, 5, null);
 		
 		// Left line number table
 		g.setColor(COLOR_PANEL);

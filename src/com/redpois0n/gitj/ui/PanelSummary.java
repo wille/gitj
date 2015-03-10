@@ -57,7 +57,7 @@ public class PanelSummary extends JPanel {
 		model.clear();
 		
 		for (Diff diff : diffs) {
-			model.addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(IconUtils.getIcon(diff.getType()))));
+			model.addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(IconUtils.getIconFromDiffType(diff.getType()))));
 		}
 		
 		StringBuilder sb = new StringBuilder();
