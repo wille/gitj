@@ -16,6 +16,11 @@ import com.redpois0n.git.Diff;
 @SuppressWarnings("serial")
 public class DiffPanel extends JPanel {
 	
+	public static final Color COLOR_ADDED = new Color(212, 234, 205);
+	public static final Color COLOR_REMOVED = new Color(240, 214, 214);
+	public static final Color COLOR_PANEL = new Color(237, 237, 237);
+	public static final Color COLOR_PANEL_BORDER = new Color(204, 204, 204);
+	
 	private Diff diff;
 	
 	private int prefWidth;
@@ -46,32 +51,49 @@ public class DiffPanel extends JPanel {
 					prefHeight += metrics.getHeight() + 2;
 				}
 			}
+			
+			if (metrics.stringWidth(diff.getFile().getAbsolutePath()) > prefWidth) {
+				prefWidth = metrics.stringWidth(diff.getFile().getAbsolutePath());
+			}
 		}
+		
+		// Top diff file table
+		g.setColor(COLOR_PANEL);
+		g.fillRect(10, 10, prefWidth, 20);
+		g.setColor(COLOR_PANEL_BORDER);
+		g.drawRect(10, 10, prefWidth, 20);
+		
+		g.setColor(Color.gray);
+		g.drawString(diff.getFile().getAbsolutePath(), 14, 24);
+		
+		// Left line number table
+		g.setColor(COLOR_PANEL);
+		g.fillRect(10, 30, 20, prefHeight);
+		g.setColor(COLOR_PANEL_BORDER);
+		g.drawRect(10, 30, 20, prefHeight);
 						
-		int y = 0;
+		int y = 21;
 		
 		for (Chunk chunk : diff.getChunks()) {
 			y += 10;
 			for (CodeLine line : chunk.getLines()) {		
 				if (line.getType() == CodeLine.Type.ADDED) {
-					g.setColor(new Color(212, 234, 205));
+					g.setColor(COLOR_ADDED);
 				} else if (line.getType() == CodeLine.Type.REMOVED) {
-					g.setColor(new Color(240, 214, 214));
+					g.setColor(COLOR_REMOVED);
 				} else {
 					g.setColor(Color.white);
 				}
 								
-				g.fillRect(0, y, prefWidth, metrics.getHeight() + 2);
+				g.fillRect(31, y, prefWidth, metrics.getHeight() + 2);
 				
 				g.setColor(Color.black);
-				g.drawString(line.getLine(), 0, y + metrics.getHeight());
+				g.drawString(line.getLine(), 33, y + metrics.getHeight());
 				
 				y += metrics.getHeight() + 2;
 			}
 		}
-		
-		g.drawRect(0, 0, getWidth(), getHeight());
-		
+				
 		super.setSize(getDimension());
 		super.setPreferredSize(getDimension());
 	}
