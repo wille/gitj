@@ -28,6 +28,7 @@ public class MainPanel extends JPanel {
 	private JCommitPane jcommitPane;
 	private DiffHolderPanel diffHolderPanel;
 	private JScrollPane scrollPaneDiffs;
+	private PanelSummary panelSummary;
 	
 	/**
 	 * Repository tab
@@ -63,6 +64,9 @@ public class MainPanel extends JPanel {
 		scrollPaneDiffs.setViewportView(diffHolderPanel);
 		
 		splitPaneLow.setRightComponent(scrollPaneDiffs);
+		
+		panelSummary = new PanelSummary();
+		splitPaneLow.setLeftComponent(panelSummary);
 	}
 	
 	public void reload() throws Exception {
@@ -86,6 +90,8 @@ public class MainPanel extends JPanel {
 		public void onClick(Commit c) {
 			diffHolderPanel.clear();
 			loadDiffs(c.getDiffs());
+			
+			panelSummary.reload(c.getDiffs());
 		}
 	}
 
