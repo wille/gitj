@@ -103,8 +103,9 @@ public class MainPanel extends AbstractPanel {
 		panelSummary.reload(c, diffs);
 	}
 	
-	public void loadUncommited() {
+	public void loadUncommited() throws Exception {
 		PanelUncommited pu = new PanelUncommited(repo);
+		pu.reload();
 		splitPaneLow.setLeftComponent(pu);
 	}
 	

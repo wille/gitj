@@ -1,14 +1,26 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
+import com.redpois0n.git.Change;
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.ui.components.JFileList;
+import com.redpois0n.gitj.ui.components.JFileListEntry;
 
 @SuppressWarnings("serial")
 public class PanelUncommited extends AbstractPanel {
+	
+	private DefaultListModel<JFileListEntry> unstagedModel;
+	private JFileList unstagedList;
 
+	private DefaultListModel<JFileListEntry> stagedModel;
+	private JFileList stagedList;
+	
 	public PanelUncommited(Repository repo) {
 		super(repo);
 		setLayout(new BorderLayout(0, 0));
@@ -17,7 +29,41 @@ public class PanelUncommited extends AbstractPanel {
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		splitPane.setResizeWeight(0.5);
 		
+		JScrollPane stagedScrollList = new JScrollPane();
+		stagedScrollList.setBorder(null);
+		stagedModel = new DefaultListModel<JFileListEntry>();
+		stagedList = new JFileList();
+		stagedList.setModel(stagedModel);
+		stagedScrollList.setViewportView(stagedList);
+		splitPane.setLeftComponent(stagedScrollList);
+		
+		JScrollPane unstagedScrollList = new JScrollPane();
+		unstagedScrollList.setBorder(null);
+		unstagedModel = new DefaultListModel<JFileListEntry>();
+		unstagedList = new JFileList();
+		unstagedList.setModel(unstagedModel);
+		unstagedScrollList.setViewportView(unstagedList);
+		splitPane.setRightComponent(unstagedScrollList);
+		
 		add(splitPane);
+	}
+	
+	public void reload() throws Exception {
+		unstagedModel.clear();
+		
+		List<Change> changes = repo.parseStatus();
+		
+		for (Change change : changes) {
+			DefaultListModel<JFileListEntry> model;
+			
+			if (change.isStaged()) {
+				model = stagedModel;
+			} else {
+				model = unstagedModel;
+			}
+			
+			model.addElement(new JFileListEntry(change.getRepoPath(), null));
+		}
 	}
 
 }

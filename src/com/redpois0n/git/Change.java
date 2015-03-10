@@ -50,6 +50,20 @@ public class Change {
 		return types;
 	}
 	
+	public boolean isStaged() {		
+		boolean b1 = types.get(0).isStaged();
+		
+		for (int i = 0; i < types.size(); i++) {
+			boolean tstag = types.get(i).isStaged();
+			
+			if (b1 != tstag) {
+				throw new RuntimeException("Staged and unstaged types");
+			}
+		}
+		
+		return b1;
+	}
+	
 	public static List<Type> getType(String s) {
 		List<Type> types = new ArrayList<Type>();;
 		
