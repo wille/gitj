@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.redpois0n.gitj.utils.FileUtils;
+
 public class Diff {
 	
 	public static enum Type {
@@ -46,15 +48,7 @@ public class Diff {
 	}
 
 	public String getLocalPath() {
-		String path = file.getAbsolutePath();
-		
-		path.replace(parent.getRepository().getFolder().getAbsolutePath(), "").replace("\\", "/");
-		
-		if (path.startsWith("/")) {
-			path = path.substring(1, path.length());
-		}
-		
-		return path;
+		return FileUtils.getRepoPath(file, parent.getRepository());
 	}
 	
 }
