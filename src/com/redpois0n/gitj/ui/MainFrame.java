@@ -18,6 +18,7 @@ import javax.swing.event.ChangeListener;
 
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.Version;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -129,7 +130,7 @@ public class MainFrame extends JFrame {
 	 */
 	@Override
 	public void setTitle(String title) {
-		super.setTitle("gitj - " + title);
+		super.setTitle("gitj " + Version.getVersion() + " - " + title);
 	}
 	
 	public class TabChangeListener implements ChangeListener {
