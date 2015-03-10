@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui.components;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -93,8 +94,10 @@ public class JCommitPane extends JScrollPane {
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 			JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 			
-			if (table.getValueAt(row, 0) instanceof Commit) {
-				Commit c = (Commit) table.getValueAt(row, 0);
+			Object obj = table.getValueAt(row, 0);
+			
+			if (obj instanceof Commit) {
+				Commit c = (Commit) obj;
 				
 				if (column == INDEX_DESCRIPTION) {
 					label.setText(c.getComment());
@@ -108,6 +111,13 @@ public class JCommitPane extends JScrollPane {
 					throw new IndexOutOfBoundsException();
 				}
 				
+			} else if (obj == null) {
+				if (column == INDEX_DESCRIPTION) {
+					label.setText("Uncommitted changes");
+					label.setFont(new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize()));
+				} else {
+					label.setText("");
+				}
 			}
 			
 			return label;
