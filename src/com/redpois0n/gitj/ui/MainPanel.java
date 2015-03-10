@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Diff;
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.components.CommitClickedListener;
 import com.redpois0n.gitj.ui.components.DiffHolderPanel;
 import com.redpois0n.gitj.ui.components.DiffPanel;
@@ -89,6 +90,8 @@ public class MainPanel extends AbstractPanel {
 	 * @param diffs
 	 */
 	public void loadDiffs(Commit c, List<Diff> diffs) {
+		splitPaneLow.setLeftComponent(panelSummary);
+
 		diffHolderPanel.clear();
 		
 		for (Diff diff : diffs) {		
@@ -100,10 +103,24 @@ public class MainPanel extends AbstractPanel {
 		panelSummary.reload(c, diffs);
 	}
 	
+	public void loadUncommited() {
+		PanelUncommited pu = new PanelUncommited(repo);
+		splitPaneLow.setLeftComponent(pu);
+	}
+	
 	public class CommitChangeListener implements CommitClickedListener {
 		@Override
 		public void onClick(Commit c) {
-			loadDiffs(c, c.getDiffs());
+			try {
+				if (c == null && repo.hasUnstagedFiles()) {
+					loadUncommited();
+				} else {
+					loadDiffs(c, c.getDiffs());
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				Main.displayError(ex);
+			}
 		}
 	}
 
