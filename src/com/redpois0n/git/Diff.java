@@ -44,5 +44,11 @@ public class Diff {
 	public Type getType() {
 		return type;
 	}
+
+	public String getLocalPath() {
+		String path = file.getAbsolutePath();
+		
+		return path.replace(parent.getRepository().getFolder().getAbsolutePath(), "").replace("\\", "/");
+	}
 	
 }

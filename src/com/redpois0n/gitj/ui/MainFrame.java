@@ -94,6 +94,10 @@ public class MainFrame extends JFrame {
 		return null;
 	}
 	
+	/**
+	 * Gets selected tab
+	 * @return
+	 */
 	public AbstractPanel getSelectedPanel() {
 		Component c = tabbedPane.getSelectedComponent();
 		
@@ -120,6 +124,9 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
+	/**
+	 * Sets title beginning with "gitj - "
+	 */
 	@Override
 	public void setTitle(String title) {
 		super.setTitle("gitj - " + title);
@@ -127,6 +134,9 @@ public class MainFrame extends JFrame {
 	
 	public class TabChangeListener implements ChangeListener {
 		
+		/**
+		 * Called when tab changed
+		 */
 		@Override
 		public void stateChanged(ChangeEvent arg0) {
 			Repository repo = MainFrame.this.getSelectedRepo();

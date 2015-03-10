@@ -58,16 +58,19 @@ public class PanelSummary extends JPanel {
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public class DiffListRenderer extends DefaultListCellRenderer {
 		
-		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 			Object obj = value;
 		
 			if (obj instanceof Diff) {
 				Diff diff = (Diff) obj;
 				
-				JLabel label = (JLabel) super.getListCellRendererComponent(list, diff.getFile().getAbsolutePath(), index, isSelected, cellHasFocus);;
-				label.setText(diff.getFile().getAbsolutePath());
+				JLabel label = (JLabel) super.getListCellRendererComponent(list, diff.getLocalPath(), index, isSelected, cellHasFocus);;
+
+				label.setText(diff.getLocalPath());
 				label.setIcon(new ImageIcon(IconUtils.getIcon(diff.getType())));
 				label.setForeground(Color.black);
 				
