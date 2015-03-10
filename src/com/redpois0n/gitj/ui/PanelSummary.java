@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 
+import com.redpois0n.git.Commit;
 import com.redpois0n.git.Diff;
 import com.redpois0n.gitj.utils.IconUtils;
 
@@ -34,6 +35,8 @@ public class PanelSummary extends JPanel {
 		add(splitPane);
 		
 		textPane = new JTextPane();
+		textPane.setContentType("text/html");
+		textPane.setEditable(false);
 		JScrollPane scrollTextPane = new JScrollPane();
 		scrollTextPane.setBorder(null);
 		scrollTextPane.setViewportView(textPane);
@@ -50,12 +53,24 @@ public class PanelSummary extends JPanel {
 		splitPane.setRightComponent(scrollList);
 	}
 	
-	public void reload(List<Diff> diffs) {
+	public void reload(Commit c, List<Diff> diffs) {
 		model.clear();
 		
 		for (Diff diff : diffs) {
 			model.addElement(diff);
 		}
+		
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("<html>");
+		sb.append("<b>Commit:</b> " + c.getHash() + " [" + c.getDisplayCommit() + "]<br>");
+		sb.append("<b>Author:</b> " + c.getDisplayAuthor().replace(">", "&#62").replace("<", "&#60") + "<br>");
+		sb.append("<b>When:</b> " + c.getWhen() + "<br>");
+		sb.append("<br>");
+		sb.append(c.getComment());
+		sb.append("</html>");
+		
+		textPane.setText(sb.toString());
 	}
 	
 	@SuppressWarnings("rawtypes")

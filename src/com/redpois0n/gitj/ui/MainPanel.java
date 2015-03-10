@@ -88,7 +88,7 @@ public class MainPanel extends AbstractPanel {
 	 * Loads diffs (On lick
 	 * @param diffs
 	 */
-	public void loadDiffs(List<Diff> diffs) {
+	public void loadDiffs(Commit c, List<Diff> diffs) {
 		diffHolderPanel.clear();
 		
 		for (Diff diff : diffs) {		
@@ -97,13 +97,13 @@ public class MainPanel extends AbstractPanel {
 				
 		diffHolderPanel.revalidate();
 		
-		panelSummary.reload(diffs);
+		panelSummary.reload(c, diffs);
 	}
 	
 	public class CommitChangeListener implements CommitClickedListener {
 		@Override
 		public void onClick(Commit c) {
-			loadDiffs(c.getDiffs());
+			loadDiffs(c, c.getDiffs());
 		}
 	}
 
