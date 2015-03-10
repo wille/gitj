@@ -22,7 +22,7 @@ public abstract class AbstractPanel extends JPanel {
 		return this.parent == null ? this.repo : this.parent.getRepository();
 	}
 	
-	public AbstractPanel getParent() {
+	public AbstractPanel getParentPanel() {
 		return this.parent == null ? this : this.parent;
 	}
 	
