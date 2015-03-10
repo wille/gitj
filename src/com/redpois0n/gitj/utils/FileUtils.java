@@ -17,5 +17,9 @@ public class FileUtils {
 		
 		return path;
 	}
+	
+	public static File fromRepoPath(String path, Repository repo) {
+		return new File(repo.getFolder(), path);
+	}
 
 }
