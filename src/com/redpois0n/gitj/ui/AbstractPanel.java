@@ -1,0 +1,24 @@
+package com.redpois0n.gitj.ui;
+
+import javax.swing.JPanel;
+
+import com.redpois0n.git.Repository;
+
+@SuppressWarnings("serial")
+public abstract class AbstractPanel extends JPanel {
+	
+	protected Repository repo;
+	
+	public AbstractPanel(Repository repo) {
+		this.repo = repo;
+	}
+	
+	public Repository getRepository() {
+		return this.repo;
+	}
+	
+	public void reload() throws Exception {
+		
+	}
+
+}

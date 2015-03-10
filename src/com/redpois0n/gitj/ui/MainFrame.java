@@ -94,18 +94,21 @@ public class MainFrame extends JFrame {
 		return null;
 	}
 	
-	public MainPanel getSelectedPanel() {
+	public AbstractPanel getSelectedPanel() {
 		Component c = tabbedPane.getSelectedComponent();
 		
-		if (c instanceof MainPanel) {
-			return (MainPanel) c;
+		if (c instanceof AbstractPanel) {
+			return (AbstractPanel) c;
 		}
 		
 		return null;
 	}
 	
+	/**
+	 * Reloads selected repo
+	 */
 	public void reloadCurrentRepo() {
-		MainPanel mp = getSelectedPanel();
+		AbstractPanel mp = getSelectedPanel();
 		
 		if (mp != null) {
 			try {

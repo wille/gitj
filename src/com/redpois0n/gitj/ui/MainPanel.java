@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ScrollPaneConstants;
@@ -19,10 +18,9 @@ import com.redpois0n.gitj.ui.components.DiffPanel;
 import com.redpois0n.gitj.ui.components.JCommitPane;
 
 @SuppressWarnings("serial")
-public class MainPanel extends JPanel {
+public class MainPanel extends AbstractPanel {
 
 	private JFrame parent;
-	private Repository repository;
 	private JSplitPane splitPaneMain;
 	private JSplitPane splitPaneLow;
 	private JCommitPane jcommitPane;
@@ -36,8 +34,8 @@ public class MainPanel extends JPanel {
 	 * @throws Exception
 	 */
 	public MainPanel(JFrame parent, Repository repository) throws Exception {	
+		super(repository);
 		this.parent = parent;
-		this.repository = repository;
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new BorderLayout(0, 0));
 		
@@ -69,29 +67,43 @@ public class MainPanel extends JPanel {
 		splitPaneLow.setLeftComponent(panelSummary);
 	}
 	
+	/**
+	 * Clears everything visible and reloads commit panel
+	 */
+	@Override
 	public void reload() throws Exception {
-		jcommitPane.reload(repository.getCommits(true));
+		clear();
+		jcommitPane.reload(repo.getCommits(true));
 	}
 	
-	public Repository getRepository() {
-		return this.repository;
+	/**
+	 * Clears Diff and Commit panels
+	 */
+	public void clear() {
+		jcommitPane.clear();
+		diffHolderPanel.clear();
 	}
 	
+	/**
+	 * Loads diffs (On lick
+	 * @param diffs
+	 */
 	public void loadDiffs(List<Diff> diffs) {
+		diffHolderPanel.clear();
+		
 		for (Diff diff : diffs) {		
 			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
 		}
 				
 		diffHolderPanel.revalidate();
+		
+		panelSummary.reload(diffs);
 	}
 	
 	public class CommitChangeListener implements CommitClickedListener {
 		@Override
 		public void onClick(Commit c) {
-			diffHolderPanel.clear();
 			loadDiffs(c.getDiffs());
-			
-			panelSummary.reload(c.getDiffs());
 		}
 	}
 
