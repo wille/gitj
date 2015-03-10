@@ -155,6 +155,36 @@ public class Repository {
 	public List<String> getStatus() throws Exception {
 		return run(new String[] { "git", "status", "--short", "--porcelain" });
 	}
+
+	public List<Change> parseStatus() throws Exception {
+		List<String> raw = getStatus();
+		List<Change> changes = new ArrayList<Change>();
+		
+		for (String s : raw) {
+			String xy = s.substring(0, 2);
+			String path = s.substring(3, s.length());
+			changes.add(new Change(Change.getType(xy), path));
+		}
+		
+		return changes;
+	}
+	
+	public void stage(String path) throws Exception {
+		List<String> raw = run(new String[] { "git", "add", path });
+
+		for (String s : raw) {
+			System.out.println(s);
+		}
+	}
+	
+	
+	public void unstage(String path) throws Exception  {
+		List<String> raw = run(new String[] { "git", "reset", path });
+		
+		for (String s : raw) {
+			System.out.println(s);
+		}
+	}
 	
 	public void init() throws Exception {
 		List<String> raw = run(new String[] { "git", "init" }); 
