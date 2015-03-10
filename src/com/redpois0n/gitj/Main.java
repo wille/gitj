@@ -29,4 +29,8 @@ public class Main {
 	public static void displayError(Exception e) {
 		
 	}
+	
+	public static void print(String s) {
+		Main.print(s);
+	}
 }

@@ -3,6 +3,8 @@ package com.redpois0n.git;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.redpois0n.gitj.Main;
+
 public class Change {
 	
 	public static enum Type {
@@ -72,7 +74,7 @@ public class Change {
 			
 			if (x.startsWith("*") && s.endsWith(x.replace("*", "")) || x.endsWith("*") && s.startsWith(x.replace("*", "")) || x.equals(s)) {
 				types.add(t);
-				System.out.println(t.name());
+				Main.print(t.name());
 			}
 		}
 		

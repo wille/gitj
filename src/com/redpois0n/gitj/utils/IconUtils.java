@@ -49,7 +49,7 @@ public class IconUtils {
 	}
 	
 	public static Image getIconFrom(Change.Type type) {
-		String s;
+		String s = null;
 		
 		
 		

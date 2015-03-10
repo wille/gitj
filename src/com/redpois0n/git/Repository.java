@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import com.redpois0n.gitj.Main;
+
 public class Repository {
 	
 	private File folder;
@@ -48,22 +50,22 @@ public class Repository {
 			String s = e.nextElement();
 			
 			while (e.hasMoreElements()) {				
-				System.out.println("Raw commit data: " + s);
+				Main.print("Raw commit data: " + s);
 				Commit c = new Commit(this, s.replace("Commit;", ""));
 
 				while ((s = e.nextElement()).contains("|")) {
 					//String sdiff = s.split("|")[0].trim();
 					//Diff diff = new Diff();
-					//System.out.println("Diff created: " + s);
+					//Main.print("Diff created: " + s);
 				}
 								
 				String changes = s;
-				System.out.println("Changes: " + changes);
+				Main.print("Changes: " + changes);
 				
 				s = e.nextElement();
 								
 				while (s.startsWith("diff --git")) {
-					System.out.println("Diff: " + s);
+					Main.print("Diff: " + s);
 
 					String sdiff = s.substring(s.lastIndexOf(" b/") + 3, s.length()).trim();		
 										
@@ -90,7 +92,7 @@ public class Repository {
 						} else if (s.startsWith("@@ ")) {
 							String chunk = s.substring(0, s.indexOf("@@", 3) + 2).trim();
 							
-							System.out.println("Chunk: " + chunk);				
+							Main.print("Chunk: " + chunk);				
 							
 							s = " " + s.substring(s.indexOf("@@", 3) + 2, s.length());
 
@@ -100,9 +102,9 @@ public class Repository {
 						
 						if (current != null) {
 							current.addRawLine(s);		
-							System.out.println("Code: " + s);
+							Main.print("Code: " + s);
 						} else {
-							System.out.println("!Code: " + s);
+							Main.print("!Code: " + s);
 						}										
 					}
 					
@@ -173,7 +175,7 @@ public class Repository {
 		List<String> raw = run(new String[] { "git", "add", path });
 
 		for (String s : raw) {
-			System.out.println(s);
+			Main.print(s);
 		}
 	}
 	
@@ -182,7 +184,7 @@ public class Repository {
 		List<String> raw = run(new String[] { "git", "reset", path });
 		
 		for (String s : raw) {
-			System.out.println(s);
+			Main.print(s);
 		}
 	}
 	
@@ -190,7 +192,7 @@ public class Repository {
 		List<String> raw = run(new String[] { "git", "init" }); 
 
 		for (String s : raw) {
-			System.out.println(s);
+			Main.print(s);
 		}
 	}
 	
