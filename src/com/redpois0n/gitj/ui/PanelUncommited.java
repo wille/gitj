@@ -11,6 +11,7 @@ import com.redpois0n.git.Change;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.ui.components.JFileList;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
+import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
 public class PanelUncommited extends AbstractPanel {
@@ -62,7 +63,7 @@ public class PanelUncommited extends AbstractPanel {
 				model = unstagedModel;
 			}
 			
-			model.addElement(new JFileListEntry(change.getRepoPath(), null));
+			model.addElement(new JFileListEntry(change.getRepoPath(), IconUtils.getIconFromChangeType(change.getTypes().get(0))));
 		}
 	}
 

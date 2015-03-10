@@ -48,11 +48,31 @@ public class IconUtils {
 		return getIcon(s).getImage();
 	}
 	
-	public static Image getIconFrom(Change.Type type) {
+	public static ImageIcon getIconFromChangeType(Change.Type type) {
 		String s = null;
 		
+		if (type == Change.Type.ADDED) {
+			s = "added";
+		} else if (type == Change.Type.UNSTAGED_DELETE) {
+			s = "missing";
+		} else if (type == Change.Type.STAGED_DELETE) {
+			s = "deleted";
+		} else if (type == Change.Type.UNSTAGED_RENAME || type == Change.Type.STAGED_RENAME) {
+			s = "renamed";
+		} else if (type == Change.Type.UNSTAGED_COPY) {
+			
+		} else if (type == Change.Type.STAGED_COPY) {
+			
+		} else if (type == Change.Type.UNSTAGED_MODIFIED || type == Change.Type.STAGED_MODIFIED) {
+			s = "modified";
+		} else if (type == Change.Type.UNSTAGED) {
+			s = "unknown";
+		}
 		
+		if (s == null) {
+			s = "missing";
+		}
 		
-		return getIcon(s).getImage();
+		return getIcon(s);
 	}
 }
