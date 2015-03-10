@@ -146,6 +146,14 @@ public class Repository {
 		return lines;
 	}
 	
+	public void init() throws Exception {
+		List<String> raw = run(new String[] { "git", "init" }); 
+
+		for (String s : raw) {
+			System.out.println(s);
+		}
+	}
+	
 	public File getFolder() {
 		return this.folder;
 	}
