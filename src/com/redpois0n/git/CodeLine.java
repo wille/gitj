@@ -21,4 +21,8 @@ public class CodeLine {
 	public String getLine() {
 		return line;
 	}
+
+	public String getFixedLine() {
+		return getLine().replace("\t", "                  ");
+	}
 }

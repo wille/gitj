@@ -93,7 +93,7 @@ public class DiffPanel extends JPanel {
 				g.fillRect(31, y, prefWidth, metrics.getHeight() + 2);
 				
 				g.setColor(Color.black);
-				g.drawString(line.getLine(), 33, y + metrics.getHeight());				
+				g.drawString(line.getFixedLine(), 33, y + metrics.getHeight());
 				
 				y += metrics.getHeight() + 2;
 			}
