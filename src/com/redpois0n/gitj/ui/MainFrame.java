@@ -74,7 +74,7 @@ public class MainFrame extends JFrame {
 	 * @param title Tab title
 	 * @param panel
 	 */
-	public void addPanel(String title, MainPanel panel) {
+	public void addPanel(String title, AbstractPanel panel) {
 		tabbedPane.addTab(title, panel);
 	}
 	
@@ -85,8 +85,8 @@ public class MainFrame extends JFrame {
 	public Repository getSelectedRepo() {
 		Component c = tabbedPane.getSelectedComponent();
 		
-		if (c instanceof MainPanel) {
-			MainPanel mp = (MainPanel) c;
+		if (c instanceof AbstractPanel) {
+			AbstractPanel mp = (AbstractPanel) c;
 			
 			return mp.getRepository();
 		}

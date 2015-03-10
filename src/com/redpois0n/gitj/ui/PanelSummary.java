@@ -35,6 +35,7 @@ public class PanelSummary extends JPanel {
 		
 		textPane = new JTextPane();
 		JScrollPane scrollTextPane = new JScrollPane();
+		scrollTextPane.setBorder(null);
 		scrollTextPane.setViewportView(textPane);
 		splitPane.setLeftComponent(scrollTextPane);
 		
@@ -44,6 +45,7 @@ public class PanelSummary extends JPanel {
 		list.setFixedCellHeight(25);
 		list.setCellRenderer(new DiffListRenderer());
 		JScrollPane scrollList = new JScrollPane();
+		scrollList.setBorder(null);
 		scrollList.setViewportView(list);
 		splitPane.setRightComponent(scrollList);
 	}
