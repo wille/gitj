@@ -41,6 +41,7 @@ public class PanelSummary extends JPanel {
 		model = new DefaultListModel<Diff>();
 		list = new JList<Diff>();
 		list.setModel(model);
+		list.setFixedCellHeight(25);
 		list.setCellRenderer(new DiffListRenderer());
 		JScrollPane scrollList = new JScrollPane();
 		scrollList.setViewportView(list);
