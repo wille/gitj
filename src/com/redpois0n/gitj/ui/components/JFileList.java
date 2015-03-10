@@ -12,6 +12,7 @@ public class JFileList extends JList<JFileListEntry> {
 	
 	public JFileList() {
 		setCellRenderer(new JFileListRenderer());
+		setFixedCellHeight(25);
 	}
 	
 	@SuppressWarnings("rawtypes")

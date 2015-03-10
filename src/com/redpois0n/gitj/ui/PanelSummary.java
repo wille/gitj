@@ -47,7 +47,6 @@ public class PanelSummary extends JPanel {
 		model = new DefaultListModel<JFileListEntry>();
 		list = new JFileList();
 		list.setModel(model);
-		list.setFixedCellHeight(25);
 		JScrollPane scrollList = new JScrollPane();
 		scrollList.setBorder(null);
 		scrollList.setViewportView(list);
