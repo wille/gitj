@@ -83,6 +83,7 @@ public class MainPanel extends AbstractPanel {
 	public void clear() {
 		jcommitPane.clear();
 		diffHolderPanel.clear();
+		panelSummary.clear();
 	}
 	
 	/**

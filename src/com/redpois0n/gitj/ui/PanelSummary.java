@@ -73,4 +73,9 @@ public class PanelSummary extends JPanel {
 		textPane.setText(sb.toString());
 	}
 
+	public void clear() {
+		model.clear();
+		textPane.setText("");
+	}
+
 }
