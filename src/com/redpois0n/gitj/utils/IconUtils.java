@@ -1,9 +1,12 @@
 package com.redpois0n.gitj.utils;
 
+import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+
+import com.redpois0n.git.Diff.Type;
 
 public class IconUtils {
 	
@@ -28,5 +31,19 @@ public class IconUtils {
 		}
 		
 		return icon;
+	}
+
+	public static Image getIcon(Type type) {
+		String s;
+		
+		if (type == Type.DELETED) {
+			s = "deleted";
+		} else if (type == Type.NEW) {
+			s = "added";
+		} else {
+			s = "modified";
+		}
+		
+		return getIcon(s).getImage();
 	}
 }
