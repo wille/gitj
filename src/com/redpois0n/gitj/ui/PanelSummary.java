@@ -17,6 +17,8 @@ import javax.swing.JTextPane;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Diff;
+import com.redpois0n.gitj.ui.components.JFileList;
+import com.redpois0n.gitj.ui.components.JFileListEntry;
 import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
@@ -24,8 +26,8 @@ public class PanelSummary extends JPanel {
 	
 	private JSplitPane splitPane;
 	private JTextPane textPane;
-	private JList<Diff> list;
-	private DefaultListModel<Diff> model;
+	private JFileList list;
+	private DefaultListModel<JFileListEntry> model;
 	
 	public PanelSummary() {
 		setLayout(new BorderLayout(0, 0));
@@ -42,8 +44,8 @@ public class PanelSummary extends JPanel {
 		scrollTextPane.setViewportView(textPane);
 		splitPane.setLeftComponent(scrollTextPane);
 		
-		model = new DefaultListModel<Diff>();
-		list = new JList<Diff>();
+		model = new DefaultListModel<JFileListEntry>();
+		list = new JFileList();
 		list.setModel(model);
 		list.setFixedCellHeight(25);
 		list.setCellRenderer(new DiffListRenderer());
@@ -57,7 +59,7 @@ public class PanelSummary extends JPanel {
 		model.clear();
 		
 		for (Diff diff : diffs) {
-			model.addElement(diff);
+			model.addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(IconUtils.getIcon(diff.getType()))));
 		}
 		
 		StringBuilder sb = new StringBuilder();
@@ -80,13 +82,12 @@ public class PanelSummary extends JPanel {
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 			Object obj = value;
 		
-			if (obj instanceof Diff) {
-				Diff diff = (Diff) obj;
+			if (obj instanceof JFileListEntry) {
+				JFileListEntry diff = (JFileListEntry) obj;
 				
-				JLabel label = (JLabel) super.getListCellRendererComponent(list, diff.getLocalPath(), index, isSelected, cellHasFocus);;
+				JLabel label = (JLabel) super.getListCellRendererComponent(list, diff.getText(), index, isSelected, cellHasFocus);;
 
-				label.setText(diff.getLocalPath());
-				label.setIcon(new ImageIcon(IconUtils.getIcon(diff.getType())));
+				label.setIcon(diff.getIcon());
 				label.setForeground(Color.black);
 				
 				if (isSelected) {
