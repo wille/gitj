@@ -26,16 +26,14 @@ public class JCommitPane extends JScrollPane {
 	
 	private List<CommitClickedListener> listeners = new ArrayList<CommitClickedListener>();
 	
+	private Repository repo;
 	private List<Commit> commits;
 	private JTable table;
 	private CommitTableModel model;
 	
 	public JCommitPane(Repository repo) throws Exception {
-		this(repo.getCommits());
-	}
-	
-	public JCommitPane(List<Commit> commits) {
-		this.commits = commits;
+		this.repo = repo;
+		this.commits = repo.getCommits();
 		this.model = new CommitTableModel();
 		this.table = new JTable(model);
 		
@@ -61,10 +59,14 @@ public class JCommitPane extends JScrollPane {
 		reload(commits);
 	}
 	
-	public void reload(List<Commit> commits) {
+	public void reload(List<Commit> commits) throws Exception {
 		this.commits = commits;
 		
 		clear();
+		
+		if (repo.hasUnstagedFiles()) {
+			model.addRow(new Object[] { null });
+		}
 		
 		for (Commit c : commits) {
 			model.addRow(new Object[] { c });

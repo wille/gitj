@@ -146,6 +146,16 @@ public class Repository {
 		return lines;
 	}
 	
+	public boolean hasUnstagedFiles() throws Exception {
+		List<String> raw = run(new String[] { "git", "status", "--short" }); 
+
+		for (String s : raw) {
+			System.out.println(s);
+		}
+		
+		return false;
+	}
+	
 	public void init() throws Exception {
 		List<String> raw = run(new String[] { "git", "init" }); 
 

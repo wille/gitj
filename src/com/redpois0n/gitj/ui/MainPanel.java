@@ -45,7 +45,7 @@ public class MainPanel extends AbstractPanel {
 		
 		add(splitPaneMain, BorderLayout.CENTER);
 		
-		jcommitPane = new JCommitPane(repository.getCommits(true));
+		jcommitPane = new JCommitPane(repository);
 		jcommitPane.addListener(new CommitChangeListener());
 		
 		splitPaneMain.setLeftComponent(jcommitPane);
