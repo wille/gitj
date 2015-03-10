@@ -54,9 +54,9 @@ public class DiffPanel extends JPanel {
 			y += 10;
 			for (CodeLine line : chunk.getLines()) {		
 				if (line.getType() == CodeLine.Type.ADDED) {
-					g.setColor(Color.green);
+					g.setColor(new Color(212, 234, 205));
 				} else if (line.getType() == CodeLine.Type.REMOVED) {
-					g.setColor(Color.red);
+					g.setColor(new Color(240, 214, 214));
 				} else {
 					g.setColor(Color.white);
 				}
