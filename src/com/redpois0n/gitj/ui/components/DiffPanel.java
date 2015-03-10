@@ -6,6 +6,7 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -39,6 +40,8 @@ public class DiffPanel extends JPanel {
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		
 		if (prefWidth == 0 || prefHeight == 0) {
+			prefHeight += 21;
+			
 			for (Chunk chunk : diff.getChunks()) {
 				prefHeight += 10;
 				for (CodeLine line : chunk.getLines()) {
@@ -74,7 +77,9 @@ public class DiffPanel extends JPanel {
 						
 		int y = 21;
 		
-		for (Chunk chunk : diff.getChunks()) {
+		List<Chunk> chunks = diff.getChunks();
+		
+		for (Chunk chunk : chunks) {
 			y += 10;
 			for (CodeLine line : chunk.getLines()) {		
 				if (line.getType() == CodeLine.Type.ADDED) {
@@ -88,12 +93,12 @@ public class DiffPanel extends JPanel {
 				g.fillRect(31, y, prefWidth, metrics.getHeight() + 2);
 				
 				g.setColor(Color.black);
-				g.drawString(line.getLine(), 33, y + metrics.getHeight());
+				g.drawString(line.getLine(), 33, y + metrics.getHeight());				
 				
 				y += metrics.getHeight() + 2;
 			}
 		}
-				
+					
 		super.setSize(getDimension());
 		super.setPreferredSize(getDimension());
 	}
