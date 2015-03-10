@@ -46,7 +46,7 @@ public class Commit {
 		return getAuthorName() + " <" + getAuthorEmail() + ">";
 	}
 
-	public String getDisplayCommit() {
+	public String getDisplayHash() {
 		return getHash().substring(0, 6);
 	}
 	

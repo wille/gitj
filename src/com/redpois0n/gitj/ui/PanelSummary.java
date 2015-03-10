@@ -63,7 +63,7 @@ public class PanelSummary extends JPanel {
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("<html>");
-		sb.append("<b>Commit:</b> " + c.getHash() + " [" + c.getDisplayCommit() + "]<br>");
+		sb.append("<b>Commit:</b> " + c.getHash() + " [" + c.getDisplayHash() + "]<br>");
 		sb.append("<b>Author:</b> " + c.getDisplayAuthor().replace(">", "&#62").replace("<", "&#60") + "<br>");
 		sb.append("<b>When:</b> " + c.getWhen() + "<br>");
 		sb.append("<br>");

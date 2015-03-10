@@ -101,7 +101,7 @@ public class JCommitPane extends JScrollPane {
 				} else if (column == INDEX_AUTHOR) {
 					label.setText(c.getDisplayAuthor());
 				} else if (column == INDEX_COMMIT) {
-					label.setText(c.getDisplayCommit());
+					label.setText(c.getDisplayHash());
 				} else {
 					throw new IndexOutOfBoundsException();
 				}
