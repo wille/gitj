@@ -2,6 +2,7 @@ package com.redpois0n.git;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -194,6 +195,29 @@ public class Repository {
 		for (String s : raw) {
 			Main.print(s);
 		}
+	}
+	
+	/**
+	 * Gets file content at commit c
+	 * @param c
+	 * @param repopath
+	 * @return
+	 * @throws Exception
+	 */
+	public String getFileAt(Commit c, String repopath) throws Exception {
+		List<String> raw = run(new String[] { "git", "show", c.getHash() + ":" + repopath }); 
+		
+		if (raw.get(0).startsWith("fatal: Path ") || raw.get(0).startsWith("fatal: Invalid object name")) {
+			throw new FileNotFoundException(raw.get(0));
+		}
+		
+		StringBuilder sb = new StringBuilder();
+
+		for (String s : raw) {
+			sb.append(s);
+		}
+		
+		return sb.toString();
 	}
 	
 	public File getFolder() {
