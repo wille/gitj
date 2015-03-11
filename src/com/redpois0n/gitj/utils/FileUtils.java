@@ -12,7 +12,7 @@ public class FileUtils {
 	public static String getRepoPath(File file, Repository repo) {
 		String path = file.getAbsolutePath();
 		
-		path.replace(repo.getFolder().getAbsolutePath(), "").replace("\\", "/");
+		path = path.replace(repo.getFolder().getAbsolutePath(), "").replace("\\", "/");
 		
 		if (path.startsWith("/")) {
 			path = path.substring(1, path.length());
