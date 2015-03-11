@@ -114,7 +114,7 @@ public class MainPanel extends AbstractPanel {
 		splitPaneLow.setLeftComponent(pu);
 	}
 	
-	public JFrame getParent() {
+	public JFrame getParentFrame() {
 		return this.parent;
 	}
 	
