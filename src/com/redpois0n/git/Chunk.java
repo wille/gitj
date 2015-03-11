@@ -51,5 +51,21 @@ public class Chunk {
 	public String getName() {
 		return name;
 	}
+	
+	public int getStartLine() {
+		return Integer.parseInt(name.substring(name.lastIndexOf("+") + 1, name.lastIndexOf(",")));
+	}
+	
+	public int getEndLine() {
+		return Integer.parseInt(name.substring(name.lastIndexOf(",") + 1, name.lastIndexOf(" ")));
+	}
+	
+	public int getStartRemovedLine() {
+		return Integer.parseInt(name.substring(name.lastIndexOf("-") + 1, name.indexOf(",")));
+	}
+	
+	public int getEndRemovedLine() {
+		return Integer.parseInt(name.substring(name.indexOf(",") + 1, name.substring(0, 3).indexOf(" ")));
+	}
 
 }

@@ -41,14 +41,15 @@ public class DiffPanel extends JPanel {
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		
 		if (prefWidth == 0 || prefHeight == 0) {
-			prefHeight += 16;
+			prefHeight += 20;
 			
 			if (diff.getChunks().size() == 0) {
 				prefHeight += 10;
 			}
 			
 			for (Chunk chunk : diff.getChunks()) {
-				prefHeight += 10;
+				prefHeight += 5;
+				prefHeight += 6 + metrics.getHeight();
 				for (CodeLine line : chunk.getLines()) {
 					int sw = metrics.stringWidth(line.getLine());
 					
@@ -78,9 +79,9 @@ public class DiffPanel extends JPanel {
 		
 		// Left line number table
 		g.setColor(COLOR_PANEL);
-		g.fillRect(0, 25, 20, prefHeight);
+		g.fillRect(0, 25, 60, prefHeight);
 		g.setColor(COLOR_PANEL_BORDER);
-		g.drawRect(0, 25, 20, prefHeight);
+		g.drawRect(0, 25, 60, prefHeight);
 						
 		int y = 20;
 		
@@ -88,26 +89,42 @@ public class DiffPanel extends JPanel {
 		
 		for (Chunk chunk : chunks) {
 			y += 5;
+			
 			g.setColor(Color.black);
-			g.drawString(chunk.getName(), 23, y + metrics.getHeight());
+			g.drawString(chunk.getName(), 63, y + metrics.getHeight());
 			g.setColor(COLOR_PANEL_BORDER);
-			g.drawRect(20, y, prefWidth - 20, 5 + metrics.getHeight());
+			g.drawRect(60, y, prefWidth - 60, 5 + metrics.getHeight());
 
 			y += 6 + metrics.getHeight();
 			
+			int startLine = chunk.getStartLine();
+			int startRemovedLine = chunk.getStartRemovedLine();
+			
 			for (CodeLine line : chunk.getLines()) {		
+				g.setColor(Color.gray);
+				
+				if (line.getType() == CodeLine.Type.ADDED) {
+					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + metrics.getHeight());
+				} else if (line.getType() == CodeLine.Type.REMOVED) {
+					g.drawString(startRemovedLine++ + "", 2, y + metrics.getHeight());
+				} else {					
+					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + metrics.getHeight());
+					g.drawString(startRemovedLine++ + "", 2, y + metrics.getHeight());
+
+				}
+								
 				if (line.getType() == CodeLine.Type.ADDED) {
 					g.setColor(COLOR_ADDED);
 				} else if (line.getType() == CodeLine.Type.REMOVED) {
 					g.setColor(COLOR_REMOVED);
 				} else {
 					g.setColor(Color.white);
-				}
+				}			
 								
-				g.fillRect(21, y, prefWidth, metrics.getHeight() + 2);
+				g.fillRect(61, y, prefWidth, metrics.getHeight() + 2);
 				
 				g.setColor(Color.black);
-				g.drawString(line.getFixedLine(), 23, y + metrics.getHeight());
+				g.drawString(line.getFixedLine(), 63, y + metrics.getHeight());						
 				
 				y += metrics.getHeight() + 2;
 			}
