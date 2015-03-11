@@ -116,7 +116,7 @@ public class MainPanel extends AbstractPanel {
 			try {
 				if (c == null && repo.hasUnstagedFiles()) {
 					loadUncommited();
-				} else {
+				} else if (c != null) {
 					loadDiffs(c, c.getDiffs());
 				}
 			} catch (Exception ex) {
