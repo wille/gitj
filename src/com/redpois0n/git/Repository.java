@@ -96,10 +96,9 @@ public class Repository {
 							
 							Main.print("Chunk: " + chunk);				
 							
-							s = " " + s.substring(s.indexOf("@@", 3) + 2, s.length());
-
 							current = new Chunk(diff, chunk);
 							diff.addChunk(current);
+							continue;
 						}
 						
 						if (current != null) {
