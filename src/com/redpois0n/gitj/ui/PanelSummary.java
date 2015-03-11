@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
@@ -15,14 +17,20 @@ import com.redpois0n.git.Diff;
 import com.redpois0n.gitj.ui.components.JFileList;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
 import com.redpois0n.gitj.utils.IconUtils;
+import com.redpois0n.gitj.utils.MenuItemUtils;
+
+import javax.swing.event.PopupMenuListener;
+import javax.swing.event.PopupMenuEvent;
 
 @SuppressWarnings("serial")
 public class PanelSummary extends JPanel {
 	
+	private Commit commit;
 	private JSplitPane splitPane;
 	private JTextPane textPane;
 	private JFileList list;
 	private DefaultListModel<JFileListEntry> model;
+	private JPopupMenu popupMenu;
 	
 	public PanelSummary() {
 		setLayout(new BorderLayout(0, 0));
@@ -46,9 +54,27 @@ public class PanelSummary extends JPanel {
 		scrollList.setBorder(null);
 		scrollList.setViewportView(list);
 		splitPane.setRightComponent(scrollList);
+		
+		popupMenu = new JPopupMenu();
+		popupMenu.addPopupMenuListener(new PopupMenuListener() {
+			public void popupMenuCanceled(PopupMenuEvent arg0) {
+			}
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent arg0) {
+				popupMenu.removeAll();
+			}
+			public void popupMenuWillBecomeVisible(PopupMenuEvent arg0) {
+				Object value = list.getSelectedValue();
+				
+				JMenuItem item = MenuItemUtils.getOpenSelectedVersion(commit, value == null ? "" : list.getSelectedValue().getText());
+				item.setEnabled(value != null);
+				popupMenu.add(item);
+			}
+		});
+		MenuItemUtils.addPopup(list, popupMenu);
 	}
 	
 	public void reload(Commit c, List<Diff> diffs) {
+		this.commit = c;
 		model.clear();
 		
 		for (Diff diff : diffs) {
