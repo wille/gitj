@@ -15,6 +15,7 @@ public class Repository {
 	
 	private File folder;
 	private List<Commit> commits;
+	private List<Tag> tags;
 	
 	public Repository(File folder) {
 		this.folder = folder;
@@ -115,6 +116,38 @@ public class Repository {
 			}
 			
 			return commits;
+		}
+	}
+	
+	/**
+	 * Returns all tags from this repository
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Tag> getTags() throws Exception {
+		return getTags(false);
+	}
+
+	
+	/**
+	 * Returns all tags from this repository
+	 * @param update if it should be reloaded and not returned from cache
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Tag> getTags(boolean update) throws Exception {
+		if (!update && tags != null) {
+			return tags;
+		} else {
+			if (tags == null) {
+				tags = new ArrayList<Tag>();
+			} else {
+				tags.clear();
+			}
+			
+			List<String> raw = run(new String[] { "git", "tag" });
+			
+			return tags;
 		}
 	}
 	
@@ -249,7 +282,7 @@ public class Repository {
 		
 		return sb.toString();
 	}
-	
+		
 	public File getFolder() {
 		return this.folder;
 	}
