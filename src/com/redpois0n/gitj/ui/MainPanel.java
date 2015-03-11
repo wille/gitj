@@ -87,7 +87,7 @@ public class MainPanel extends AbstractPanel {
 	}
 	
 	/**
-	 * Loads diffs (On lick
+	 * Loads diffs (On click on commit)
 	 * @param diffs
 	 */
 	public void loadDiffs(Commit c, List<Diff> diffs) {
@@ -104,10 +104,18 @@ public class MainPanel extends AbstractPanel {
 		panelSummary.reload(c, diffs);
 	}
 	
+	/**
+	 * Loads stage and unstaging panel
+	 * @throws Exception
+	 */
 	public void loadUncommited() throws Exception {
 		PanelUncommited pu = new PanelUncommited(repo);
 		pu.reload();
 		splitPaneLow.setLeftComponent(pu);
+	}
+	
+	public JFrame getParent() {
+		return this.parent;
 	}
 	
 	public class CommitChangeListener implements CommitClickedListener {

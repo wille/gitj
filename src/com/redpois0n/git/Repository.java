@@ -149,16 +149,31 @@ public class Repository {
 		return lines;
 	}
 	
+	/**
+	 * Returns if we have unstaged files or changes
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean hasUnstagedFiles() throws Exception {
 		List<String> raw = getStatus(); 
 				
 		return raw.size() > 0;
 	}
 	
+	/**
+	 * Gets raw statuses
+	 * @return
+	 * @throws Exception
+	 */
 	public List<String> getStatus() throws Exception {
 		return run(new String[] { "git", "status", "--short", "--porcelain" });
 	}
 
+	/**
+	 * Parses status to changes
+	 * @return list of changes
+	 * @throws Exception
+	 */
 	public List<Change> parseStatus() throws Exception {
 		List<String> raw = getStatus();
 		List<Change> changes = new ArrayList<Change>();
@@ -172,6 +187,11 @@ public class Repository {
 		return changes;
 	}
 	
+	/**
+	 * Stage file
+	 * @param path repo path
+	 * @throws Exception
+	 */
 	public void stage(String path) throws Exception {
 		List<String> raw = run(new String[] { "git", "add", path });
 
@@ -180,7 +200,11 @@ public class Repository {
 		}
 	}
 	
-	
+	/**
+	 * Unstage file
+	 * @param path repo path
+	 * @throws Exception
+	 */
 	public void unstage(String path) throws Exception  {
 		List<String> raw = run(new String[] { "git", "reset", path });
 		
@@ -189,6 +213,10 @@ public class Repository {
 		}
 	}
 	
+	/**
+	 * Create new empty repository
+	 * @throws Exception
+	 */
 	public void init() throws Exception {
 		List<String> raw = run(new String[] { "git", "init" }); 
 
@@ -203,6 +231,7 @@ public class Repository {
 	 * @param repopath
 	 * @return
 	 * @throws Exception
+	 * @throws FileNotFoundException if invalid hash or path
 	 */
 	public String getFileAt(Commit c, String repopath) throws Exception {
 		List<String> raw = run(new String[] { "git", "show", c.getHash() + ":" + repopath }); 
@@ -215,6 +244,7 @@ public class Repository {
 
 		for (String s : raw) {
 			sb.append(s);
+			sb.append(System.getProperty("line.separator"));
 		}
 		
 		return sb.toString();
