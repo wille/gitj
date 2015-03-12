@@ -100,6 +100,8 @@ public class DiffPanel extends JPanel {
 			int startLine = chunk.getStartLine();
 			int startRemovedLine = chunk.getStartRemovedLine();
 			
+			int startY = y;
+			
 			for (CodeLine line : chunk.getLines()) {		
 				g.setColor(Color.gray);
 				
@@ -122,7 +124,13 @@ public class DiffPanel extends JPanel {
 				}			
 								
 				g.fillRect(61, y, prefWidth, metrics.getHeight() + 2);
-				
+								
+				y += metrics.getHeight() + 2;
+			}
+			
+			y = startY;
+			
+			for (CodeLine line : chunk.getLines()) {		
 				g.setColor(Color.black);
 				g.drawString(line.getFixedLine(), 63, y + metrics.getHeight());						
 				
