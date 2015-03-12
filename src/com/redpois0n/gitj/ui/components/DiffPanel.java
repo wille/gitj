@@ -73,7 +73,7 @@ public class DiffPanel extends JPanel {
 		g.drawRect(0, 0, prefWidth, 25);
 		
 		g.setColor(Color.gray);
-		g.drawString(diff.getFile().getAbsolutePath(), 20, 4 + metrics.getHeight());
+		g.drawString(diff.getLocalPath(), 20, 4 + metrics.getHeight());
 		
 		g.drawImage(IconUtils.getIconFromDiffType(diff.getType()), 2, 5, null);
 		
