@@ -25,7 +25,7 @@ public class JCommitPane extends JScrollPane {
 	public static final int INDEX_AUTHOR = 2;
 	public static final int INDEX_COMMIT = 3;
 	
-	private List<CommitClickedListener> listeners = new ArrayList<CommitClickedListener>();
+	private List<ICommitClickListener> listeners = new ArrayList<ICommitClickListener>();
 	
 	private Repository repo;
 	private List<Commit> commits;
@@ -50,7 +50,7 @@ public class JCommitPane extends JScrollPane {
 		        if (row != -1) {
 		        	Commit c = (Commit) table.getValueAt(row, 0);
 		        	
-		        	for (CommitClickedListener l : listeners) {
+		        	for (ICommitClickListener l : listeners) {
 		        		l.onClick(c);
 		        	}
 		        }
@@ -80,11 +80,11 @@ public class JCommitPane extends JScrollPane {
 		}
 	}
 	
-	public void addListener(CommitClickedListener l) {
+	public void addListener(ICommitClickListener l) {
 		listeners.add(l);
 	}
 	
-	public void removeListener(CommitClickedListener l) {
+	public void removeListener(ICommitClickListener l) {
 		listeners.remove(l);
 	}
 	
