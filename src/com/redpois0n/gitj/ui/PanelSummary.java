@@ -1,26 +1,28 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Diff;
+import com.redpois0n.gitj.ui.components.IDiffSelectionListener;
 import com.redpois0n.gitj.ui.components.JFileList;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
-import com.redpois0n.gitj.utils.IconUtils;
 import com.redpois0n.gitj.utils.MenuItemUtils;
-
-import javax.swing.event.PopupMenuListener;
-import javax.swing.event.PopupMenuEvent;
 
 @SuppressWarnings("serial")
 public class PanelSummary extends JPanel {
@@ -31,6 +33,8 @@ public class PanelSummary extends JPanel {
 	private JFileList list;
 	private DefaultListModel<JFileListEntry> model;
 	private JPopupMenu popupMenu;
+	
+	private List<IDiffSelectionListener> listeners = new ArrayList<IDiffSelectionListener>();
 	
 	public PanelSummary() {
 		setLayout(new BorderLayout(0, 0));
@@ -50,6 +54,35 @@ public class PanelSummary extends JPanel {
 		model = new DefaultListModel<JFileListEntry>();
 		list = new JFileList();
 		list.setModel(model);
+		list.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
+		      
+		        if (!lsm.isSelectionEmpty() && !e.getValueIsAdjusting()) {
+		            int min = lsm.getMinSelectionIndex();
+		            int max = lsm.getMaxSelectionIndex();
+		            
+		            List<Diff> diffs = new ArrayList<Diff>();
+		            
+		            for (int i = min; i <= max; i++) {
+		                if (lsm.isSelectedIndex(i)) {
+		                    JFileListEntry entry = model.get(i);
+		                    
+		                    for (Diff d : commit.getDiffs()) {
+		                    	if (d.getLocalPath().equals(entry.getText())) {
+		                    		diffs.add(d);
+		                    	}
+		                    }
+		                }
+		            }
+		            
+		            for (IDiffSelectionListener l : listeners) {
+                    	l.onSelect(commit, diffs);
+                    }
+		        }
+			}		
+		});
 		JScrollPane scrollList = new JScrollPane();
 		scrollList.setBorder(null);
 		scrollList.setViewportView(list);
@@ -73,13 +106,17 @@ public class PanelSummary extends JPanel {
 		MenuItemUtils.addPopup(list, popupMenu);
 	}
 	
-	public void reload(Commit c, List<Diff> diffs) {
+	public void addListener(IDiffSelectionListener l) {
+		listeners.add(l);
+	}
+	
+	public void removeListener(IDiffSelectionListener l) {
+		listeners.remove(l);
+	}
+	
+	public void reload(Commit c) {
 		this.commit = c;
 		model.clear();
-		
-		for (Diff diff : diffs) {
-			model.addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(IconUtils.getIconFromDiffType(diff.getType()))));
-		}
 		
 		StringBuilder sb = new StringBuilder();
 		
@@ -92,6 +129,10 @@ public class PanelSummary extends JPanel {
 		sb.append("</html>");
 		
 		textPane.setText(sb.toString());
+	}
+	
+	public DefaultListModel<JFileListEntry> getListModel() {
+		return model;
 	}
 
 	public void clear() {
