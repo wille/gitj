@@ -48,8 +48,7 @@ public class DiffPanel extends JPanel {
 			}
 			
 			for (Chunk chunk : diff.getChunks()) {
-				prefHeight += 5;
-				prefHeight += 6 + metrics.getHeight();
+				prefHeight += 11 + metrics.getHeight();
 				for (CodeLine line : chunk.getLines()) {
 					int sw = metrics.stringWidth(line.getFixedLine()) + 80;
 					
@@ -61,12 +60,11 @@ public class DiffPanel extends JPanel {
 				}
 			}
 			
-			if (metrics.stringWidth(diff.getFile().getAbsolutePath()) + 80 > prefWidth) {
+			if (metrics.stringWidth(diff.getLocalPath()) + 80 > prefWidth) {
 				prefWidth = metrics.stringWidth(diff.getLocalPath()) + 80;
 			}
+			prefWidth += 5;
 		}
-		
-		prefWidth += 5;
 		
 		// Top diff file table
 		g.setColor(COLOR_PANEL);
@@ -112,7 +110,6 @@ public class DiffPanel extends JPanel {
 				} else {					
 					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + metrics.getHeight());
 					g.drawString(startRemovedLine++ + "", 5, y + metrics.getHeight());
-
 				}
 								
 				if (line.getType() == CodeLine.Type.ADDED) {
@@ -123,7 +120,7 @@ public class DiffPanel extends JPanel {
 					g.setColor(Color.white);
 				}			
 								
-				g.fillRect(61, y, prefWidth, metrics.getHeight() + 2);
+				g.fillRect(61, y, prefWidth - 61, metrics.getHeight() + 2);
 								
 				y += metrics.getHeight() + 2;
 			}
@@ -147,9 +144,8 @@ public class DiffPanel extends JPanel {
 		}
 		
 		g.setColor(COLOR_PANEL_BORDER);
-		g.drawRect(0, 0, getWidth() - 1, getHeight() - 1);
+		g.drawRect(0, 0, prefWidth - 1, prefHeight - 1);
 							
-		super.setSize(getDimension());
 		super.setPreferredSize(getDimension());
 	}
 	

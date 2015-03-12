@@ -14,9 +14,9 @@ import com.redpois0n.git.Commit;
 import com.redpois0n.git.Diff;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.ui.components.DiffHolderPanel;
 import com.redpois0n.gitj.ui.components.DiffPanel;
 import com.redpois0n.gitj.ui.components.ICommitClickListener;
-import com.redpois0n.gitj.ui.components.DiffHolderPanel;
 import com.redpois0n.gitj.ui.components.IDiffSelectionListener;
 import com.redpois0n.gitj.ui.components.JCommitPane;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
@@ -65,10 +65,11 @@ public class MainPanel extends AbstractPanel {
 		scrollPaneDiffs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPaneDiffs.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneDiffs.setViewportView(diffHolderPanel);
-		
+
 		splitPaneLow.setRightComponent(scrollPaneDiffs);
 		
 		panelSummary = new PanelSummary();
+		
 		splitPaneLow.setLeftComponent(panelSummary);
 		panelSummary.addListener(new DiffSelectionListener());
 	}
@@ -102,8 +103,8 @@ public class MainPanel extends AbstractPanel {
 		diffHolderPanel.clear();
 		
 		for (Diff diff : diffs) {		
-			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
-		}
+ 			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
+ 		}
 		
 		diffHolderPanel.revalidate();
 			

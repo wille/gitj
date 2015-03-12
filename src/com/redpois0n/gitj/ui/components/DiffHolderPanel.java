@@ -19,7 +19,7 @@ public class DiffHolderPanel extends JPanel {
 		setLayout(gridBagLayout);
 	}
 	
-	public void addDiffPanel(DiffPanel panel) {
+	public void addDiffPanel(final DiffPanel panel) {
 		GridBagConstraints grid = new GridBagConstraints();
 		grid.gridx = 0;
 		grid.gridy = getComponentCount();
@@ -43,16 +43,18 @@ public class DiffHolderPanel extends JPanel {
 							DiffPanel dp = (DiffPanel) c;
 														
 							height += dp.getPrefHeight();
-							
+														
 							if (dp.getPrefWidth() > width) {
 								width = (int) dp.getPrefWidth();
 							}
 						}
 					}
 				} while (width == 0 && height == 0);
-								
-				setSize(new Dimension(width, height));
-				setPreferredSize(new Dimension(width, height));
+	
+				Dimension d = new Dimension(width, height);
+				
+				panel.setSize(d);
+				//panel.setPreferredSize(d);
 			}
 		};
 		
