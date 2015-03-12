@@ -41,7 +41,7 @@ public class DiffPanel extends JPanel {
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		
 		if (prefWidth == 0 || prefHeight == 0) {
-			prefHeight += 20;
+			prefHeight += 25;
 			
 			if (diff.getChunks().size() == 0) {
 				prefHeight += 10;
@@ -83,11 +83,9 @@ public class DiffPanel extends JPanel {
 		g.setColor(COLOR_PANEL_BORDER);
 		g.drawRect(0, 25, 60, prefHeight);
 						
-		int y = 20;
+		int y = 25;
 		
 		List<Chunk> chunks = diff.getChunks();
-		
-		y += 5;
 		
 		for (Chunk chunk : chunks) {			
 			g.setColor(Color.black);
