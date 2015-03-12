@@ -87,9 +87,9 @@ public class DiffPanel extends JPanel {
 		
 		List<Chunk> chunks = diff.getChunks();
 		
-		for (Chunk chunk : chunks) {
-			y += 5;
-			
+		y += 5;
+		
+		for (Chunk chunk : chunks) {			
 			g.setColor(Color.black);
 			g.drawString(chunk.getName(), 63, y + metrics.getHeight());
 			g.setColor(COLOR_PANEL_BORDER);
@@ -106,10 +106,10 @@ public class DiffPanel extends JPanel {
 				if (line.getType() == CodeLine.Type.ADDED) {
 					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + metrics.getHeight());
 				} else if (line.getType() == CodeLine.Type.REMOVED) {
-					g.drawString(startRemovedLine++ + "", 2, y + metrics.getHeight());
+					g.drawString(startRemovedLine++ + "", 5, y + metrics.getHeight());
 				} else {					
 					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + metrics.getHeight());
-					g.drawString(startRemovedLine++ + "", 2, y + metrics.getHeight());
+					g.drawString(startRemovedLine++ + "", 5, y + metrics.getHeight());
 
 				}
 								
