@@ -129,8 +129,16 @@ public class DiffPanel extends JPanel {
 			y = startY;
 			
 			for (CodeLine line : chunk.getLines()) {		
+				if (line.getType() == CodeLine.Type.ADDED) {
+					g.setColor(COLOR_ADDED.darker());
+					g.drawString("+", 67 - (metrics.stringWidth("+") / 2), y + metrics.getHeight() - 1);
+				} else if (line.getType() == CodeLine.Type.REMOVED) {
+					g.setColor(COLOR_REMOVED.darker());
+					g.drawString("-", 67 - (metrics.stringWidth("-") / 2), y + metrics.getHeight() - 1);
+				}
+				
 				g.setColor(Color.black);
-				g.drawString(line.getFixedLine(), 63, y + metrics.getHeight());						
+				g.drawString(line.getFixedLine(), 80, y + metrics.getHeight());						
 				
 				y += metrics.getHeight() + 2;
 			}
