@@ -51,7 +51,7 @@ public class DiffPanel extends JPanel {
 				prefHeight += 5;
 				prefHeight += 6 + metrics.getHeight();
 				for (CodeLine line : chunk.getLines()) {
-					int sw = metrics.stringWidth(line.getLine());
+					int sw = metrics.stringWidth(line.getFixedLine()) + 80;
 					
 					if (sw > prefWidth) {
 						prefWidth = sw;
@@ -61,10 +61,12 @@ public class DiffPanel extends JPanel {
 				}
 			}
 			
-			if (metrics.stringWidth(diff.getFile().getAbsolutePath()) + 25 > prefWidth) {
-				prefWidth = metrics.stringWidth(diff.getFile().getAbsolutePath()) + 25;
+			if (metrics.stringWidth(diff.getFile().getAbsolutePath()) + 80 > prefWidth) {
+				prefWidth = metrics.stringWidth(diff.getLocalPath()) + 80;
 			}
 		}
+		
+		prefWidth += 5;
 		
 		// Top diff file table
 		g.setColor(COLOR_PANEL);
