@@ -146,6 +146,35 @@ public class Repository {
 			
 			List<String> raw = run(new String[] { "git", "tag" });
 			
+			for (String stag : raw) {
+				List<String> rawtext = run(new String[] { "git", "show", stag });
+				
+				Tag tag;
+				
+				if (rawtext.get(0).startsWith("commit ")) {
+					String commit = rawtext.get(0).substring(7, rawtext.get(0).length());
+					tag = new Tag(commit);
+					tags.add(tag);
+				} else if (rawtext.get(0).startsWith("tag ")) {
+					String tagger = rawtext.get(1);
+					String date = rawtext.get(2);
+					
+					String message = "";
+					
+					int i = 4; // skip empty line at index 3
+					String line;
+					
+					while (!(line = rawtext.get(i++)).startsWith("commit ")) {
+						if (line.length() > 0) {
+							message += line + "\n";
+						}
+					}
+					
+					tag = new Tag(stag, message, tagger, date);
+					tags.add(tag);
+				}
+			}
+			
 			return tags;
 		}
 	}
