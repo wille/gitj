@@ -33,14 +33,13 @@ public class Commit {
 		}
 	}
 	
-	public void addDiff(Diff diff) {
-		diffs.add(diff);
-	}
-	
-	public List<Diff> getDiffs() {
-		if (diffs == null) {
+	public List<Diff> getDiffs(boolean cache) {
+		if (cache && diffs == null) {
 			diffs = repo.getDiffs(this);
+		} else if (!cache) {
+			return repo.getDiffs(this);
 		}
+		
 		return diffs;
 	}
 

@@ -69,7 +69,7 @@ public class PanelSummary extends JPanel {
 		                if (lsm.isSelectedIndex(i)) {
 		                    JFileListEntry entry = model.get(i);
 		                    
-		                    for (Diff d : commit.getDiffs()) {
+		                    for (Diff d : commit.getDiffs(false)) {
 		                    	if (d.getLocalPath().equals(entry.getText())) {
 		                    		diffs.add(d);
 		                    	}

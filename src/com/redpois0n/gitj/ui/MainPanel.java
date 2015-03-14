@@ -111,7 +111,7 @@ public class MainPanel extends AbstractPanel {
 		if (reloadDiffList) {
 			panelSummary.reload(c);
 
-			for (Diff diff : c.getDiffs()) {
+			for (Diff diff : c.getDiffs(false)) {
 				panelSummary.getListModel().addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(IconUtils.getIconFromDiffType(diff.getType()))));
 			}
 		}
@@ -138,7 +138,7 @@ public class MainPanel extends AbstractPanel {
 				if (c == null && repo.hasUnstagedFiles()) {
 					loadUncommited();
 				} else if (c != null) {
-					loadDiffs(c, c.getDiffs(), true);
+					loadDiffs(c, c.getDiffs(false), true);
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
