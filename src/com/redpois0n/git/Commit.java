@@ -1,6 +1,5 @@
 package com.redpois0n.git;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Commit {
@@ -11,7 +10,7 @@ public class Commit {
 	private String authorEmail;
 	private String when;
 	private String comment;
-	private List<Diff> diffs = new ArrayList<Diff>();
+	private List<Diff> diffs;
 	
 	public Commit(Repository repo, String raw) {
 		this(repo, raw.split(";"));
@@ -39,6 +38,9 @@ public class Commit {
 	}
 	
 	public List<Diff> getDiffs() {
+		if (diffs == null) {
+			diffs = repo.getDiffs(this);
+		}
 		return diffs;
 	}
 

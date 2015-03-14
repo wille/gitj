@@ -49,6 +49,10 @@ public class DiffHolderPanel extends JPanel {
 							}
 						}
 					}
+					
+					try {
+						Thread.sleep(100L);
+					} catch (Exception ex) { }
 				} while (width == 0 && height == 0);
 	
 				Dimension d = new Dimension(width, height);
