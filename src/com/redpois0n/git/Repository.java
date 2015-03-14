@@ -1,14 +1,17 @@
 package com.redpois0n.git;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import com.redpois0n.git.Diff.DataType;
 import com.redpois0n.gitj.Main;
 
 public class Repository {
@@ -77,6 +80,7 @@ public class Repository {
 
 		try {
 			List<String> raw = run(new String[] { "git", "show", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--stat", "-p", c.getHash() });
+			System.out.println("git " + " show" + " --pretty=format:Commit;%H;%an;%ae;%ar;%s " + "--stat" + " -p " + c.getHash());
 			Enumeration<String> e = Collections.enumeration(raw);
 
 			diffs.clear();
@@ -110,13 +114,17 @@ public class Repository {
 						type = Diff.Type.EDITED;
 					}
 
-					Diff diff = new Diff(c, new File(folder, sdiff), type);
+					Diff diff = new Diff(c, new File(folder, sdiff), type, Diff.getPreferedDataType(null));
 					diffs.add(diff);
 
 					Chunk current = null;
 
 					while (!(s = e.nextElement()).startsWith("diff --git")) {
-						if (s.startsWith("Commit;") || !e.hasMoreElements()) {
+						if (s.startsWith("Binary files ")) {
+							diff.setDataType(Diff.DataType.BINARY);
+							diff.setData(readBinary(new String[] { "git", "show", c.getHash() + ":" + diff.getLocalPath() }));
+							break;
+						} else if (s.startsWith("Commit;") || !e.hasMoreElements()) {
 							break;
 						} else if (s.startsWith("@@ ")) {
 							String chunk = s.substring(0, s.indexOf("@@", 3) + 2).trim();
@@ -127,7 +135,7 @@ public class Repository {
 							diff.addChunk(current);
 							continue;
 						}
-
+						
 						if (current != null) {
 							current.addRawLine(s);
 							Main.print("Code: " + s);
@@ -242,6 +250,30 @@ public class Repository {
 
 		return lines;
 	}
+	
+	/**
+	 * Reads binary input
+	 * @param c
+	 * @return
+	 * @throws Exception
+	 */
+	public byte[] readBinary(String[] c) throws Exception {
+		ProcessBuilder pb = new ProcessBuilder(c);
+		pb.directory(folder);
+		Process p = pb.start();
+
+		InputStream is = p.getInputStream();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
+		byte[] buffer = new byte[1024];
+		int i;
+		
+		while ((i = is.read(buffer)) != -1) {
+			baos.write(buffer, 0, i);
+		}
+		
+		return baos.toByteArray();
+	}
 
 	/**
 	 * Returns if we have unstaged files or changes
@@ -340,7 +372,8 @@ public class Repository {
 	public String getFileAt(Commit c, String repopath) throws Exception {
 		List<String> raw = run(new String[] { "git", "show", c.getHash() + ":" + repopath });
 
-		if (raw.get(0).startsWith("fatal: Path ") || raw.get(0).startsWith("fatal: Invalid object name")) {
+		System.out.println("git show " + c.getHash() + ":" + repopath);
+		if (raw.size() == 0 || raw.size() > 0 && raw.get(0).startsWith("fatal: Path ") || raw.size() > 0 && raw.get(0).startsWith("fatal: Invalid object name")) {
 			throw new FileNotFoundException(raw.get(0));
 		}
 
