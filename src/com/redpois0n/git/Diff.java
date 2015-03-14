@@ -21,18 +21,17 @@ public class Diff {
 	private File file;
 	private List<Chunk> chunks = new ArrayList<Chunk>();
 	private Type type;
-	private DataType datatype;
+	private DataType datatype = DataType.TEXT;
 	private byte[] data;
 	
-	public Diff(Commit parent, File file, Type type, DataType datatype) {
+	public Diff(Commit parent, File file, Type type) {
 		this.parent = parent;
 		this.file = file;
 		this.type = type;
-		this.datatype = datatype;
 	}
 	
 	public Diff(Commit parent, String file, Type type) {
-		this(parent, new File(file), type, DataType.TEXT);
+		this(parent, new File(file), type);
 	}
 	
 	public void addChunk(Chunk c) {
@@ -60,7 +59,7 @@ public class Diff {
 	}
 	
 	public void setDataType(DataType type) {
-		this.datatype = datatype;
+		this.datatype = type;
 	}
 	
 	public DataType getDataType() {
