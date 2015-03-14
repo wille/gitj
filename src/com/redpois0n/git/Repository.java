@@ -114,7 +114,7 @@ public class Repository {
 						type = Diff.Type.EDITED;
 					}
 
-					Diff diff = new Diff(c, new File(folder, sdiff), type, Diff.getPreferedDataType(null));
+					Diff diff = new Diff(c, new File(folder, sdiff), type);
 					diffs.add(diff);
 
 					Chunk current = null;
@@ -123,6 +123,9 @@ public class Repository {
 						if (s.startsWith("Binary files ")) {
 							diff.setDataType(Diff.DataType.BINARY);
 							diff.setData(readBinary(new String[] { "git", "show", c.getHash() + ":" + diff.getLocalPath() }));
+							if (e.hasMoreElements()) {
+								s = e.nextElement();
+							}
 							break;
 						} else if (s.startsWith("Commit;") || !e.hasMoreElements()) {
 							break;
