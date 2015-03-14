@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.redpois0n.git.Diff.DataType;
 import com.redpois0n.gitj.utils.FileUtils;
 
 public class Diff {
@@ -12,19 +13,26 @@ public class Diff {
 		NEW, DELETED, EDITED;
 	}
 	
+	public static enum DataType {
+		BINARY, TEXT;
+	}
+	
 	private Commit parent;
 	private File file;
 	private List<Chunk> chunks = new ArrayList<Chunk>();
 	private Type type;
+	private DataType datatype;
+	private byte[] data;
 	
-	public Diff(Commit parent, File file, Type type) {
+	public Diff(Commit parent, File file, Type type, DataType datatype) {
 		this.parent = parent;
 		this.file = file;
 		this.type = type;
+		this.datatype = datatype;
 	}
 	
 	public Diff(Commit parent, String file, Type type) {
-		this(parent, new File(file), type);
+		this(parent, new File(file), type, DataType.TEXT);
 	}
 	
 	public void addChunk(Chunk c) {
@@ -51,4 +59,29 @@ public class Diff {
 		return FileUtils.getRepoPath(file, parent.getRepository());
 	}
 	
+	public void setDataType(DataType type) {
+		this.datatype = datatype;
+	}
+	
+	public DataType getDataType() {
+		return datatype;
+	}
+	
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	public boolean isBinary() {
+		return datatype == DataType.BINARY;
+	}
+	
+	public boolean isImage() {
+		String path = getLocalPath().toLowerCase();
+		
+		return path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".gif");
+	}
 }
