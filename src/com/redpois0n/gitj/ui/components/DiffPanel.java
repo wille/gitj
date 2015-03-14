@@ -6,8 +6,12 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.FileOutputStream;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import com.redpois0n.git.Chunk;
@@ -33,10 +37,25 @@ public class DiffPanel extends JPanel {
 	}
 
 	@Override
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {		
 		super.paintComponent(g);
 		
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		
+		boolean isImage = diff.isImage();
+		BufferedImage image = null;
+		
+		if (isImage) {
+			try {
+				image = ImageIO.read(new ByteArrayInputStream(diff.getData()));
+				if (image == null) {
+					isImage = false;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				isImage = false;
+			}
+		}
 		
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		
@@ -64,6 +83,14 @@ public class DiffPanel extends JPanel {
 				prefWidth = metrics.stringWidth(diff.getLocalPath()) + 80;
 			}
 			prefWidth += 5;
+			
+			if (isImage) {
+				if (image.getWidth() + 80 > prefWidth) {
+					prefWidth = image.getWidth() + 80;
+				}
+				
+				prefHeight += image.getHeight();
+			}
 		}
 		
 		// Top diff file table
@@ -141,6 +168,10 @@ public class DiffPanel extends JPanel {
 				
 				y += metrics.getHeight() + 2;
 			}
+		}
+		
+		if (isImage) {
+			g.drawImage(image, prefWidth / 2, y + 5, null);
 		}
 		
 		g.setColor(COLOR_PANEL_BORDER);
