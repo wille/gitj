@@ -29,6 +29,9 @@ public class DiffPanel extends JPanel {
 	
 	private Diff diff;
 	
+	private boolean hasChecked;
+	private BufferedImage image;
+	
 	private int prefWidth;
 	private int prefHeight;
 	
@@ -43,14 +46,15 @@ public class DiffPanel extends JPanel {
 		((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
 		boolean isImage = diff.isImage();
-		BufferedImage image = null;
 		
-		if (isImage) {
+		if (isImage && image == null && !hasChecked) {
 			try {
-				image = ImageIO.read(new ByteArrayInputStream(diff.getData(true)));
+				image = ImageIO.read(new ByteArrayInputStream(diff.getData(false)));
 				if (image == null) {
 					isImage = false;
 				}
+				
+				hasChecked = true;
 			} catch (Exception e) {
 				e.printStackTrace();
 				isImage = false;
