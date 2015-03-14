@@ -47,7 +47,7 @@ public class DiffPanel extends JPanel {
 		
 		if (isImage) {
 			try {
-				image = ImageIO.read(new ByteArrayInputStream(diff.getData()));
+				image = ImageIO.read(new ByteArrayInputStream(diff.getData(false)));
 				if (image == null) {
 					isImage = false;
 				}

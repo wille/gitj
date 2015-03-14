@@ -66,7 +66,15 @@ public class Diff {
 		return datatype;
 	}
 	
-	public byte[] getData() {
+	public byte[] getData(boolean cache) throws Exception {
+		String[] cmd = new String[] { "git", "show", parent.getHash() + ":" + getLocalPath() };
+		
+		if (cache && data == null) {
+			data = parent.getRepository().readBinary(cmd);
+		} else if (!cache) {
+			return parent.getRepository().readBinary(cmd);
+		}
+		
 		return data;
 	}
 

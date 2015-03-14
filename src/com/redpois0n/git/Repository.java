@@ -121,8 +121,7 @@ public class Repository {
 
 					while (!(s = e.nextElement()).startsWith("diff --git")) {
 						if (s.startsWith("Binary files ")) {
-							diff.setDataType(Diff.DataType.BINARY);
-							diff.setData(readBinary(new String[] { "git", "show", c.getHash() + ":" + diff.getLocalPath() }));
+							diff.setDataType(Diff.DataType.BINARY);						
 							if (e.hasMoreElements()) {
 								s = e.nextElement();
 							}
