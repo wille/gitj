@@ -43,7 +43,6 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public List<Commit> getCommits(boolean update) throws Exception {
-		long start = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		if (!update && commits != null) {
 			return commits;
 		} else {
@@ -53,6 +52,7 @@ public class Repository {
 				commits.clear();
 			}
 
+			List<Tag> tags = getTags();
 			List<String> raw = run(new String[] { "git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s" });
 			Enumeration<String> e = Collections.enumeration(raw);
 
@@ -60,7 +60,17 @@ public class Repository {
 
 			while (e.hasMoreElements()) {
 				Main.print("Raw commit data: " + s);
-				Commit c = new Commit(this, s.replace("Commit;", ""));
+				
+				String[] split = s.replace("Commit;", "").split(";");
+				String hash = split[0];
+				
+				Commit c = new Commit(this, split);
+				
+				for (Tag tag : tags) {
+					if (tag.getHash().equals(hash)) {
+						c.addTag(tag);
+					}
+				}
 
 				commits.add(c);
 				
@@ -68,14 +78,10 @@ public class Repository {
 			}
 		}
 		
-		System.out.println("Before getCommits(): " + (start / 1024) + " mb");
-		System.out.println("End on getCommits(): " + ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())  / 1024L) + " mb");
-
 		return commits;
 	}
 
 	public List<Diff> getDiffs(Commit c) {
-		long start = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 		List<Diff> diffs = new ArrayList<Diff>();
 
 		try {
@@ -150,10 +156,7 @@ public class Repository {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("Before getDiffs(): " + (start / 1024) + " mb");
-		System.out.println("End on getDiffs(): " + ((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())  / 1024L) + " mb");
-		
+				
 		return diffs;
 	}
 	
@@ -170,8 +173,7 @@ public class Repository {
 	/**
 	 * Returns all tags from this repository
 	 * 
-	 * @param update
-	 *            if it should be reloaded and not returned from cache
+	 * @param update if it should be reloaded and not returned from cache
 	 * @return
 	 * @throws Exception
 	 */
@@ -194,7 +196,7 @@ public class Repository {
 
 				if (rawtext.get(0).startsWith("commit ")) {
 					String commit = rawtext.get(0).substring(7, rawtext.get(0).length());
-					tag = new Tag(commit);
+					tag = new Tag(commit, stag);
 					tags.add(tag);
 				} else if (rawtext.get(0).startsWith("tag ")) {
 					String tagger = rawtext.get(1);
@@ -211,7 +213,9 @@ public class Repository {
 						}
 					}
 
-					tag = new Tag(stag, message, tagger, date);
+					String commit = rawtext.get(0).substring(7, rawtext.get(0).length());
+					
+					tag = new Tag(commit, stag, message, tagger, date);
 					tags.add(tag);
 				}
 			}

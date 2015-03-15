@@ -6,18 +6,21 @@ public class Tag {
 		ANNOTATED, LIGHTWEIGHT;
 	}
 	
+	private String hash;
 	private String tag;
 	private String message;
 	private String tagger;
 	private String date;
 	private Type type;
 	
-	public Tag(String tag) {
+	public Tag(String hash, String tag) {
+		this.hash = hash;
 		this.tag = tag;
 		this.type = Type.LIGHTWEIGHT;
 	}
 	
-	public Tag(String tag, String message, String tagger, String date) {
+	public Tag(String hash, String tag, String message, String tagger, String date) {
+		this.hash = hash;
 		this.tag = tag;
 		this.message = message;
 		this.tagger = tagger;
@@ -27,6 +30,10 @@ public class Tag {
 	
 	public boolean isAnnotated() {
 		return this.type == Type.ANNOTATED;
+	}
+	
+	public String getHash() {
+		return this.hash;
 	}
 	
 	public String getTag() {

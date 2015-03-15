@@ -1,5 +1,6 @@
 package com.redpois0n.git;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Commit {
@@ -11,6 +12,7 @@ public class Commit {
 	private String when;
 	private String comment;
 	private List<Diff> diffs;
+	private List<Tag> tags;
 	
 	public Commit(Repository repo, String raw) {
 		this(repo, raw.split(";"));
@@ -73,6 +75,17 @@ public class Commit {
 
 	public String getComment() {
 		return comment;
+	}
+	
+	public void addTag(Tag tag) {
+		if (tags == null) {
+			tags = new ArrayList<Tag>();
+		}
+		tags.add(tag);
+	}
+	
+	public List<Tag> getTags() {
+		return tags;
 	}
 
 }
