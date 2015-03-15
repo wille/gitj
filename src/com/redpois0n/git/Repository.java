@@ -58,7 +58,7 @@ public class Repository {
 			String s = e.nextElement();
 
 			while (e.hasMoreElements()) {
-				Main.print("Raw commit data: " + s);
+				//Main.print("Raw commit data: " + s);
 				
 				String[] split = s.replace("Commit;", "").split(";");
 				String hash = split[0];
@@ -189,8 +189,8 @@ public class Repository {
 			List<String> raw = run(new String[] { "git", "tag" });
 
 			for (String stag : raw) {
-				List<String> rawtext = run(new String[] { "git", "show", stag });
-
+				List<String> rawtext = run(new String[] { "git", "show", stag });			
+				
 				Tag tag;
 
 				if (rawtext.get(0).startsWith("commit ")) {
@@ -203,16 +203,19 @@ public class Repository {
 
 					String message = "";
 
-					int i = 4; // skip empty line at index 3
-					String line;
+					int i = 3; // skip empty line at index 3
+					String line = null;
 
-					while (!(line = rawtext.get(i++)).startsWith("commit ")) {
-						if (line.length() > 0) {
+					while (rawtext.size() >= i + 1 && !(line = rawtext.get(i++)).startsWith("commit ")) {
+						System.out.println("LINE: " + line);
+						if (line.startsWith("diff --git")) {
+							break;
+						} else {
 							message += line + "\n";
 						}
 					}
 
-					String commit = rawtext.get(0).substring(7, rawtext.get(0).length());
+					String commit = line.substring(7, line.length());
 					
 					tag = new Tag(commit, stag, message, tagger, date);
 					tags.add(tag);
