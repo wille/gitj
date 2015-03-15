@@ -7,5 +7,5 @@ import com.redpois0n.git.Diff;
 
 public abstract interface IDiffSelectionListener {
 
-	public abstract void onSelect(Commit c, List<Diff> d);
+	public abstract void onSelect(Commit c, List<Diff> d, List<Diff> all);
 }

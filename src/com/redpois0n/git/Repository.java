@@ -80,7 +80,6 @@ public class Repository {
 
 		try {
 			List<String> raw = run(new String[] { "git", "show", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--stat", "-p", c.getHash() });
-			System.out.println("git " + " show" + " --pretty=format:Commit;%H;%an;%ae;%ar;%s " + "--stat" + " -p " + c.getHash());
 			Enumeration<String> e = Collections.enumeration(raw);
 
 			diffs.clear();
@@ -157,7 +156,7 @@ public class Repository {
 		
 		return diffs;
 	}
-
+	
 	/**
 	 * Returns all tags from this repository
 	 * 

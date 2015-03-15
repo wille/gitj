@@ -180,8 +180,10 @@ public class DiffPanel extends JPanel {
 		
 		g.setColor(COLOR_PANEL_BORDER);
 		g.drawRect(0, 0, prefWidth - 1, prefHeight - 1);
-							
-		super.setPreferredSize(getDimension());
+
+		if (getWidth() != prefWidth || getHeight() != prefHeight) {
+			super.setPreferredSize(getDimension());
+		}
 	}
 	
 	public Dimension getDimension() {

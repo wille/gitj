@@ -64,12 +64,13 @@ public class PanelSummary extends JPanel {
 		            int max = lsm.getMaxSelectionIndex();
 		            
 		            List<Diff> diffs = new ArrayList<Diff>();
+		            List<Diff> allDiffs = commit.getDiffs(false);
 		            
 		            for (int i = min; i <= max; i++) {
 		                if (lsm.isSelectedIndex(i)) {
 		                    JFileListEntry entry = model.get(i);
 		                    
-		                    for (Diff d : commit.getDiffs(false)) {
+		                    for (Diff d : allDiffs) {
 		                    	if (d.getLocalPath().equals(entry.getText())) {
 		                    		diffs.add(d);
 		                    	}
@@ -78,7 +79,7 @@ public class PanelSummary extends JPanel {
 		            }
 		            
 		            for (IDiffSelectionListener l : listeners) {
-                    	l.onSelect(commit, diffs);
+                    	l.onSelect(commit, diffs, allDiffs);
                     }
 		        }
 			}		

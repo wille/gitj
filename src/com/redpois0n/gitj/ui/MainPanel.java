@@ -94,10 +94,11 @@ public class MainPanel extends AbstractPanel {
 	
 	/**
 	 * Loads diffs (On click on commit)
-	 * @param diffs
+	 * @param diffs Diffs to load
+	 * @param allDiffs All diffs for current commit
 	 * @param reloadDiffList if we should clear and fill the JList containing the diffs with data from diffs list
 	 */
-	public void loadDiffs(Commit c, List<Diff> diffs, boolean reloadDiffList) {
+	public void loadDiffs(Commit c, List<Diff> diffs, List<Diff> allDiffs, boolean reloadDiffList) {
 		splitPaneLow.setLeftComponent(panelSummary);
 
 		diffHolderPanel.clear();
@@ -111,7 +112,7 @@ public class MainPanel extends AbstractPanel {
 		if (reloadDiffList) {
 			panelSummary.reload(c);
 
-			for (Diff diff : c.getDiffs(false)) {
+			for (Diff diff : allDiffs) {
 				panelSummary.getListModel().addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(IconUtils.getIconFromDiffType(diff.getType()))));
 			}
 		}
@@ -138,7 +139,8 @@ public class MainPanel extends AbstractPanel {
 				if (c == null && repo.hasUnstagedFiles()) {
 					loadUncommited();
 				} else if (c != null) {
-					loadDiffs(c, c.getDiffs(false), true);
+					List<Diff> d = c.getDiffs(false);
+					loadDiffs(c, d, d, true);
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -149,9 +151,9 @@ public class MainPanel extends AbstractPanel {
 
 	public class DiffSelectionListener implements IDiffSelectionListener {
 		@Override
-		public void onSelect(Commit c, List<Diff> d) {
+		public void onSelect(Commit c, List<Diff> d, List<Diff> all) {
 			try {
-				loadDiffs(c, d, false);
+				loadDiffs(c, d, all, false);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				Main.displayError(ex);
