@@ -12,6 +12,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -19,6 +20,10 @@ import javax.swing.event.ChangeListener;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
+import com.redpois0n.gitj.utils.IconUtils;
+
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -28,10 +33,13 @@ public class MainFrame extends JFrame {
 
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 500);
+		setBounds(100, 100, 1000, 700);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
+		
+		JMenu mnFile = new JMenu("File");
+		menuBar.add(mnFile);
 		
 		JMenu mnRepository = new JMenu("Repository");
 		menuBar.add(mnRepository);
@@ -47,6 +55,40 @@ public class MainFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		JToolBar toolBar = new JToolBar();
+		toolBar.setFloatable(false);
+		contentPane.add(toolBar, BorderLayout.NORTH);
+		
+		JButton btnCloneNew = new JButton("Clone/New");
+		btnCloneNew.setIcon(IconUtils.getIcon("database-add"));
+		toolBar.add(btnCloneNew);
+		
+		toolBar.addSeparator();
+		
+		JButton btnCommit = new JButton("Commit");
+		btnCommit.setIcon(IconUtils.getIcon("commit"));
+		toolBar.add(btnCommit);
+		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.setIcon(IconUtils.getIcon("add-big"));
+		toolBar.add(btnAdd);
+		
+		JButton btnRemove = new JButton("Remove");
+		btnRemove.setIcon(IconUtils.getIcon("remove-big"));
+		toolBar.add(btnRemove);
+		
+		JButton btnFetch = new JButton("Fetch");
+		btnFetch.setIcon(IconUtils.getIcon("fetch"));
+		toolBar.add(btnFetch);
+		
+		JButton btnPull = new JButton("Pull");
+		btnPull.setIcon(IconUtils.getIcon("pull"));
+		toolBar.add(btnPull);
+		
+		JButton btnPush = new JButton("Push");
+		btnPush.setIcon(IconUtils.getIcon("push"));
+		toolBar.add(btnPush);
 		
 		JSplitPane splitPane = new JSplitPane();
 		contentPane.add(splitPane, BorderLayout.CENTER);
