@@ -51,6 +51,7 @@ public class JCommitPane extends JScrollPane {
 		table.setDefaultRenderer(Object.class, new CommitRenderer());
 		table.setRowHeight(20);
 		table.setShowGrid(false);
+		table.setFillsViewportHeight(true);
 		table.setIntercellSpacing(new Dimension(0, 0));
 		
 		super.setViewportView(table);
