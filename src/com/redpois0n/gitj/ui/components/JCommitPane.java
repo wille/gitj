@@ -1,12 +1,16 @@
 package com.redpois0n.gitj.ui.components;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -15,6 +19,8 @@ import javax.swing.table.DefaultTableModel;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
+import com.redpois0n.git.Tag;
+import com.redpois0n.gitj.utils.IconGenerator;
 
 @SuppressWarnings("serial")
 public class JCommitPane extends JScrollPane {
@@ -39,6 +45,9 @@ public class JCommitPane extends JScrollPane {
 		this.table = new JTable(model);
 		
 		table.setDefaultRenderer(Object.class, new CommitRenderer());
+		table.setRowHeight(20);
+		table.setShowGrid(false);
+		table.setIntercellSpacing(new Dimension(0, 0));
 		
 		super.setViewportView(table);
 		
@@ -90,6 +99,8 @@ public class JCommitPane extends JScrollPane {
 	
 	public class CommitRenderer extends DefaultTableCellRenderer {
 		
+		private Map<Tag, ImageIcon> cache = new HashMap<Tag, ImageIcon>();
+		
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 			JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
@@ -99,7 +110,26 @@ public class JCommitPane extends JScrollPane {
 			if (obj instanceof Commit) {
 				Commit c = (Commit) obj;
 				
-				if (column == INDEX_DESCRIPTION) {
+				ImageIcon icon = null;
+				
+				if (c.getTags() != null) {
+					for (Tag tag : c.getTags()) {
+						if (tag.getHash().equals(c.getHash())) {
+							if (cache.containsKey(tag)) {
+								icon = cache.get(tag);
+								break;
+							} else {
+								icon = IconGenerator.getTagIcon(tag);
+								cache.put(tag, icon);
+								break;
+							}
+						}
+					}
+				}
+				
+				label.setIcon(null);
+				if (column == INDEX_DESCRIPTION) {										
+					label.setIcon(icon);
 					label.setText(c.getComment());
 				} else if (column == INDEX_DATE) {
 					label.setText(c.getWhen());

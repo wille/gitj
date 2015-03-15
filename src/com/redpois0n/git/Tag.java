@@ -51,5 +51,9 @@ public class Tag {
 	public String getDate() {
 		return this.date;
 	}
+	
+	public Type getType() {
+		return this.type;
+	}
 
 }
