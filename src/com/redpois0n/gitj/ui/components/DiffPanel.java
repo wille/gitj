@@ -8,7 +8,6 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
 import java.util.List;
 
 import javax.imageio.ImageIO;

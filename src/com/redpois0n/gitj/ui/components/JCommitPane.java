@@ -1,5 +1,6 @@
 package com.redpois0n.gitj.ui.components;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -24,6 +25,9 @@ import com.redpois0n.gitj.utils.IconGenerator;
 
 @SuppressWarnings("serial")
 public class JCommitPane extends JScrollPane {
+	
+	public static final Color TABLE_SELECTED = new Color(51, 153, 255);
+	public static final Color TABLE_GRAY = new Color(240, 240, 240);
 
 	public static final String[] DEFAULT_VALUES = new String[] { "Description", "Date", "Author", "Commit" };
 	public static final int INDEX_DESCRIPTION = 0;
@@ -148,6 +152,14 @@ public class JCommitPane extends JScrollPane {
 				} else {
 					label.setText("");
 				}
+			}
+			
+			if (isSelected) {
+				label.setBackground(TABLE_SELECTED);
+			} else if (row % 2 == 0) {
+				label.setBackground(TABLE_GRAY);
+			} else {
+				label.setBackground(Color.white);
 			}
 			
 			return label;

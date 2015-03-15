@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,9 +22,6 @@ import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
-
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {

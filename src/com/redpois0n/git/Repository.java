@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import com.redpois0n.git.Diff.DataType;
 import com.redpois0n.gitj.Main;
 
 public class Repository {
