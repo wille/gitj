@@ -1,6 +1,8 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import javax.swing.JSplitPane;
 
 import com.redpois0n.git.Change;
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.components.JFileList;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
 import com.redpois0n.gitj.utils.IconUtils;
@@ -29,13 +32,14 @@ public class PanelUncommited extends AbstractPanel {
 		
 		JSplitPane splitPane = new JSplitPane();
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		splitPane.setResizeWeight(0.5);
+		splitPane.setResizeWeight(0.5);	
 		
 		JScrollPane stagedScrollList = new JScrollPane();
 		stagedScrollList.setBorder(null);
 		stagedModel = new DefaultListModel<JFileListEntry>();
 		stagedList = new JFileList();
 		stagedList.setModel(stagedModel);
+		stagedList.addMouseListener(new ClickListener());
 		stagedScrollList.setViewportView(stagedList);
 		splitPane.setLeftComponent(stagedScrollList);
 		
@@ -44,6 +48,7 @@ public class PanelUncommited extends AbstractPanel {
 		unstagedModel = new DefaultListModel<JFileListEntry>();
 		unstagedList = new JFileList();
 		unstagedList.setModel(unstagedModel);
+		unstagedList.addMouseListener(new ClickListener());
 		unstagedScrollList.setViewportView(unstagedList);
 		splitPane.setRightComponent(unstagedScrollList);
 		
@@ -91,5 +96,29 @@ public class PanelUncommited extends AbstractPanel {
 		}
 		
 		return list;
+	}
+	
+	public class ClickListener extends MouseAdapter {
+		
+		public void mouseClicked(MouseEvent e) {
+			JFileList list = (JFileList) e.getSource();
+			
+			JFileListEntry entry = list.getSelectedValue();
+			
+			if (e.getClickCount() == 2 && entry != null) {
+				try {
+					if (list == stagedList) {
+						repo.unstage(entry.getText());
+					} else {
+						repo.stage(entry.getText());
+					}
+					
+					reload();
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					Main.displayError(ex);
+				}
+			}
+		}
 	}
 }
