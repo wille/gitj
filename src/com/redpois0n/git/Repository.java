@@ -19,8 +19,12 @@ public class Repository {
 	private List<Commit> commits;
 	private List<Tag> tags;
 
-	public Repository(File folder) {
+	public Repository(File folder) throws InvalidRepositoryException {
 		this.folder = folder;
+		
+		if (!isValidRepo()) {
+			throw new InvalidRepositoryException();
+		}
 	}
 
 	/**
@@ -352,6 +356,20 @@ public class Repository {
 			Main.print(s);
 		}
 	}
+	
+	public void commit(String message) throws Exception {
+		commit(message, false);
+	}
+	
+	public void commit(String message, boolean amend) throws Exception {
+		List<String> raw;
+		
+		if (amend) {
+			raw = run(new String[] { "git", "commit", "--amend", "-m", message});
+		} else {
+			raw = run(new String[] { "git", "commit", "-m", message} );
+		}
+	}
 
 	/**
 	 * Create new empty repository
@@ -392,6 +410,17 @@ public class Repository {
 		}
 
 		return sb.toString();
+	}
+	
+	public boolean isValidRepo() {
+		List<String> lines = null;
+		try {
+			lines = run(new String[] { "git", "rev-parse", "--is-inside-work-tree" } );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return lines != null && lines.get(0).equalsIgnoreCase("true");
 	}
 
 	public File getFolder() {

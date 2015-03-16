@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,6 +21,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.redpois0n.git.InvalidRepositoryException;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
@@ -62,6 +65,15 @@ public class MainFrame extends JFrame {
 		JButton btnCloneNew = new JButton("Clone/New");
 		btnCloneNew.setIcon(IconUtils.getIcon("database-add"));
 		toolBar.add(btnCloneNew);
+		
+		JButton btnOpen = new JButton("Open");
+		btnOpen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent paramActionEvent) {
+				open();
+			}
+		});
+		btnOpen.setIcon(IconUtils.getIcon("folder-open"));
+		toolBar.add(btnOpen);
 		
 		toolBar.addSeparator();
 		
@@ -269,6 +281,25 @@ public class MainFrame extends JFrame {
 					e.printStackTrace();
 					Main.displayError(e);
 				}
+			}
+		}
+	}
+	
+	public void open() {
+		JFileChooser c = new JFileChooser();
+		c.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+		c.showOpenDialog(null);
+		
+		File file = c.getSelectedFile();
+		
+		if (file != null) {
+			try {
+				Repository repository = new Repository(file);
+				loadRepository(repository);
+			} catch (InvalidRepositoryException e) {
+				e.printStackTrace();
+				// TODO
 			}
 		}
 	}
