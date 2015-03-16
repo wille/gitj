@@ -66,6 +66,11 @@ public class MainFrame extends JFrame {
 		toolBar.addSeparator();
 		
 		JButton btnCommit = new JButton("Commit");
+		btnCommit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				commit();
+			}
+		});
 		btnCommit.setIcon(IconUtils.getIcon("commit"));
 		toolBar.add(btnCommit);
 		
@@ -128,6 +133,7 @@ public class MainFrame extends JFrame {
 	 */
 	public void addPanel(String title, AbstractPanel panel) {
 		tabbedPane.addTab(title, panel);
+		tabbedPane.setSelectedComponent(panel);
 	}
 	
 	/**
@@ -182,6 +188,14 @@ public class MainFrame extends JFrame {
 	@Override
 	public void setTitle(String title) {
 		super.setTitle("gitj " + Version.getVersion() + " - " + title);
+	}
+	
+	public void commit() {
+		Repository repo = getSelectedRepo();
+		
+		if (repo != null) {
+			addPanel("Commit", new CommitPanel(repo));
+		}
 	}
 	
 	public void stageSelected() {
