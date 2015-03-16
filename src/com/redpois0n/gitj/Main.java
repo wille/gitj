@@ -16,14 +16,25 @@ public class Main {
 			MainFrame frame = new MainFrame();
 			frame.setVisible(true);
 			
-			File dir = new File(".");
-			Repository repository = new Repository(dir);
+			if (argsContains("-debug", args)) {
+				File dir = new File(".");
+				Repository repository = new Repository(dir);
 
-			frame.loadRepository(repository);
-		
+				frame.loadRepository(repository);
+			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	public static boolean argsContains(String s, String[] args) {
+		for (String arg : args) {
+			if (arg.equalsIgnoreCase(s)) {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 
 	public static void displayError(Exception e) {
