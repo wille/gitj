@@ -73,7 +73,9 @@ public class PanelUncommited extends AbstractPanel {
 		List<String> list = new ArrayList<String>();
 		
 		for (int i = 0; i < unstagedModel.getSize(); i++) {
-			list.add(unstagedModel.get(i).getText());
+			if (unstagedList.isSelectedIndex(i)) {
+				list.add(unstagedModel.get(i).getText());
+			}
 		}
 		
 		return list;
@@ -83,7 +85,9 @@ public class PanelUncommited extends AbstractPanel {
 		List<String> list = new ArrayList<String>();
 		
 		for (int i = 0; i < stagedModel.getSize(); i++) {
-			list.add(stagedModel.get(i).getText());
+			if (stagedList.isSelectedIndex(i)) {
+				list.add(stagedModel.get(i).getText());
+			}
 		}
 		
 		return list;
