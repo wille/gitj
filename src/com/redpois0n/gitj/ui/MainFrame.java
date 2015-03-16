@@ -195,6 +195,13 @@ public class MainFrame extends JFrame {
 						e.printStackTrace();
 					}
 				}
+				
+				try {
+					pu.reload();
+				} catch (Exception e) {
+					e.printStackTrace();
+					Main.displayError(e);
+				}
 			}
 		}
 	}
