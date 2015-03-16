@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -65,6 +66,16 @@ public class PanelUncommited extends AbstractPanel {
 			
 			model.addElement(new JFileListEntry(change.getRepoPath(), IconUtils.getIconFromChangeType(change.getTypes().get(0))));
 		}
+	}
+	
+	public List<String> getSelectedUnstaged() {
+		List<String> list = new ArrayList<String>();
+		
+		for (int i = 0; i < unstagedModel.getSize(); i++) {
+			list.add(unstagedModel.get(i).getText());
+		}
+		
+		return list;
 	}
 
 }

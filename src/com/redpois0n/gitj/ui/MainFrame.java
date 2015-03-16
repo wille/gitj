@@ -69,6 +69,11 @@ public class MainFrame extends JFrame {
 		toolBar.add(btnCommit);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				add();
+			}
+		});
 		btnAdd.setIcon(IconUtils.getIcon("add-big"));
 		toolBar.add(btnAdd);
 		
@@ -171,6 +176,27 @@ public class MainFrame extends JFrame {
 	@Override
 	public void setTitle(String title) {
 		super.setTitle("gitj " + Version.getVersion() + " - " + title);
+	}
+	
+	public void add() {
+		Repository repo = getSelectedRepo();
+		AbstractPanel panel = getSelectedPanel();
+		
+		if (panel instanceof MainPanel) {
+			JPanel panel2 = ((MainPanel)panel).getListPanel();
+			
+			if (panel2 instanceof PanelUncommited) {
+				PanelUncommited pu = (PanelUncommited) panel2;
+				
+				for (String path : pu.getSelectedUnstaged()) {
+					try {
+						repo.stage(path);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 	
 	public class TabChangeListener implements ChangeListener {

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ScrollPaneConstants;
@@ -32,6 +33,8 @@ public class MainPanel extends AbstractPanel {
 	private DiffHolderPanel diffHolderPanel;
 	private JScrollPane scrollPaneDiffs;
 	private PanelSummary panelSummary;
+	
+	private JPanel panelList;
 	
 	/**
 	 * Repository tab
@@ -100,6 +103,7 @@ public class MainPanel extends AbstractPanel {
 	 */
 	public void loadDiffs(Commit c, List<Diff> diffs, List<Diff> allDiffs, boolean reloadDiffList) {
 		splitPaneLow.setLeftComponent(panelSummary);
+		panelList = panelSummary;
 
 		diffHolderPanel.clear();
 		
@@ -126,6 +130,7 @@ public class MainPanel extends AbstractPanel {
 		PanelUncommited pu = new PanelUncommited(repo);
 		pu.reload();
 		splitPaneLow.setLeftComponent(pu);
+		panelList = pu;
 	}
 	
 	public JFrame getParentFrame() {
@@ -159,5 +164,9 @@ public class MainPanel extends AbstractPanel {
 				Main.displayError(ex);
 			}
 		}
+	}
+
+	public JPanel getListPanel() {
+		return panelList;
 	}
 }
