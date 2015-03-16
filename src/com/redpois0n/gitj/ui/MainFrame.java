@@ -194,13 +194,19 @@ public class MainFrame extends JFrame {
 	
 	public void toggle(boolean stage) {
 		Repository repo = getSelectedRepo();
-		AbstractPanel panel = getSelectedPanel();
+		AbstractPanel apanel = getSelectedPanel();
 		
-		if (panel instanceof MainPanel) {
-			JPanel panel2 = ((MainPanel)panel).getListPanel();
+		if (apanel instanceof AbstractPanel) {
+			JPanel panel = null;
 			
-			if (panel2 instanceof PanelUncommited) {
-				PanelUncommited pu = (PanelUncommited) panel2;
+			if (apanel instanceof MainPanel) {
+				panel = ((MainPanel) apanel).getListPanel();
+			} else if (apanel instanceof CommitPanel) {
+				panel = ((CommitPanel) apanel).getListPanel();
+			}
+			
+			if (panel instanceof PanelUncommited) {
+				PanelUncommited pu = (PanelUncommited) panel;
 				
 				List<String> list;
 				
