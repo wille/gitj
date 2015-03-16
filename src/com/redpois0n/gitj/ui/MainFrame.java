@@ -137,6 +137,14 @@ public class MainFrame extends JFrame {
 	}
 	
 	/**
+	 * Remove tab
+	 * @param panel
+	 */
+	public void removePanel(AbstractPanel panel) {
+		tabbedPane.remove(panel);
+	}
+	
+	/**
 	 * Gets selected repo tab
 	 * @return
 	 */
@@ -190,22 +198,35 @@ public class MainFrame extends JFrame {
 		super.setTitle("gitj " + Version.getVersion() + " - " + title);
 	}
 	
+	/**
+	 * Opens commit panel for selected repository
+	 */
 	public void commit() {
 		Repository repo = getSelectedRepo();
 		
 		if (repo != null) {
-			addPanel("Commit", new CommitPanel(repo));
+			addPanel("Commit", new CommitPanel(this, repo));
 		}
 	}
 	
+	/**
+	 * Stages selected files in current repository
+	 */
 	public void stageSelected() {
 		toggle(true);
 	}
 	
+	/**
+	 * Unstages selected files in current repository
+	 */
 	public void unstageSelected() {
 		toggle(false);
 	}
 	
+	/**
+	 * Stages or unstages selected files in current repository
+	 * @param stage
+	 */
 	public void toggle(boolean stage) {
 		Repository repo = getSelectedRepo();
 		AbstractPanel apanel = getSelectedPanel();
