@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -71,13 +72,18 @@ public class MainFrame extends JFrame {
 		JButton btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				add();
+				stageSelected();
 			}
 		});
 		btnAdd.setIcon(IconUtils.getIcon("add-big"));
 		toolBar.add(btnAdd);
 		
 		JButton btnRemove = new JButton("Remove");
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				unstageSelected();
+			}
+		});
 		btnRemove.setIcon(IconUtils.getIcon("remove-big"));
 		toolBar.add(btnRemove);
 		
@@ -178,7 +184,15 @@ public class MainFrame extends JFrame {
 		super.setTitle("gitj " + Version.getVersion() + " - " + title);
 	}
 	
-	public void add() {
+	public void stageSelected() {
+		toggle(true);
+	}
+	
+	public void unstageSelected() {
+		toggle(false);
+	}
+	
+	public void toggle(boolean stage) {
 		Repository repo = getSelectedRepo();
 		AbstractPanel panel = getSelectedPanel();
 		
@@ -188,9 +202,21 @@ public class MainFrame extends JFrame {
 			if (panel2 instanceof PanelUncommited) {
 				PanelUncommited pu = (PanelUncommited) panel2;
 				
-				for (String path : pu.getSelectedUnstaged()) {
+				List<String> list;
+				
+				if (stage) {
+					list = pu.getSelectedUnstaged();
+				} else {
+					list = pu.getSelectedStaged();
+				}
+				
+				for (String path : list) {
 					try {
-						repo.stage(path);
+						if (stage) {
+							repo.stage(path);
+						} else {
+							repo.unstage(path);
+						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

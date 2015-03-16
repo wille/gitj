@@ -130,6 +130,7 @@ public class MainPanel extends AbstractPanel {
 		PanelUncommited pu = new PanelUncommited(repo);
 		pu.reload();
 		splitPaneLow.setLeftComponent(pu);
+		diffHolderPanel.clear();
 		panelList = pu;
 	}
 	

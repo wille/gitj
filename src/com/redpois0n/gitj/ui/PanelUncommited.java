@@ -52,6 +52,7 @@ public class PanelUncommited extends AbstractPanel {
 	
 	public void reload() throws Exception {
 		unstagedModel.clear();
+		stagedModel.clear();
 		
 		List<Change> changes = repo.parseStatus();
 		
@@ -77,5 +78,14 @@ public class PanelUncommited extends AbstractPanel {
 		
 		return list;
 	}
-
+	
+	public List<String> getSelectedStaged() {
+		List<String> list = new ArrayList<String>();
+		
+		for (int i = 0; i < stagedModel.getSize(); i++) {
+			list.add(stagedModel.get(i).getText());
+		}
+		
+		return list;
+	}
 }
