@@ -19,7 +19,6 @@ import com.redpois0n.gitj.ui.components.DiffHolderPanel;
 import com.redpois0n.gitj.ui.components.DiffPanel;
 import com.redpois0n.gitj.ui.components.ICommitClickListener;
 import com.redpois0n.gitj.ui.components.IDiffSelectionListener;
-import com.redpois0n.gitj.ui.components.JCommitPane;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
 import com.redpois0n.gitj.utils.IconUtils;
 
@@ -29,7 +28,7 @@ public class MainPanel extends AbstractPanel {
 	private JFrame parent;
 	private JSplitPane splitPaneMain;
 	private JSplitPane splitPaneLow;
-	private JCommitPane jcommitPane;
+	private CommitListPanel jcommitPane;
 	private DiffHolderPanel diffHolderPanel;
 	private JScrollPane scrollPaneDiffs;
 	private PanelSummary panelSummary;
@@ -53,7 +52,7 @@ public class MainPanel extends AbstractPanel {
 		
 		add(splitPaneMain, BorderLayout.CENTER);
 		
-		jcommitPane = new JCommitPane(repository);
+		jcommitPane = new CommitListPanel(repository);
 		jcommitPane.addListener(new CommitClickListener());
 		
 		splitPaneMain.setLeftComponent(jcommitPane);

@@ -1,4 +1,4 @@
-package com.redpois0n.gitj.ui.components;
+package com.redpois0n.gitj.ui;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -21,10 +21,11 @@ import javax.swing.table.DefaultTableModel;
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
+import com.redpois0n.gitj.ui.components.ICommitClickListener;
 import com.redpois0n.gitj.utils.IconGenerator;
 
 @SuppressWarnings("serial")
-public class JCommitPane extends JScrollPane {
+public class CommitListPanel extends JScrollPane {
 	
 	public static final Color TABLE_SELECTED = new Color(51, 153, 255);
 	public static final Color TABLE_GRAY = new Color(240, 240, 240);
@@ -42,7 +43,7 @@ public class JCommitPane extends JScrollPane {
 	private JTable table;
 	private CommitTableModel model;
 	
-	public JCommitPane(Repository repo) throws Exception {
+	public CommitListPanel(Repository repo) throws Exception {
 		this.repo = repo;
 		this.commits = repo.getCommits();
 		this.model = new CommitTableModel();
