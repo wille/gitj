@@ -58,9 +58,7 @@ public class Change {
 		for (int i = 0; i < types.size(); i++) {
 			boolean tstag = types.get(i).isStaged();
 			
-			if (b1 != tstag) {
-				throw new RuntimeException("Staged and unstaged types");
-			}
+			assert b1 == tstag;
 		}
 		
 		return b1;
