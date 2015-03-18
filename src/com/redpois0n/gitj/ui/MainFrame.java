@@ -215,9 +215,10 @@ public class MainFrame extends JFrame {
 	 */
 	public void commit() {
 		Repository repo = getSelectedRepo();
+		AbstractPanel panel = getSelectedPanel();
 		
-		if (repo != null) {
-			addPanel("Commit", new CommitPanel(this, repo));
+		if (repo != null && panel instanceof MainPanel) {
+			addPanel("Commit", new CommitPanel(this, (MainPanel) panel, repo));
 		}
 	}
 	

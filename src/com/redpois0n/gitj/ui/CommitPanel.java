@@ -13,10 +13,12 @@ public class CommitPanel extends AbstractPanel {
 	private MainFrame parent;
 	private PanelUncommited panelList;
 	private CommitButtonPanel buttonPanel;
+	private MainPanel parentPanel;
 
-	public CommitPanel(MainFrame parent, Repository repo) {
+	public CommitPanel(MainFrame parent, MainPanel parentPanel, Repository repo) {
 		super(repo);
 		this.parent = parent;
+		this.parentPanel = parentPanel;
 		setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane splitPane = new JSplitPane();
@@ -47,12 +49,14 @@ public class CommitPanel extends AbstractPanel {
 	 */
 	public void cancel() {
 		parent.removePanel(this);
+		reload();
 	}
 	
 	@Override
 	public void reload() {
 		try {
 			panelList.reload();
+			parentPanel.reload();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Main.displayError(e);
