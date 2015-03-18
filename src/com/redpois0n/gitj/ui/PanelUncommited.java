@@ -79,6 +79,8 @@ public class PanelUncommited extends AbstractPanel {
 				model = unstagedModel;
 			}
 			
+			System.out.println(change.getRepoPath());
+			
 			model.addElement(new JFileListEntry(change.getRepoPath(), IconUtils.getIconFromChangeType(change.getTypes().get(0))));
 		}
 	}

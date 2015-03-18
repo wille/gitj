@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import com.redpois0n.git.Change.Type;
 import com.redpois0n.gitj.Main;
 
 public class Repository {
@@ -381,7 +382,15 @@ public class Repository {
 		for (String s : raw) {
 			String xy = s.substring(0, 2);
 			String path = s.substring(3, s.length());
-			changes.add(new Change(Change.getType(xy), path));
+			
+			List<Type> type = Change.getType(xy);
+			
+			if (path.contains(" -> ")) {
+				path = path.split(" -> ")[1];
+				type.clear();
+				type.add(Change.Type.STAGED_RENAME);
+			}
+			changes.add(new Change(type, path));
 		}
 
 		return changes;
