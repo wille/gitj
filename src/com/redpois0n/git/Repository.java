@@ -412,6 +412,37 @@ public class Repository {
 		return sb.toString();
 	}
 	
+	/**
+	 * Returns author (if not repo specific, uses global)
+	 * @return
+	 * @throws Exception
+	 */
+	public String getAuthorName() throws Exception {
+		return run(new String[] { "git", "config", "user.name" }).get(0);
+	}
+	
+	/**
+	 * Returns author email (if not repo specific, uses global)
+	 * @return
+	 * @throws Exception
+	 */
+	public String getAuthorEmail() throws Exception {
+		return run(new String[] { "git", "config", "user.email" }).get(0);
+	}
+	
+	/**
+	 * Returns combined string of author and author email
+	 * @return
+	 * @throws Exception
+	 */
+	public String getAuthorString() throws Exception {
+		return getAuthorName() + " <" + getAuthorEmail() + ">";
+	}
+	
+	/**
+	 * Returns true if folder is a valid git repository
+	 * @return
+	 */
 	public boolean isValidRepo() {
 		List<String> lines = null;
 		try {
