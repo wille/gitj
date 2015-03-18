@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -81,10 +82,20 @@ public class CommitPanel extends AbstractPanel {
 		diffHolderPanel.clear();
 
 		for (Diff diff : diffs) {
-			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
+			DiffPanel diffPanel = new DiffPanel(diff);
+			diffHolderPanel.addDiffPanel(diffPanel);
 		}
 
 		diffHolderPanel.revalidate();
+		
+		new Thread() {
+			public void run() {
+				try { Thread.sleep(1000L); } catch (Exception ex) { }
+				
+				diffHolderPanel.repaint();
+				diffHolderPanel.revalidate();
+			}
+		}.start();
 	}
 	
 	public class DiffSelectionListener implements IDiffSelectionListener {
