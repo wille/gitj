@@ -113,7 +113,6 @@ public class MainPanel extends AbstractPanel {
 				e.printStackTrace();
 			}
 			splitPaneLow.setLeftComponent(pu);
-			diffHolderPanel.clear();
 			panelList = pu;
 		}
 
@@ -139,12 +138,8 @@ public class MainPanel extends AbstractPanel {
 	 * @throws Exception
 	 */
 	public void loadUncommited() throws Exception {
-		PanelUncommited pu = new PanelUncommited(this, repo);
-		pu.addListener(new DiffSelectionListener());
-		pu.reload();
-		splitPaneLow.setLeftComponent(pu);
-		diffHolderPanel.clear();
-		panelList = pu;
+		List<Diff> diffs = repo.getUncommitedDiffs();
+		loadDiffs(null, diffs, null, false);
 	}
 	
 	public JFrame getParentFrame() {
