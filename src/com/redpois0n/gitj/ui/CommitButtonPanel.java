@@ -12,6 +12,11 @@ import javax.swing.JTextPane;
 
 import com.redpois0n.gitj.Main;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 @SuppressWarnings("serial")
 public class CommitButtonPanel extends JPanel {
 	
@@ -19,6 +24,7 @@ public class CommitButtonPanel extends JPanel {
 	private JLabel lblAuthor;
 	private JComboBox<String> comboBox;
 	private JTextPane textPane;
+	private JButton btnCommit;
 
 	public CommitButtonPanel(CommitPanel parent) {
 		this.parent = parent;
@@ -34,8 +40,19 @@ public class CommitButtonPanel extends JPanel {
 		comboBox = new JComboBox<String>();
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cancel();
+			}
+		});
 		
-		JButton btnCommit = new JButton("Commit");
+		btnCommit = new JButton("Commit");
+		btnCommit.setEnabled(false);
+		btnCommit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				commit();
+			}
+		});
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -72,8 +89,32 @@ public class CommitButtonPanel extends JPanel {
 		);
 		
 		textPane = new JTextPane();
+		textPane.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				update();
+			}
+		});
 		scrollPane.setViewportView(textPane);
 		setLayout(groupLayout);
 
+	}
+	
+	public void commit() {
+		try {
+			parent.getRepository().commit(textPane.getText().trim());
+			parent.cancel();
+		} catch (Exception e) {
+			e.printStackTrace();
+			Main.displayError(e);
+		}
+	}
+	
+	public void cancel() {
+		parent.cancel();
+	}
+	
+	public void update() {
+		btnCommit.setEnabled(textPane.getText().trim().length() > 0);
 	}
 }

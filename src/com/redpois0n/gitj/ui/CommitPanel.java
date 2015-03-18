@@ -42,6 +42,9 @@ public class CommitPanel extends AbstractPanel {
 		return panelList;
 	}
 	
+	/**
+	 * Closes current tab
+	 */
 	public void cancel() {
 		parent.removePanel(this);
 	}
