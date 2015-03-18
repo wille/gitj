@@ -88,7 +88,7 @@ public class Repository {
 		List<Diff> diffs = new ArrayList<Diff>();
 		
 		try {
-			List<String> raw = run(new String[] { "git", "diff" } );
+			List<String> raw = run(new String[] { "git", "diff", "HEAD" } );
 			Enumeration<String> e = Collections.enumeration(raw);
 
 			while (e.hasMoreElements()) {
