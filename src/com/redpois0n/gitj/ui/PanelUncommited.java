@@ -11,8 +11,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import com.redpois0n.git.Change;
+import com.redpois0n.git.Diff;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.ui.components.IDiffSelectionListener;
 import com.redpois0n.gitj.ui.components.JFileList;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
 import com.redpois0n.gitj.utils.IconUtils;
@@ -20,14 +22,17 @@ import com.redpois0n.gitj.utils.IconUtils;
 @SuppressWarnings("serial")
 public class PanelUncommited extends AbstractPanel {
 	
+	private List<IDiffSelectionListener> listeners = new ArrayList<IDiffSelectionListener>();
+	private AbstractPanel parent;
 	private DefaultListModel<JFileListEntry> unstagedModel;
 	private JFileList unstagedList;
 
 	private DefaultListModel<JFileListEntry> stagedModel;
 	private JFileList stagedList;
 	
-	public PanelUncommited(Repository repo) {
+	public PanelUncommited(AbstractPanel parent, Repository repo) {
 		super(repo);
+		this.parent = parent;
 		setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane splitPane = new JSplitPane();
@@ -55,6 +60,10 @@ public class PanelUncommited extends AbstractPanel {
 		add(splitPane);
 	}
 	
+	public void addListener(IDiffSelectionListener l) {
+		listeners.add(l);
+	}
+
 	public void reload() throws Exception {
 		unstagedModel.clear();
 		stagedModel.clear();
@@ -95,7 +104,19 @@ public class PanelUncommited extends AbstractPanel {
 			}
 		}
 		
+		for (int i = 0; i < unstagedModel.getSize(); i++) {
+			if (unstagedList.isSelectedIndex(i)) {
+				list.add(unstagedModel.get(i).getText());
+			}
+		}
+		
 		return list;
+	}
+	
+	public void loadDiff(List<Diff> diffs) {
+		for (IDiffSelectionListener l : listeners) {
+			l.onSelect(null, diffs, null);
+		}
 	}
 	
 	public class ClickListener extends MouseAdapter {
@@ -118,6 +139,17 @@ public class PanelUncommited extends AbstractPanel {
 					ex.printStackTrace();
 					Main.displayError(ex);
 				}
+			} else if (e.getClickCount() == 1) {
+				List<Diff> diffs = repo.getUncommitedDiffs();
+				List<Diff> selected = new ArrayList<Diff>();
+				
+				for (Diff d : diffs) {
+					if (d.getLocalPath().equals(entry.getText())) {
+						selected.add(d);
+					}
+				}
+				
+				loadDiff(selected);
 			}
 		}
 	}

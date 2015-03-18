@@ -101,8 +101,21 @@ public class MainPanel extends AbstractPanel {
 	 * @param reloadDiffList if we should clear and fill the JList containing the diffs with data from diffs list
 	 */
 	public void loadDiffs(Commit c, List<Diff> diffs, List<Diff> allDiffs, boolean reloadDiffList) {
-		splitPaneLow.setLeftComponent(panelSummary);
-		panelList = panelSummary;
+		if (allDiffs != null) {
+			splitPaneLow.setLeftComponent(panelSummary);
+			panelList = panelSummary;
+		} else {
+			PanelUncommited pu = new PanelUncommited(this, repo);
+			pu.addListener(new DiffSelectionListener());
+			try {
+				pu.reload();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			splitPaneLow.setLeftComponent(pu);
+			diffHolderPanel.clear();
+			panelList = pu;
+		}
 
 		diffHolderPanel.clear();
 		
@@ -126,7 +139,8 @@ public class MainPanel extends AbstractPanel {
 	 * @throws Exception
 	 */
 	public void loadUncommited() throws Exception {
-		PanelUncommited pu = new PanelUncommited(repo);
+		PanelUncommited pu = new PanelUncommited(this, repo);
+		pu.addListener(new DiffSelectionListener());
 		pu.reload();
 		splitPaneLow.setLeftComponent(pu);
 		diffHolderPanel.clear();

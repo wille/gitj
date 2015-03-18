@@ -86,7 +86,13 @@ public class Diff {
 	}
 	
 	public boolean isImage() {
-		String path = getLocalPath().toLowerCase();
+		String path = getLocalPath();
+		
+		if (path == null) {
+			return false;
+		}
+		
+		path = path.toLowerCase();
 		
 		return path.endsWith(".png") || path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".gif");
 	}

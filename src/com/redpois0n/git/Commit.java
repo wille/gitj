@@ -14,6 +14,10 @@ public class Commit {
 	private List<Diff> diffs;
 	private List<Tag> tags;
 	
+	public Commit(Repository repo) {
+		this.repo = repo;
+	}
+	
 	public Commit(Repository repo, String raw) {
 		this(repo, raw.split(";"));
 	}

@@ -83,6 +83,66 @@ public class Repository {
 		
 		return commits;
 	}
+	
+	public List<Diff> getUncommitedDiffs() {
+		List<Diff> diffs = new ArrayList<Diff>();
+		
+		try {
+			List<String> raw = run(new String[] { "git", "diff" } );
+			Enumeration<String> e = Collections.enumeration(raw);
+
+			while (e.hasMoreElements()) {
+				String s = e.nextElement();
+
+				while (s.startsWith("diff --git")) {
+					Main.print("Diff: " + s);
+
+					String sdiff = s.substring(s.lastIndexOf(" b/") + 3, s.length()).trim();
+
+					s = e.nextElement();
+					e.nextElement();
+					e.nextElement();
+
+					Diff diff = new Diff(new Commit(this), new File(folder, sdiff), Diff.Type.EDITED);
+					diffs.add(diff);
+
+					Chunk current = null;
+
+					while (!(s = e.nextElement()).startsWith("diff --git")) {
+						if (s.startsWith("Binary files ")) {
+							diff.setDataType(Diff.DataType.BINARY);						
+							if (e.hasMoreElements()) {
+								s = e.nextElement();
+							}
+							break;
+						} else if (s.startsWith("Commit;") || !e.hasMoreElements()) {
+							break;
+						} else if (s.startsWith("@@ ")) {
+							String chunk = s.substring(0, s.indexOf("@@", 3) + 2).trim();
+
+							Main.print("Chunk: " + chunk);
+
+							current = new Chunk(diff, chunk);
+							diff.addChunk(current);
+							continue;
+						}
+						
+						if (current != null) {
+							current.addRawLine(s);
+							Main.print("Code: " + s);
+						} else {
+							Main.print("!Code: " + s);
+						}
+					}
+
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return diffs;
+	}
 
 	public List<Diff> getDiffs(Commit c) {
 		List<Diff> diffs = new ArrayList<Diff>();
