@@ -1,7 +1,6 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -26,7 +25,6 @@ import com.redpois0n.gitj.utils.IconUtils;
 @SuppressWarnings("serial")
 public class MainPanel extends AbstractPanel {
 
-	private PanelUncommited pu;
 	private JFrame parent;
 	private JSplitPane splitPaneMain;
 	private JSplitPane splitPaneLow;
@@ -63,10 +61,6 @@ public class MainPanel extends AbstractPanel {
 		splitPaneLow.setResizeWeight(0.5);
 		
 		splitPaneMain.setRightComponent(splitPaneLow);
-		
-		pu = new PanelUncommited(this, repo);
-		pu.addListener(new DiffSelectionListener());
-		pu.reload();
 		
 		diffHolderPanel = new DiffHolderPanel();
 		scrollPaneDiffs = new JScrollPane();
@@ -111,6 +105,8 @@ public class MainPanel extends AbstractPanel {
 			splitPaneLow.setLeftComponent(panelSummary);
 			panelList = panelSummary;
 		} else {
+			PanelUncommited pu = new PanelUncommited(this, repo);
+			pu.addListener(new DiffSelectionListener());
 			try {
 				pu.reload();
 			} catch (Exception e) {
@@ -123,8 +119,7 @@ public class MainPanel extends AbstractPanel {
 		diffHolderPanel.clear();
 		
 		for (Diff diff : diffs) {		
-			DiffPanel diffPanel = new DiffPanel(diff);
- 			diffHolderPanel.addDiffPanel(diffPanel);
+ 			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
  		}
 		
 		diffHolderPanel.revalidate();

@@ -1,11 +1,12 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Desktop;
 import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Diff;
@@ -53,6 +54,8 @@ public class CommitPanel extends AbstractPanel {
 
 		buttonPanel = new CommitButtonPanel(this);
 		splitPane.setRightComponent(buttonPanel);
+		
+		loadDiffs(repo.getUncommitedDiffs());
 	}
 
 	public PanelUncommited getListPanel() {
@@ -82,20 +85,10 @@ public class CommitPanel extends AbstractPanel {
 		diffHolderPanel.clear();
 
 		for (Diff diff : diffs) {
-			DiffPanel diffPanel = new DiffPanel(diff);
-			diffHolderPanel.addDiffPanel(diffPanel);
+			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
 		}
-
-		diffHolderPanel.revalidate();
 		
-		new Thread() {
-			public void run() {
-				try { Thread.sleep(1000L); } catch (Exception ex) { }
-				
-				diffHolderPanel.repaint();
-				diffHolderPanel.revalidate();
-			}
-		}.start();
+		diffHolderPanel.revalidate();
 	}
 	
 	public class DiffSelectionListener implements IDiffSelectionListener {
