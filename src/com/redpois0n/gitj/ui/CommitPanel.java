@@ -20,7 +20,7 @@ public class CommitPanel extends AbstractPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		JSplitPane splitPane = new JSplitPane();
-		splitPane.setResizeWeight(0.5);
+		splitPane.setResizeWeight(0.75);
 		splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
 		
 		add(splitPane, BorderLayout.CENTER);
@@ -34,7 +34,7 @@ public class CommitPanel extends AbstractPanel {
 		
 		splitPane.setLeftComponent(topSplitPane);
 		
-		buttonPanel = new CommitButtonPanel();
+		buttonPanel = new CommitButtonPanel(this);
 		splitPane.setRightComponent(buttonPanel);
 	}
 	
