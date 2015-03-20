@@ -6,6 +6,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -16,6 +17,9 @@ import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.CommitListPanel.CommitRenderer;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 @SuppressWarnings("serial")
 public class DialogRemotes extends JDialog {
 
@@ -25,17 +29,67 @@ public class DialogRemotes extends JDialog {
 	private RemotesTableModel model;
 
 	public DialogRemotes(Repository repo) {
+		setAlwaysOnTop(true);
+		setModal(true);
 		this.repo = repo;
 		setBounds(100, 100, 450, 300);
 
 		JButton btnCancel = new JButton("Cancel");
-
-		JButton btnOk = new JButton("OK");
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cancel();
+			}
+		});
 
 		scrollPane = new JScrollPane();
+		
+		JButton btnAdd = new JButton("New");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				add();
+			}
+		});
+		
+		JButton btnEdit = new JButton("Edit");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				edit();
+			}
+		});
+		
+		JButton btnRemove = new JButton("Remove");
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				remove();
+			}
+		});
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout.createSequentialGroup().addContainerGap(316, Short.MAX_VALUE).addComponent(btnOk).addPreferredGap(ComponentPlacement.RELATED).addComponent(btnCancel).addContainerGap()).addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup().addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE).addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGroup(groupLayout.createParallelGroup(Alignment.BASELINE).addComponent(btnCancel).addComponent(btnOk)).addContainerGap()));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnAdd)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnEdit)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnRemove)
+					.addPreferredGap(ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+					.addComponent(btnCancel)
+					.addContainerGap())
+				.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCancel)
+						.addComponent(btnAdd)
+						.addComponent(btnEdit)
+						.addComponent(btnRemove))
+					.addContainerGap())
+		);
 
 		model = new RemotesTableModel();
 		table = new JTable(model);
@@ -48,6 +102,8 @@ public class DialogRemotes extends JDialog {
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
 
+		setLocationRelativeTo(null);
+		
 		reload();
 	}
 	
@@ -65,7 +121,74 @@ public class DialogRemotes extends JDialog {
 			Main.displayError(e);
 		}
 	}
+	
+	public void cancel() {
+		setVisible(false);
+		dispose();
+	}
 
+	public void add() {
+		setAlwaysOnTop(false);
+		
+		String name = JOptionPane.showInputDialog(null, "Input remote name", "Create new Remote", JOptionPane.QUESTION_MESSAGE);
+		
+		if (name == null || name != null && name.trim().length() == 0) {
+			return;
+		}
+		
+		String path = JOptionPane.showInputDialog(null, "Input remote URL", "Create new Remote", JOptionPane.QUESTION_MESSAGE);
+		
+		if (path == null || path != null && path.trim().length() == 0) {
+			return;
+		}
+		
+		try {
+			repo.addRemote(name, path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Main.displayError(e);
+		}
+		
+		setAlwaysOnTop(true);
+		
+		reload();
+	}
+	
+	public void edit() {
+		int row = table.getSelectedRow();
+		
+		if (row != -1) {
+			String name = table.getValueAt(row, 0).toString();
+
+			String path = JOptionPane.showInputDialog(null, "Input new remote URL", "Edit Remote", JOptionPane.QUESTION_MESSAGE);
+			
+			if (path == null || path != null && path.trim().length() == 0) {
+				return;
+			}
+			
+			try {
+				repo.editRemote(name, path);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Main.displayError(e);
+			}
+		}
+	}
+	
+	public void remove() {
+		int row = table.getSelectedRow();
+		
+		if (row != -1) {
+			String name = table.getValueAt(row, 0).toString();
+			
+			try {
+				repo.removeRemote(name);
+			} catch (Exception e) {
+				e.printStackTrace();
+				Main.displayError(e);
+			}
+		}
+	}
 
 	public class RemotesTableModel extends DefaultTableModel {
 

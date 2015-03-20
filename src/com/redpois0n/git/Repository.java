@@ -456,13 +456,41 @@ public class Repository {
 			
 			if (!remotes.contains(remote)) {
 				remotes.add(remote);
-
-			}
-			
+			}	
 		}
 		
 		return remotes;
 	}
+	
+	/**
+	 * Adds a remote to this repository
+	 * @param name
+	 * @param path
+	 * @throws Exception
+	 */
+	public void addRemote(String name, String path) throws Exception {
+		run(new String[] { "git", "remote", "add", name, path });
+	}
+	
+	/**
+	 * Removes a remote from this repository
+	 * @param name
+	 * @throws Exception
+	 */
+	public void removeRemote(String name) throws Exception {
+		run(new String[] { "git", "remote", "remove", name });
+	}
+	
+	/**
+	 * Sets a new url for remote in this repository
+	 * @param name
+	 * @param path
+	 * @throws Exception
+	 */
+	public void editRemote(String name, String path) throws Exception {
+		run(new String[] { "git", "remote", "set-url", name, path });
+	}
+
 
 	/**
 	 * Create new empty repository
