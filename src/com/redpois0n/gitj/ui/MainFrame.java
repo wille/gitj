@@ -156,7 +156,7 @@ public class MainFrame extends JFrame {
 	 * @param panel
 	 */
 	public void addPanel(String title, AbstractPanel panel) {
-		tabbedPane.addTab(title, panel);
+		tabbedPane.addTab(title + "                   ", panel);
 		tabbedPane.setSelectedComponent(panel);
 	}
 	
