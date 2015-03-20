@@ -1,33 +1,23 @@
 package com.redpois0n.gitj.ui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Font;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.Dimension;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import com.redpois0n.git.Commit;
+import com.redpois0n.git.Remote;
 import com.redpois0n.git.Repository;
-import com.redpois0n.git.Tag;
-import com.redpois0n.gitj.utils.IconGenerator;
+import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.ui.CommitListPanel.CommitRenderer;
 
 @SuppressWarnings("serial")
 public class DialogRemotes extends JDialog {
-
-	public static final Color TABLE_SELECTED = new Color(51, 153, 255);
-	public static final Color TABLE_GRAY = new Color(240, 240, 240);
 
 	private Repository repo;
 	private JScrollPane scrollPane;
@@ -49,28 +39,33 @@ public class DialogRemotes extends JDialog {
 
 		model = new RemotesTableModel();
 		table = new JTable(model);
+		table.setDefaultRenderer(Object.class, new DefaultRenderer());
+		table.setRowHeight(20);
+		table.setShowGrid(false);
+		table.setFillsViewportHeight(true);
+		table.setIntercellSpacing(new Dimension(0, 0));
+		
 		scrollPane.setViewportView(table);
 		getContentPane().setLayout(groupLayout);
 
+		reload();
 	}
-
-	public class RemotesRenderer extends DefaultTableCellRenderer {
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-			if (isSelected) {
-				label.setBackground(TABLE_SELECTED);
-			} else if (row % 2 == 0) {
-				label.setBackground(TABLE_GRAY);
-			} else {
-				label.setBackground(Color.white);
+	
+	public void reload() {
+		while (model.getRowCount() > 0) {
+			model.removeRow(0);
+		}
+		
+		try {
+			for (Remote remote : repo.getRemotes()) {
+				model.addRow(new Object[] { remote.getName(), remote.getPath() } );
 			}
-
-			return label;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Main.displayError(e);
 		}
 	}
+
 
 	public class RemotesTableModel extends DefaultTableModel {
 
