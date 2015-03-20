@@ -439,6 +439,26 @@ public class Repository {
 			raw = run(new String[] { "git", "commit", "-m", message} );
 		}
 	}
+	
+	public List<Remote> getRemotes() throws Exception {
+		List<Remote> remotes = new ArrayList<Remote>();
+		
+		List<String> raw = run(new String[] { "git", "remote", "--verbose"} );
+		
+		for (String line : raw) {
+			String[] split = line.split(" ")[0].split("\t");
+			String name = split[0];
+			String path = split[1];
+			
+			System.out.println(name + ", " + path);
+			
+			Remote remote = new Remote(this, name, path);
+			
+			remotes.add(remote);
+		}
+		
+		return remotes;
+	}
 
 	/**
 	 * Create new empty repository
