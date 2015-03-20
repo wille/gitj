@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,6 +30,9 @@ import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
+	
+	public static final Color TABLE_SELECTED = new Color(51, 153, 255);
+	public static final Color TABLE_GRAY = new Color(240, 240, 240);
 
 	private JPanel contentPane;
 	private JTabbedPane tabbedPane;
@@ -52,6 +56,14 @@ public class MainFrame extends JFrame {
 				reloadCurrentRepo();
 			}
 		});
+		
+		JMenuItem mntmRemotes = new JMenuItem("Remotes");
+		mntmRemotes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				remotes();
+			}
+		});
+		mnRepository.add(mntmRemotes);
 		mnRepository.add(mntmRefresh);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -302,6 +314,14 @@ public class MainFrame extends JFrame {
 				e.printStackTrace();
 				// TODO
 			}
+		}
+	}
+	
+	public void remotes() {
+		Repository repo = getSelectedRepo();
+		
+		if (repo != null) {
+			new DialogRemotes(repo).setVisible(true);
 		}
 	}
 	
