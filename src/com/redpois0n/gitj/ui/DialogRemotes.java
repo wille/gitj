@@ -1,6 +1,8 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -15,10 +17,6 @@ import javax.swing.table.DefaultTableModel;
 import com.redpois0n.git.Remote;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
-import com.redpois0n.gitj.ui.CommitListPanel.CommitRenderer;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class DialogRemotes extends JDialog {

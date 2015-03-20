@@ -23,6 +23,6 @@ public class CodeLine {
 	}
 
 	public String getFixedLine() {
-		return getLine().replace("\t", "                  ");
+		return getLine().replace("\t", "        ");
 	}
 }
