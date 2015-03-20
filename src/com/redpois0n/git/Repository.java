@@ -454,7 +454,11 @@ public class Repository {
 			
 			Remote remote = new Remote(this, name, path);
 			
-			remotes.add(remote);
+			if (!remotes.contains(remote)) {
+				remotes.add(remote);
+
+			}
+			
 		}
 		
 		return remotes;

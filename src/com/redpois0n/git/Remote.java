@@ -23,5 +23,16 @@ public class Remote {
 	public String getPath() {
 		return this.path;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Remote) {
+			Remote re = (Remote) o;
+			
+			return re.name.equals(name) && re.path.equals(path) && re.repo.equals(repo);
+		}
+		
+		return false;
+	}
 
 }
