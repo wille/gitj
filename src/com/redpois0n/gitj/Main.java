@@ -16,7 +16,7 @@ public class Main {
 			MainFrame frame = new MainFrame();
 			frame.setVisible(true);
 			
-			if (argsContains("-debug", args)) {
+			if (argsContains("--debug", args)) {
 				File dir = new File(".");
 				Repository repository = new Repository(dir);
 
