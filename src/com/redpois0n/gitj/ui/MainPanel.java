@@ -78,18 +78,40 @@ public class MainPanel extends AbstractPanel {
 	
 	/**
 	 * Clears everything visible and reloads commit panel
+	 * @throws Exception
 	 */
 	@Override
 	public void reload() throws Exception {
 		clear();
+		reloadCommits();
+		reloadUncommited();
+	}
+	
+	/**
+	 * Reloads commit list
+	 * @throws Exception
+	 */
+	public void reloadCommits() throws Exception {
+		jcommitPane.clear();
 		jcommitPane.reload(repo.getCommits(true));
+	}
+	
+	/**
+	 * Reloads staged and unstaged files
+	 * @throws Exception
+	 */
+	public void reloadUncommited() throws Exception {
+		if (panelList instanceof PanelUncommited) {
+			PanelUncommited panel = (PanelUncommited) panelList;
+			
+			panel.reload();
+		}
 	}
 	
 	/**
 	 * Clears Diff and Commit panels
 	 */
 	public void clear() {
-		jcommitPane.clear();
 		diffHolderPanel.clear();
 		panelSummary.clear();
 	}
