@@ -25,7 +25,6 @@ import javax.swing.event.ChangeListener;
 import com.redpois0n.git.InvalidRepositoryException;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
-import com.redpois0n.gitj.RunnableReload;
 import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
 
@@ -136,8 +135,6 @@ public class MainFrame extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addChangeListener(new TabChangeListener());
 		splitPane.setRightComponent(tabbedPane);
-		
-		new Thread(new RunnableReload(this)).start();
 	}
 
 	/**
