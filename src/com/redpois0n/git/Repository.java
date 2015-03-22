@@ -57,7 +57,7 @@ public class Repository {
 			}
 
 			List<Tag> tags = getTags();
-			List<String> raw = run(new String[] { "git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s" });
+			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s");
 			Enumeration<String> e = Collections.enumeration(raw);
 
 			String s = e.nextElement();
@@ -89,7 +89,7 @@ public class Repository {
 		List<Diff> diffs = new ArrayList<Diff>();
 		
 		try {
-			List<String> raw = run(new String[] { "git", "diff", "HEAD" } );
+			List<String> raw = run("git", "diff", "HEAD");
 			Enumeration<String> e = Collections.enumeration(raw);
 
 			while (e.hasMoreElements()) {
@@ -154,7 +154,7 @@ public class Repository {
 		List<Diff> diffs = new ArrayList<Diff>();
 
 		try {
-			List<String> raw = run(new String[] { "git", "show", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--stat", "-p", c.getHash() });
+			List<String> raw = run("git", "show", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--stat", "-p", c.getHash());
 			Enumeration<String> e = Collections.enumeration(raw);
 
 			diffs.clear();
@@ -256,10 +256,10 @@ public class Repository {
 				tags.clear();
 			}
 
-			List<String> raw = run(new String[] { "git", "tag" });
+			List<String> raw = run("git", "tag");
 
 			for (String stag : raw) {
-				List<String> rawtext = run(new String[] { "git", "show", stag });			
+				List<String> rawtext = run("git", "show", stag);			
 				
 				Tag tag;
 
@@ -307,7 +307,7 @@ public class Repository {
 	 * @return ArrayList with all lines that has been read, empty list if none
 	 * @throws Exception
 	 */
-	public List<String> run(String[] c) throws Exception {
+	public List<String> run(String... c) throws Exception {
 		ProcessBuilder pb = new ProcessBuilder(c);
 		pb.directory(folder);
 		Process p = pb.start();
@@ -371,7 +371,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public List<String> getStatus() throws Exception {
-		return run(new String[] { "git", "status", "--short", "--porcelain" });
+		return run("git", "status", "--short", "--porcelain");
 	}
 
 	/**
@@ -409,7 +409,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void stage(String path) throws Exception {
-		List<String> raw = run(new String[] { "git", "add", path });
+		List<String> raw = run("git", "add", path);
 
 		for (String s : raw) {
 			Main.print(s);
@@ -424,7 +424,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void unstage(String path) throws Exception {
-		List<String> raw = run(new String[] { "git", "reset", path });
+		List<String> raw = run("git", "reset", path);
 
 		for (String s : raw) {
 			Main.print(s);
@@ -437,16 +437,16 @@ public class Repository {
 	
 	public void commit(String message, boolean amend) throws Exception {		
 		if (amend) {
-			run(new String[] { "git", "commit", "--amend", "-m", message});
+			run("git", "commit", "--amend", "-m", message);
 		} else {
-			run(new String[] { "git", "commit", "-m", message} );
+			run("git", "commit", "-m", message);
 		}
 	}
 	
 	public List<Remote> getRemotes() throws Exception {
 		List<Remote> remotes = new ArrayList<Remote>();
 		
-		List<String> raw = run(new String[] { "git", "remote", "--verbose"} );
+		List<String> raw = run("git", "remote", "--verbose");
 		
 		for (String line : raw) {
 			String[] split = line.split(" ")[0].split("\t");
@@ -472,7 +472,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void addRemote(String name, String path) throws Exception {
-		run(new String[] { "git", "remote", "add", name, path });
+		run("git", "remote", "add", name, path);
 	}
 	
 	/**
@@ -481,7 +481,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void removeRemote(String name) throws Exception {
-		run(new String[] { "git", "remote", "remove", name });
+		run("git", "remote", "remove", name);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void editRemote(String name, String path) throws Exception {
-		run(new String[] { "git", "remote", "set-url", name, path });
+		run("git", "remote", "set-url", name, path);
 	}
 
 
@@ -501,7 +501,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void init() throws Exception {
-		List<String> raw = run(new String[] { "git", "init" });
+		List<String> raw = run("git", "init" );
 
 		for (String s : raw) {
 			Main.print(s);
@@ -519,7 +519,7 @@ public class Repository {
 	 *             if invalid hash or path
 	 */
 	public String getFileAt(Commit c, String repopath) throws Exception {
-		List<String> raw = run(new String[] { "git", "show", c.getHash() + ":" + repopath });
+		List<String> raw = run("git", "show", c.getHash() + ":" + repopath);
 
 		System.out.println("git show " + c.getHash() + ":" + repopath);
 		if (raw.size() == 0 || raw.size() > 0 && raw.get(0).startsWith("fatal: Path ") || raw.size() > 0 && raw.get(0).startsWith("fatal: Invalid object name")) {
@@ -542,7 +542,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public String getAuthorName() throws Exception {
-		return run(new String[] { "git", "config", "user.name" }).get(0);
+		return run("git", "config", "user.name").get(0);
 	}
 	
 	/**
@@ -551,7 +551,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public String getAuthorEmail() throws Exception {
-		return run(new String[] { "git", "config", "user.email" }).get(0);
+		return run("git", "config", "user.email").get(0);
 	}
 	
 	/**
@@ -570,7 +570,7 @@ public class Repository {
 	public boolean isValidRepo() {
 		List<String> lines = null;
 		try {
-			lines = run(new String[] { "git", "rev-parse", "--is-inside-work-tree" } );
+			lines = run("git", "rev-parse", "--is-inside-work-tree");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -584,7 +584,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void revert(Commit c) throws Exception {
-		run(new String[] { "git", "revert", c.getHash() });
+		run("git", "revert", c.getHash());
 	}
 	
 	/**
@@ -594,7 +594,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void reset(Commit c, ResetMode mode) throws Exception {
-		run(new String[] { "git", "reset", "--" + mode.getTextual(), c.getHash() } );
+		run("git", "reset", "--" + mode.getTextual(), c.getHash());
 	}
 	
 	/**
@@ -603,7 +603,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public Branch getCurrentBranch() throws Exception {
-		List<String> raw = run(new String[] { "git", "branch", "-v" } );
+		List<String> raw = run("git", "branch", "-v");
 		
 		for (String line : raw) {
 			if (line.startsWith("* ")) {
@@ -622,7 +622,7 @@ public class Repository {
 	public List<Branch> getBranches() throws Exception {
 		List<Branch> branches = new ArrayList<Branch>();
 		
-		List<String> raw = run(new String[] { "git", "branch", "-v" } );
+		List<String> raw = run("git", "branch", "-v");
 		
 		for (String line : raw) {
 			branches.add(parseBranch(line));
@@ -672,6 +672,11 @@ public class Repository {
 		}
 		
 		return null;
+	}
+	
+
+	public void checkout(Branch b) throws Exception {
+		run("git", "checkout", b.getName());
 	}
 
 	/**
