@@ -5,7 +5,7 @@ Didn't find any good graphical git client for Linux, so here is my try. It will 
 
 ## Screenshot(s)
 
-_at 4c53a4dae51716182c86e22ee23ce1e37b0e05c1_
+_at 49bd77895cce886b09fe2bf7fc00f47891bbe080_
 
 ![Screenshot](screenshots/main.png)
 
