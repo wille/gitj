@@ -108,6 +108,11 @@ public class Repository {
 					diffs.add(diff);
 
 					Chunk current = null;
+					
+					if (!e.hasMoreElements()) {
+						diff.setDataType(Diff.DataType.BINARY);
+						break;
+					}
 
 					while (!(s = e.nextElement()).startsWith("diff --git")) {
 						if (s.startsWith("Binary files ")) {
