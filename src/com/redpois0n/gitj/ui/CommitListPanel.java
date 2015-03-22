@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -13,6 +15,8 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -22,7 +26,9 @@ import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.ui.components.ICommitClickListener;
+import com.redpois0n.gitj.utils.IOUtils;
 import com.redpois0n.gitj.utils.IconGenerator;
+import com.redpois0n.gitj.utils.MenuItemUtils;
 
 @SuppressWarnings("serial")
 public class CommitListPanel extends JScrollPane {
@@ -70,7 +76,26 @@ public class CommitListPanel extends JScrollPane {
 		        	}
 		        }
 		    }
+		});	
+		
+		JPopupMenu menu = new JPopupMenu();
+		
+		JMenuItem item = new JMenuItem("Copy SHA1 to clipboard");
+		item.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = table.getSelectedRow();
+		        
+		        if (row != -1) {
+		        	Commit c = (Commit) table.getValueAt(row, 0);
+		        	
+		        	IOUtils.setClipboard(c.getHash());
+		        }
+			}		
 		});
+		menu.add(item);
+		
+		MenuItemUtils.addPopup(table, menu);
 		
 		reload(commits);
 	}
