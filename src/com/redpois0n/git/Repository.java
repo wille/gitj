@@ -579,11 +579,28 @@ public class Repository {
 		
 		return lines != null && lines.get(0).equalsIgnoreCase("true");
 	}
+	
+	/**
+	 * Runs "git revert < commit >"
+	 * @param c
+	 * @throws Exception
+	 */
+	public void revert(Commit c) throws Exception {
+		run(new String[] { "git", "revert", c.getHash() });
+	}
 
+	/**
+	 * Returns the folder
+	 * @return
+	 */
 	public File getFolder() {
 		return this.folder;
 	}
 
+	/**
+	 * Returns repository folder name
+	 * @return
+	 */
 	public String getName() {
 		return getFolder().getName();
 	}

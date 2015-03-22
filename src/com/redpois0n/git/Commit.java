@@ -92,4 +92,8 @@ public class Commit {
 		return tags;
 	}
 
+	public void revert() throws Exception {
+		repo.revert(this);
+	}
+
 }

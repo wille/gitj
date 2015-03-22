@@ -25,7 +25,9 @@ import javax.swing.table.DefaultTableModel;
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
+import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.components.ICommitClickListener;
+import com.redpois0n.gitj.utils.DialogUtils;
 import com.redpois0n.gitj.utils.IOUtils;
 import com.redpois0n.gitj.utils.IconGenerator;
 import com.redpois0n.gitj.utils.MenuItemUtils;
@@ -44,13 +46,13 @@ public class CommitListPanel extends JScrollPane {
 	
 	private List<ICommitClickListener> listeners = new ArrayList<ICommitClickListener>();
 	
-	private Repository repo;
+	private Repository repository;
 	private List<Commit> commits;
 	private JTable table;
 	private CommitTableModel model;
 	
 	public CommitListPanel(Repository repo) throws Exception {
-		this.repo = repo;
+		this.repository = repo;
 		this.commits = repo.getCommits();
 		this.model = new CommitTableModel();
 		this.table = new JTable(model);
@@ -80,8 +82,31 @@ public class CommitListPanel extends JScrollPane {
 		
 		JPopupMenu menu = new JPopupMenu();
 		
-		JMenuItem item = new JMenuItem("Copy SHA1 to clipboard");
-		item.addActionListener(new ActionListener() {
+		JMenuItem imRevert = new JMenuItem("Revert commit");
+		imRevert.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = table.getSelectedRow();
+		        
+		        if (row != -1) {
+		        	Commit c = (Commit) table.getValueAt(row, 0);
+		        	
+		        	if (DialogUtils.confirm("Are you sure that you want to create a new commit,\nreversing all the changes in " + c.getHash(), "Revert commit")) {
+		        		try {
+							c.revert();
+							reload(repository.getCommits(true));
+						} catch (Exception e) {
+							e.printStackTrace();
+							Main.displayError(e);
+						}
+		        	}
+		        }
+			}		
+		});
+		menu.add(imRevert);
+		
+		JMenuItem imCopy = new JMenuItem("Copy SHA1 to clipboard");
+		imCopy.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				int row = table.getSelectedRow();
@@ -93,7 +118,7 @@ public class CommitListPanel extends JScrollPane {
 		        }
 			}		
 		});
-		menu.add(item);
+		menu.add(imCopy);
 		
 		MenuItemUtils.addPopup(table, menu);
 		
@@ -105,7 +130,7 @@ public class CommitListPanel extends JScrollPane {
 		
 		clear();
 		
-		if (repo.hasUnstagedFiles()) {
+		if (repository.hasUnstagedFiles()) {
 			model.addRow(new Object[] { null });
 		}
 		
