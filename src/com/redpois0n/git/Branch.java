@@ -35,15 +35,4 @@ public class Branch {
 	public void setSelected(boolean isSelected) {
 		this.isSelected = isSelected;
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (o instanceof Branch) {
-			Branch branch = (Branch) o;
-			
-			return branch.getCommit().equals(getCommit());
-		}
-		
-		return false;
-	}
 }
