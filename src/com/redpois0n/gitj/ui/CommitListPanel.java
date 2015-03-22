@@ -30,6 +30,7 @@ import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.ui.components.BranchComboBox;
 import com.redpois0n.gitj.ui.components.ICommitClickListener;
 import com.redpois0n.gitj.utils.DialogUtils;
 import com.redpois0n.gitj.utils.IOUtils;
@@ -54,6 +55,7 @@ public class CommitListPanel extends JScrollPane {
 	private List<Commit> commits;
 	private JTable table;
 	private CommitTableModel model;
+	private BranchComboBox branchBox;
 	
 	public CommitListPanel(Repository repo) throws Exception {
 		this.repository = repo;
@@ -63,6 +65,9 @@ public class CommitListPanel extends JScrollPane {
 		
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
+		
+		branchBox = new BranchComboBox(repo);
+		toolBar.add(branchBox);
 		
 		table.setDefaultRenderer(Object.class, new CommitRenderer());
 		table.setRowHeight(20);

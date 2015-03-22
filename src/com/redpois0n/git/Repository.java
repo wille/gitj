@@ -637,6 +637,7 @@ public class Repository {
 	 * @return
 	 */
 	public Branch parseBranch(String line) {
+		boolean selected = line.startsWith("* ");
 		line = line.substring(2, line.length());
 		String[] split = line.split(" ");
 		String name = split[0];
@@ -649,6 +650,7 @@ public class Repository {
 		
 		Branch branch = new Branch(name, getCommit(c));
 		branch.setStatus(status);
+		branch.setSelected(selected);
 		
 		return branch;
 	}

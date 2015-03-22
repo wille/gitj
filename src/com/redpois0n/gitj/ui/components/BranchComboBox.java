@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui.components;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.util.List;
 
 import javax.swing.ComboBoxModel;
@@ -49,6 +50,10 @@ public class BranchComboBox extends JComboBox<Branch> {
 				Branch branch = (Branch) value;
 				
 				label.setText(branch.getName());
+				
+				if (branch.isSelected()) {
+					label.setFont(new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize()));
+				}
 			}
 			
 			return label;

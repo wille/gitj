@@ -109,4 +109,14 @@ public class Commit {
 		repo.reset(this, mode);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Commit) {
+			Commit c = (Commit) o;
+			
+			return c.getHash().equals(getHash());
+		}
+		
+		return false;
+	}
 }
