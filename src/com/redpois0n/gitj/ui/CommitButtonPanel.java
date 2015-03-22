@@ -97,6 +97,8 @@ public class CommitButtonPanel extends JPanel {
 		});
 		scrollPane.setViewportView(textPane);
 		setLayout(groupLayout);
+		
+		textPane.requestFocusInWindow();
 
 	}
 	

@@ -2,6 +2,8 @@ package com.redpois0n.gitj.ui.components;
 
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
@@ -34,7 +36,7 @@ public class BranchComboBox extends JComboBox<Branch> {
 			public void itemStateChanged(ItemEvent event) {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
 					Object o = event.getItem();
-					System.out.println(o.toString());
+
 					if (o instanceof Branch) {
 						Branch branch = (Branch) o;
 												
@@ -56,7 +58,7 @@ public class BranchComboBox extends JComboBox<Branch> {
 		model.removeAllElements();
 
 		for (Branch branch : list) {
-			model.addElement(branch);
+			this.addItem(branch);
 		}
 	}
 
@@ -75,7 +77,7 @@ public class BranchComboBox extends JComboBox<Branch> {
 					label.setFont(new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize()));
 				}
 			}
-			
+						
 			return label;
 		}
 	}
