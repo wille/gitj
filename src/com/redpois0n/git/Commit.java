@@ -92,8 +92,21 @@ public class Commit {
 		return tags;
 	}
 
+	/**
+	 * Same as Repository.revert()
+	 * @throws Exception
+	 */
 	public void revert() throws Exception {
 		repo.revert(this);
+	}
+	
+	/**
+	 * Same as Repository.reset()
+	 * @param mode
+	 * @throws Exception
+	 */
+	public void reset(ResetMode mode) throws Exception {
+		repo.reset(this, mode);
 	}
 
 }

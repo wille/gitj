@@ -105,6 +105,21 @@ public class CommitListPanel extends JScrollPane {
 		});
 		menu.add(imRevert);
 		
+		JMenuItem imReset = new JMenuItem("Reset current branch to this commit");
+		imReset.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = table.getSelectedRow();
+		        
+		        if (row != -1) {
+		        	Commit c = (Commit) table.getValueAt(row, 0);
+		        	
+		        	new DialogReset(c).setVisible(true);
+		        }
+			}		
+		});
+		menu.add(imReset);
+		
 		JMenuItem imCopy = new JMenuItem("Copy SHA1 to clipboard");
 		imCopy.addActionListener(new ActionListener() {
 			@Override

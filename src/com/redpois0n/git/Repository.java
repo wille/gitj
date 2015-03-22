@@ -588,6 +588,10 @@ public class Repository {
 	public void revert(Commit c) throws Exception {
 		run(new String[] { "git", "revert", c.getHash() });
 	}
+	
+	public void reset(Commit c, ResetMode mode) throws Exception {
+		run(new String[] { "git", "reset", "--" + mode.getTextual(), c.getHash() } );
+	}
 
 	/**
 	 * Returns the folder
