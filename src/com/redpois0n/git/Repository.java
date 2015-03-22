@@ -431,12 +431,23 @@ public class Repository {
 		}
 	}
 	
+	/**
+	 * Creates new normal commit
+	 * @param message
+	 * @throws Exception
+	 */
 	public void commit(String message) throws Exception {
-		commit(message, false);
+		commit(message, CommitOption.NORMAL);
 	}
 	
-	public void commit(String message, boolean amend) throws Exception {		
-		if (amend) {
+	/**
+	 * Creates new commit
+	 * @param message
+	 * @param mode
+	 * @throws Exception
+	 */
+	public void commit(String message, CommitOption mode) throws Exception {		
+		if (mode == CommitOption.AMEND) {
 			run("git", "commit", "--amend", "-m", message);
 		} else {
 			run("git", "commit", "-m", message);

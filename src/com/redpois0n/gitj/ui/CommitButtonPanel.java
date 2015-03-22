@@ -17,6 +17,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.redpois0n.git.CommitOption;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.utils.DialogUtils;
 
 @SuppressWarnings("serial")
 public class CommitButtonPanel extends JPanel {
@@ -27,8 +28,8 @@ public class CommitButtonPanel extends JPanel {
 	private JTextPane textPane;
 	private JButton btnCommit;
 
-	public CommitButtonPanel(CommitPanel parent) {
-		this.parent = parent;
+	public CommitButtonPanel(CommitPanel p) {
+		this.parent = p;
 		
 		try {
 			lblAuthor = new JLabel(parent.getRepository().getAuthorString());
@@ -43,6 +44,24 @@ public class CommitButtonPanel extends JPanel {
 		for (CommitOption o : CommitOption.values()) {
 			comboBox.addItem(o.getTextual() + " - " + o.getDescription());
 		}
+		
+		comboBox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				String selected = comboBox.getSelectedItem().toString();
+				
+				if (selected.startsWith(CommitOption.AMEND.getTextual())) {
+					if (DialogUtils.confirm("Do you want to replace the commit message with the message from your latest commit?", "Amend Commit")) {
+						try {
+							textPane.setText(parent.getRepository().getCommits().get(0).getComment());
+						} catch (Exception e) {
+							e.printStackTrace();
+							Main.displayError(e);
+						}
+					}
+				}
+			}
+		});
 		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
@@ -108,8 +127,19 @@ public class CommitButtonPanel extends JPanel {
 	}
 	
 	public void commit() {
+		String item = comboBox.getSelectedItem().toString();
+		
+		CommitOption mode = null;
+		
+		for (CommitOption o : CommitOption.values()) {
+			if (o.getTextual().equals(item.split(" - ")[0])) {
+				mode = o;
+				break;
+			}
+		}
+		
 		try {
-			parent.getRepository().commit(textPane.getText().trim());
+			parent.getRepository().commit(textPane.getText().trim(), mode);
 			parent.cancel();
 		} catch (Exception e) {
 			e.printStackTrace();
