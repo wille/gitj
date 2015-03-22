@@ -39,6 +39,7 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabbedPane;
 
 	public MainFrame() {
+		setIconImage(IconUtils.getIcon("icon").getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		
