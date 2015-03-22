@@ -105,6 +105,16 @@ public class MainFrame extends JFrame {
 				stageSelected();
 			}
 		});
+		
+		JButton btnCheckout = new JButton("Checkout");
+		btnCheckout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		toolBar.add(btnCheckout);
+		btnCheckout.setIcon(IconUtils.getIcon("checkout"));
+		
 		btnAdd.setIcon(IconUtils.getIcon("add-big"));
 		toolBar.add(btnAdd);
 		
