@@ -16,6 +16,7 @@ import com.redpois0n.gitj.Main;
 
 public class Repository {
 
+	private Branch currentBranch;
 	private File folder;
 	private List<Commit> commits;
 	private List<Tag> tags;
@@ -589,8 +590,84 @@ public class Repository {
 		run(new String[] { "git", "revert", c.getHash() });
 	}
 	
+	/**
+	 * Runs "git reset --< mode > < commit >"
+	 * @param c
+	 * @param mode
+	 * @throws Exception
+	 */
 	public void reset(Commit c, ResetMode mode) throws Exception {
 		run(new String[] { "git", "reset", "--" + mode.getTextual(), c.getHash() } );
+	}
+	
+	/**
+	 * Returns current selected branch for this repository
+	 * @return
+	 * @throws Exception
+	 */
+	public Branch getCurrentBranch() throws Exception {
+		List<String> raw = run(new String[] { "git", "branch", "-v" } );
+		
+		for (String line : raw) {
+			if (line.startsWith("* ")) {
+				return parseBranch(line);
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Returns all branches for this repository, including current
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Branch> getBranches() throws Exception {
+		List<Branch> branches = new ArrayList<Branch>();
+		
+		List<String> raw = run(new String[] { "git", "branch", "-v" } );
+		
+		for (String line : raw) {
+			branches.add(parseBranch(line));
+		}
+		
+		return branches;
+	}
+	
+	/**
+	 * Parses branch from line
+	 * @param line
+	 * @return
+	 */
+	public Branch parseBranch(String line) {
+		line = line.substring(2, line.length());
+		String[] split = line.split(" ");
+		String name = split[0];
+		String c = split[1];
+		String status = null;
+		
+		if (line.contains(" [")) {
+			status = line.substring(line.indexOf(" ["), line.lastIndexOf("] "));
+		}
+		
+		Branch branch = new Branch(name, getCommit(c));
+		branch.setStatus(status);
+		
+		return branch;
+	}
+	
+	public Commit getCommit(String hash) {
+		try {
+			for (Commit c : getCommits()) {
+				if (c.getHash().startsWith(hash)) {
+					return c;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 
 	/**
