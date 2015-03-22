@@ -175,6 +175,8 @@ public class CommitListPanel extends JScrollPane {
 		for (Commit c : commits) {
 			model.addRow(new Object[] { c });
 		}
+		
+		branchBox.reload(repository.getBranches());
 	}
 	
 	public void clear() {

@@ -655,6 +655,11 @@ public class Repository {
 		return branch;
 	}
 	
+	/***
+	 * Gets commit from hash
+	 * @param hash
+	 * @return
+	 */
 	public Commit getCommit(String hash) {
 		try {
 			for (Commit c : getCommits()) {
