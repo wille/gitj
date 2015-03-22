@@ -117,6 +117,15 @@ public class MainFrame extends JFrame {
 		btnRemove.setIcon(IconUtils.getIcon("remove-big"));
 		toolBar.add(btnRemove);
 		
+		JButton btnReload = new JButton("Reload");
+		btnReload.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				reloadCurrentRepo();
+			}
+		});
+		btnReload.setIcon(IconUtils.getIcon("update"));
+		toolBar.add(btnReload);
+		
 		JButton btnFetch = new JButton("Fetch");
 		btnFetch.setIcon(IconUtils.getIcon("fetch"));
 		toolBar.add(btnFetch);
