@@ -16,7 +16,6 @@ import com.redpois0n.gitj.Main;
 
 public class Repository {
 
-	private Branch currentBranch;
 	private File folder;
 	private List<Commit> commits;
 	private List<Tag> tags;
@@ -436,13 +435,11 @@ public class Repository {
 		commit(message, false);
 	}
 	
-	public void commit(String message, boolean amend) throws Exception {
-		List<String> raw;
-		
+	public void commit(String message, boolean amend) throws Exception {		
 		if (amend) {
-			raw = run(new String[] { "git", "commit", "--amend", "-m", message});
+			run(new String[] { "git", "commit", "--amend", "-m", message});
 		} else {
-			raw = run(new String[] { "git", "commit", "-m", message} );
+			run(new String[] { "git", "commit", "-m", message} );
 		}
 	}
 	
