@@ -2,8 +2,8 @@ package com.redpois0n.gitj.ui.components;
 
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -23,32 +23,38 @@ public class BranchComboBox extends JComboBox<Branch> {
 	private DefaultComboBoxModel<Branch> model;
 
 	public BranchComboBox(Repository repo) throws Exception {
+		this.repository = repo;
 		model = new DefaultComboBoxModel<Branch>();
 		
 		super.setRenderer(new Renderer());
 		super.setModel(model);
-		super.addActionListener(new ActionListener() {
+
+		super.addItemListener(new ItemListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (getSelectedItem() instanceof Branch) {
-					Branch branch = (Branch) getSelectedItem();
-					
-					try {
-						repository.checkout(branch);
-					} catch (Exception e1) {
-						e1.printStackTrace();
-						Main.displayError(e1);
+			public void itemStateChanged(ItemEvent event) {
+				if (event.getStateChange() == ItemEvent.SELECTED) {
+					Object o = event.getItem();
+					System.out.println(o.toString());
+					if (o instanceof Branch) {
+						Branch branch = (Branch) o;
+												
+						try {
+							repository.checkout(branch);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+							Main.displayError(e1);
+						}
 					}
 				}
 			}
 		});
-		
+
 		reload(repo.getBranches());
 	}
 	
 	public void reload(List<Branch> list) {
 		model.removeAllElements();
-		
+
 		for (Branch branch : list) {
 			model.addElement(branch);
 		}
