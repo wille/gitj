@@ -54,6 +54,7 @@ public class CommitButtonPanel extends JPanel {
 					if (DialogUtils.confirm("Do you want to replace the commit message with the message from your latest commit?", "Amend Commit")) {
 						try {
 							textPane.setText(parent.getRepository().getCommits().get(0).getComment());
+							btnCommit.setEnabled(true);
 						} catch (Exception e) {
 							e.printStackTrace();
 							Main.displayError(e);
