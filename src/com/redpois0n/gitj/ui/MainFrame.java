@@ -109,7 +109,7 @@ public class MainFrame extends JFrame {
 		JButton btnCheckout = new JButton("Checkout");
 		btnCheckout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				checkout();
 			}
 		});
 		toolBar.add(btnCheckout);
@@ -351,6 +351,10 @@ public class MainFrame extends JFrame {
 		if (repo != null) {
 			new DialogRemotes(repo).setVisible(true);
 		}
+	}
+	
+	public void checkout() {
+		
 	}
 	
 	public class TabChangeListener implements ChangeListener {
