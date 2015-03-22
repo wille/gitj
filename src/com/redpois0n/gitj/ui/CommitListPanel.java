@@ -125,6 +125,11 @@ public class CommitListPanel extends JScrollPane {
 		reload(commits);
 	}
 	
+	/**
+	 * Reloads the commit list. If repository has unstaged changes, will add "null" to the top which is the row "Uncommited changes"
+	 * @param commits
+	 * @throws Exception
+	 */
 	public void reload(List<Commit> commits) throws Exception {
 		this.commits = commits;
 		
@@ -145,17 +150,25 @@ public class CommitListPanel extends JScrollPane {
 		}
 	}
 	
+	/**
+	 * Adds commit click listener
+	 * @param l
+	 */
 	public void addListener(ICommitClickListener l) {
 		listeners.add(l);
 	}
 	
+	/**
+	 * Removes commit click listener
+	 * @param l
+	 */
 	public void removeListener(ICommitClickListener l) {
 		listeners.remove(l);
 	}
-	
+
 	public class CommitRenderer extends DefaultTableCellRenderer {
 		
-		private Map<Tag, ImageIcon> cache = new HashMap<Tag, ImageIcon>();
+		private final Map<Tag, ImageIcon> cache = new HashMap<Tag, ImageIcon>();
 		
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
