@@ -1,5 +1,6 @@
 package com.redpois0n.gitj.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -14,11 +15,14 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JToolBar;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -57,13 +61,22 @@ public class CommitListPanel extends JScrollPane {
 		this.model = new CommitTableModel();
 		this.table = new JTable(model);
 		
+		JToolBar toolBar = new JToolBar();
+		toolBar.setFloatable(false);
+		
 		table.setDefaultRenderer(Object.class, new CommitRenderer());
 		table.setRowHeight(20);
 		table.setShowGrid(false);
 		table.setFillsViewportHeight(true);
 		table.setIntercellSpacing(new Dimension(0, 0));
 		
-		super.setViewportView(table);
+		JPanel panel = new JPanel();
+
+		panel.setLayout(new BorderLayout(0, 0));	
+		panel.add(table, BorderLayout.CENTER);
+		panel.add(toolBar, BorderLayout.NORTH);
+
+		super.setViewportView(panel);
 		
 		table.addMouseListener(new MouseAdapter() {
 		    @Override
@@ -236,7 +249,7 @@ public class CommitListPanel extends JScrollPane {
 			
 			if (isSelected) {
 				label.setBackground(TABLE_SELECTED);
-			} else if (row % 2 == 0) {
+			} else if (row % 2 == 1) {
 				label.setBackground(TABLE_GRAY);
 			} else {
 				label.setBackground(Color.white);
