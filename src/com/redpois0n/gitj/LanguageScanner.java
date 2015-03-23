@@ -4,13 +4,16 @@ import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.utils.FileUtils;
 
 public class LanguageScanner {
 	
+	private final Map<File, Integer> count = new HashMap<File, Integer>();
 	private Repository repo;
 
 	public LanguageScanner(Repository repo) {
@@ -70,11 +73,23 @@ public class LanguageScanner {
 					for (String s : lang.getExtensions()) {
 						if (file.getName().endsWith("." + s)) {
 							lang.incrementFiles();
-							lang.addLineCount(FileUtils.countLines(file));
+							lang.addLineCount(count(file));
 						}
 					}
 				}
 			}
 		}		
+	}
+	
+	private int count(File file) throws Exception {
+		if (count.containsKey(file)) {
+			return count.get(file);
+		} else {
+			int c = FileUtils.countLines(file);
+			
+			count.put(file, c);
+			
+			return c;
+		}
 	}
 }
