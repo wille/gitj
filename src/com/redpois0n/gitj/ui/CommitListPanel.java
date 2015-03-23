@@ -73,18 +73,6 @@ public class CommitListPanel extends JScrollPane {
 		langToolBar = new JToolBar();
 		langToolBar.setFloatable(false);
 		langBar = new LanguageBar();
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					langBar.setLanguages(new LanguageScanner(repository).scan());
-					langBar.repaint();
-				} catch (Exception e) {
-					e.printStackTrace();
-					Main.displayError(e);
-				}
-			}
-		}).start();
 		langToolBar.add(langBar);
 		
 		toolBar = new JToolBar();
@@ -203,6 +191,19 @@ public class CommitListPanel extends JScrollPane {
 		}
 		
 		branchBox.reload(repository.getBranches());
+		
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					langBar.setLanguages(new LanguageScanner(repository).scan());
+					langBar.repaint();
+				} catch (Exception e) {
+					e.printStackTrace();
+					Main.displayError(e);
+				}
+			}
+		}).start();
 	}
 	
 	public void clear() {
@@ -240,7 +241,7 @@ public class CommitListPanel extends JScrollPane {
 		
 		revalidate();
 	}
-
+	
 	public class CommitRenderer extends DefaultTableCellRenderer {
 		
 		private final Map<Tag, ImageIcon> cache = new HashMap<Tag, ImageIcon>();
