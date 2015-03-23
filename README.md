@@ -10,6 +10,8 @@ Focus on graphics
 - Pulling
 - Fetching
 - Anything with branches (supports checkout)
+- Bookmarks
+- ...
 
 ## Screenshot(s)
 
