@@ -154,6 +154,11 @@ public class MainFrame extends JFrame {
 		});
 		
 		JButton btnTag = new JButton("Tag");
+		btnTag.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tag();
+			}
+		});
 		btnTag.setIcon(IconUtils.getIcon("tag-big"));
 		toolBar.add(btnTag);
 		btnReload.setIcon(IconUtils.getIcon("update"));
@@ -377,6 +382,10 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void checkout() {
+		
+	}
+	
+	public void tag() {
 		
 	}
 	

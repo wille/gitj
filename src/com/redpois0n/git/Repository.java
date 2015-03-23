@@ -295,6 +295,40 @@ public class Repository {
 			return tags;
 		}
 	}
+	
+	/**
+	 * Creates tag
+	 * @param tag
+	 * @throws Exception
+	 */
+	public void createTag(Tag tag) throws Exception {
+		createTag(tag.getType(), tag.getTag(), getCommit(tag.getHash()), tag.getMessage());
+	}
+	
+	/**
+	 * Creates new tag
+	 * @param type Tag type
+	 * @param name Name of tag
+	 * @param c Commit tag will be for
+	 * @param message Message, if annotated
+	 * @throws Exception
+	 */
+	public void createTag(Tag.Type type, String name, Commit c, String message) throws Exception {
+		if (type == Tag.Type.ANNOTATED) {
+			run("git", "tag", name, "--annotate", "-m", message, c.getHash());
+		} else {
+			run("git", "tag", name, c.getHash());
+		}
+	}
+	
+	/**
+	 * Deletes tag
+	 * @param name
+	 * @throws Exception
+	 */
+	public void deleteTag(String name) throws Exception {
+		run("git", "tag", "--delete", name);
+	}
 
 	public List<String> run(String c) throws Exception {
 		return run(c.split(" "));
