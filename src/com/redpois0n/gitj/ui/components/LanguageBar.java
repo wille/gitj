@@ -42,7 +42,7 @@ public class LanguageBar extends JComponent implements MouseListener, MouseMotio
 		super.paintComponent(g);
 		
 		g.setColor(Color.white);
-		g.drawRect(0, 0, getWidth(), getHeight());
+		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		int max = 0;
 		
@@ -59,9 +59,10 @@ public class LanguageBar extends JComponent implements MouseListener, MouseMotio
 			
 			g.setColor(Color.black);
 			g.setFont(FONT_NORMAL);
-			g.drawString(s, startText + 15 + g.getFontMetrics().stringWidth(percent), 5 + g.getFontMetrics().getHeight());
+			g.drawString(s, startText + 15, 5 + g.getFontMetrics().getHeight());
+			g.setColor(Color.gray);
 			g.setFont(FONT_BOLD);
-			g.drawString(percent, startText + 15, 5 + g.getFontMetrics().getHeight());
+			g.drawString(percent, startText + 17 + g.getFontMetrics().stringWidth(s), 5 + g.getFontMetrics().getHeight());
 			
 			if (l.isOther()) {
 				g.setColor(Color.lightGray);
