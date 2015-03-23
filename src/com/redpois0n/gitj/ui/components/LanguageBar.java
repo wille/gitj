@@ -9,6 +9,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -21,13 +22,17 @@ public class LanguageBar extends JComponent implements MouseListener, MouseMotio
 	public static final Font FONT_BOLD = new Font("Arial", Font.BOLD, 12);
 	public static final Font FONT_NORMAL = new Font("Arial", Font.PLAIN, 12);
 
-	private List<Language> languages;
+	private List<Language> languages = new ArrayList<Language>();
 	
-	public LanguageBar(List<Language> languages) {
-		this.languages = languages;
+	public LanguageBar() {
 		super.setPreferredSize(new Dimension(50, 40));
 		super.addMouseListener(this);
 		super.addMouseMotionListener(this);
+	}
+	
+	public LanguageBar(List<Language> languages) {
+		this();
+		this.languages = languages;
 	}
 	
 	@Override
@@ -75,6 +80,10 @@ public class LanguageBar extends JComponent implements MouseListener, MouseMotio
 			
 			start += todraw;
 		}
+	}
+	
+	public void setLanguages(List<Language> languages) {
+		this.languages = languages;
 	}
 	
 	@Override

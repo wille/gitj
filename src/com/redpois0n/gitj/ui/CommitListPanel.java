@@ -72,7 +72,19 @@ public class CommitListPanel extends JScrollPane {
 		
 		langToolBar = new JToolBar();
 		langToolBar.setFloatable(false);
-		langBar = new LanguageBar(new LanguageScanner(repository).scan());
+		langBar = new LanguageBar();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					langBar.setLanguages(new LanguageScanner(repository).scan());
+					langBar.repaint();
+				} catch (Exception e) {
+					e.printStackTrace();
+					Main.displayError(e);
+				}
+			}
+		}).start();
 		langToolBar.add(langBar);
 		
 		toolBar = new JToolBar();
