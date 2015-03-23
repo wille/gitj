@@ -61,7 +61,7 @@ public class LanguageScanner {
 
 	}
 	
-	private void check(List<Language> langs, File dir) {
+	private void check(List<Language> langs, File dir) throws Exception {
 		for (File file : dir.listFiles()) {
 			if (file.isDirectory()) {
 				check(langs, file);
@@ -70,7 +70,7 @@ public class LanguageScanner {
 					for (String s : lang.getExtensions()) {
 						if (file.getName().endsWith("." + s)) {
 							lang.incrementFiles();
-							lang.addLineCount(10);
+							lang.addLineCount(FileUtils.countLines(file));
 						}
 					}
 				}
