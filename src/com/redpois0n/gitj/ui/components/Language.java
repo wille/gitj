@@ -18,6 +18,16 @@ public class Language {
 		this.files = files;
 		this.linecount = linecount;
 	}
+	
+	public Language(String language, Color color, List<String> extensions) {
+		this.language = language;
+		this.color = color;
+		this.extensions = extensions;
+	}
+	
+	public Language(String language) {
+		this.language = language;
+	}
 
 	public String getLanguage() {
 		return language;
@@ -27,8 +37,16 @@ public class Language {
 		return color;
 	}
 	
+	public void setColor(Color decode) {
+		this.color = color;
+	}
+	
 	public List<String> getExtensions() {
 		return extensions;
+	}
+	
+	public void setExtensions(List<String> extensions) {
+		this.extensions = extensions;
 	}
 
 	public int getFiles() {
