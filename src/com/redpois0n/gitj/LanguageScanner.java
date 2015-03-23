@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.redpois0n.git.Repository;
-import com.redpois0n.gitj.ui.components.Language;
 import com.redpois0n.gitj.utils.FileUtils;
 
 public class LanguageScanner {

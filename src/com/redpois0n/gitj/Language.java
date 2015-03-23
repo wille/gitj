@@ -1,4 +1,4 @@
-package com.redpois0n.gitj.ui.components;
+package com.redpois0n.gitj;
 
 import java.awt.Color;
 import java.util.List;

@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
+import com.redpois0n.gitj.Language;
+
 @SuppressWarnings("serial")
 public class LanguageBar extends JComponent {
 	
