@@ -37,7 +37,7 @@ public class Language {
 		return color;
 	}
 	
-	public void setColor(Color decode) {
+	public void setColor(Color color) {
 		this.color = color;
 	}
 	
@@ -55,6 +55,14 @@ public class Language {
 
 	public int getLineCount() {
 		return linecount;
+	}
+
+	public void addLineCount(int i) {
+		linecount += i;
+	}
+
+	public void incrementFiles() {
+		files++;
 	}
 
 }

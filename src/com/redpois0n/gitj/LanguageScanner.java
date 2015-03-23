@@ -10,9 +10,11 @@ import com.redpois0n.gitj.ui.components.Language;
 import com.redpois0n.gitj.utils.FileUtils;
 
 public class LanguageScanner {
+	
+	private Repository repo;
 
 	public LanguageScanner(Repository repo) {
-
+		this.repo = repo;
 	}
 
 	public List<Language> scan() throws Exception {
@@ -43,11 +45,34 @@ public class LanguageScanner {
 			}
 		}
 		
+		check(langs, repo.getFolder());
+		
+		List<Language> used = new ArrayList<Language>();
+		
 		for (Language l : langs) {
-			System.out.println(l.getLanguage());
+			if (l.getLineCount() > 0 && l.getFiles() > 0) {
+				used.add(l);
+			}
 		}
 		
-		return langs;
+		return used;
 
+	}
+	
+	private void check(List<Language> langs, File dir) {
+		for (File file : dir.listFiles()) {
+			if (file.isDirectory()) {
+				check(langs, file);
+			} else {
+				for (Language lang : langs) {
+					for (String s : lang.getExtensions()) {
+						if (file.getName().endsWith("." + s)) {
+							lang.incrementFiles();
+							lang.addLineCount(10);
+						}
+					}
+				}
+			}
+		}		
 	}
 }

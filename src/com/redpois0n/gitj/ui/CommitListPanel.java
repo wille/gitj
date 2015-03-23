@@ -28,9 +28,11 @@ import javax.swing.table.DefaultTableModel;
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
+import com.redpois0n.gitj.LanguageScanner;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.components.BranchComboBox;
 import com.redpois0n.gitj.ui.components.ICommitClickListener;
+import com.redpois0n.gitj.ui.components.LanguageBar;
 import com.redpois0n.gitj.utils.DialogUtils;
 import com.redpois0n.gitj.utils.IOUtils;
 import com.redpois0n.gitj.utils.IconGenerator;
@@ -74,11 +76,15 @@ public class CommitListPanel extends JScrollPane {
 		table.setFillsViewportHeight(true);
 		table.setIntercellSpacing(new Dimension(0, 0));
 		
+		LanguageBar langPanel = new LanguageBar(new LanguageScanner(repository).scan());
+		
 		JPanel panel = new JPanel();
 
 		panel.setLayout(new BorderLayout(0, 0));	
 		panel.add(table, BorderLayout.CENTER);
-		panel.add(toolBar, BorderLayout.NORTH);
+		panel.add(toolBar, BorderLayout.NORTH);		
+		panel.add(langPanel, BorderLayout.NORTH);
+
 
 		super.setViewportView(panel);
 		
