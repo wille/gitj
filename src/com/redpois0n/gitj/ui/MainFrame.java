@@ -152,6 +152,10 @@ public class MainFrame extends JFrame {
 				reloadCurrentRepo();
 			}
 		});
+		
+		JButton btnTag = new JButton("Tag");
+		btnTag.setIcon(IconUtils.getIcon("tag-big"));
+		toolBar.add(btnTag);
 		btnReload.setIcon(IconUtils.getIcon("update"));
 		toolBar.add(btnReload);
 		

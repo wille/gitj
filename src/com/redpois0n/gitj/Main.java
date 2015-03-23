@@ -12,10 +12,10 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			
+
 			MainFrame frame = new MainFrame();
 			frame.setVisible(true);
-			
+
 			if (argsContains("--debug", args)) {
 				File dir = new File(".");
 				Repository repository = new Repository(dir);
@@ -26,21 +26,21 @@ public class Main {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	public static boolean argsContains(String s, String[] args) {
 		for (String arg : args) {
 			if (arg.equalsIgnoreCase(s)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
 	public static void displayError(Exception e) {
-		
+
 	}
-	
+
 	public static void print(String s) {
 		System.out.println(s);
 	}
