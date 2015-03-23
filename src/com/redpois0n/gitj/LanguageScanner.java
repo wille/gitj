@@ -20,13 +20,7 @@ public class LanguageScanner {
 		this.repo = repo;
 	}
 
-	/**
-	 * Scans all tracked files in this repository
-	 * @param all If we include non-programming language files, like YAML, XML, Markdown
-	 * @return
-	 * @throws Exception
-	 */
-	public List<Language> scan(boolean all) throws Exception {
+	public List<Language> scan() throws Exception {
 		List<String> raw = FileUtils.readFile(new File("languages.yml"));
 
 		List<Language> langs = new ArrayList<Language>();

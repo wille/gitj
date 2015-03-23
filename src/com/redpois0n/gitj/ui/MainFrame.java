@@ -16,18 +16,25 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.InvalidRepositoryException;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
+import com.redpois0n.gitj.ui.pathtree.PathJTree;
+import com.redpois0n.gitj.ui.pathtree.PathListener;
+import com.redpois0n.gitj.ui.pathtree.PathTreeModel;
+import com.redpois0n.gitj.ui.pathtree.PathTreeNode;
 import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
@@ -38,6 +45,10 @@ public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTabbedPane tabbedPane;
+	private JTabbedPane leftTabbedPane;
+	private JSplitPane splitPane;
+	private PathJTree tree;
+	private PathTreeModel model;
 
 	public MainFrame() {
 		setIconImage(IconUtils.getIcon("icon").getImage());
@@ -188,14 +199,59 @@ public class MainFrame extends JFrame {
 		btnPush.setIcon(IconUtils.getIcon("push"));
 		toolBar.add(btnPush);
 		
-		JSplitPane splitPane = new JSplitPane();
+		splitPane = new JSplitPane();
 		contentPane.add(splitPane, BorderLayout.CENTER);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addChangeListener(new TabChangeListener());
 		splitPane.setRightComponent(tabbedPane);
+		
+		JScrollPane scrollPaneTree = new JScrollPane();
+		tree = new PathJTree();
+		model = new PathTreeModel(new PathTreeNode("root", null));
+		//tree.setRootVisible(false);
+		tree.setModel(model);
+		tree.setDelimiter(File.separator);
+		tree.addPathListener(new PathListener() {
+			@Override
+			public void pathSelected(String path) {
+				File dir = new File(path);
+				
+				if (dir.isDirectory()) {
+					for (File file : dir.listFiles()) {
+						String name = file.getName();
+						if (tree.exists(path + File.separator + name)) {
+							return;
+						}
+						
+						DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getNodeFromPath(path);
+						model.insertNodeInto(new PathTreeNode(name, null), node, node.getChildCount());
+					}
+				}
+			}
+		});
+		scrollPaneTree.setViewportView(tree);
+		
+		leftTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		leftTabbedPane.addTab("File Tree", scrollPaneTree);
+		splitPane.setLeftComponent(leftTabbedPane);
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				splitPane.setDividerLocation(splitPane.getSize().width / 2);
+			}
+		});
 	}
+	
+	public void addToTree(String dir) {
+		model.addRoot(new PathTreeNode(dir, null));
 
+		for (int i = 0; i < tree.getRowCount(); i++) {
+			tree.expandRow(i);
+		}
+	}
+	
 	/**
 	 * Loads repository in new panel
 	 * @param repository
@@ -205,6 +261,8 @@ public class MainFrame extends JFrame {
 			MainPanel pane = new MainPanel(this, repository);
 			
 			addPanel(repository.getFolder().getName(), pane);
+			
+			addToTree(repository.getFolder().getAbsolutePath());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
