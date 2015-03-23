@@ -8,7 +8,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -119,7 +118,7 @@ public class DialogTags extends JDialog {
 	}
 
 	public void add() {
-		new DialogCreateTag(this).setVisible(true);
+		new DialogCreateTag(this, repo).setVisible(true);
 	}
 	
 	public void remove() {
