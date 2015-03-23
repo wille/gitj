@@ -32,11 +32,11 @@ import com.redpois0n.git.InvalidRepositoryException;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
-import com.redpois0n.gitj.ui.pathtree.PathJTree;
-import com.redpois0n.gitj.ui.pathtree.PathListener;
-import com.redpois0n.gitj.ui.pathtree.PathTreeModel;
-import com.redpois0n.gitj.ui.pathtree.PathTreeNode;
 import com.redpois0n.gitj.utils.IconUtils;
+import com.redpois0n.pathtree.PathJTree;
+import com.redpois0n.pathtree.PathListener;
+import com.redpois0n.pathtree.PathTreeModel;
+import com.redpois0n.pathtree.PathTreeNode;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
