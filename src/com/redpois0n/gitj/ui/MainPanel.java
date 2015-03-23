@@ -15,12 +15,14 @@ import javax.swing.border.EmptyBorder;
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Diff;
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.LanguageScanner;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.components.DiffHolderPanel;
 import com.redpois0n.gitj.ui.components.DiffPanel;
 import com.redpois0n.gitj.ui.components.ICommitClickListener;
 import com.redpois0n.gitj.ui.components.IDiffSelectionListener;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
+import com.redpois0n.gitj.ui.components.LanguageBar;
 import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
@@ -33,7 +35,7 @@ public class MainPanel extends AbstractPanel {
 	private DiffHolderPanel diffHolderPanel;
 	private JScrollPane scrollPaneDiffs;
 	private PanelSummary panelSummary;
-
+	private LanguageBar langBar;
 	private JPanel panelList;
 
 	/**
@@ -53,6 +55,9 @@ public class MainPanel extends AbstractPanel {
 		splitPaneMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
 
 		add(splitPaneMain, BorderLayout.CENTER);
+		
+		langBar = new LanguageBar();
+		add(langBar, BorderLayout.NORTH);
 
 		jcommitPane = new CommitListPanel(repository);
 		jcommitPane.addListener(new CommitClickListener());
@@ -76,6 +81,8 @@ public class MainPanel extends AbstractPanel {
 
 		splitPaneLow.setLeftComponent(panelSummary);
 		panelSummary.addListener(new DiffSelectionListener());
+		
+		reloadLangBar();
 	}
 	
 	public void reloadDividers() {
@@ -96,6 +103,23 @@ public class MainPanel extends AbstractPanel {
 		reloadUncommited();	
 		
 		reloadDividers();
+		
+		reloadLangBar();
+	}
+	
+	public void reloadLangBar() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					langBar.setLanguages(new LanguageScanner(repo).scan());
+					langBar.repaint();
+				} catch (Exception e) {
+					e.printStackTrace();
+					Main.displayError(e);
+				}
+			}
+		}).start();
 	}
 
 	/**

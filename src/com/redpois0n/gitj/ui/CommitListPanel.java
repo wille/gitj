@@ -59,9 +59,6 @@ public class CommitListPanel extends JScrollPane {
 	private JTable table;
 	private CommitTableModel model;
 	private BranchComboBox branchBox;
-	private JComponent currentToolBarItem;
-	private LanguageBar langBar;
-	private JToolBar langToolBar;
 	private JToolBar toolBar;
 	private JPanel panel;
 	
@@ -70,20 +67,7 @@ public class CommitListPanel extends JScrollPane {
 		this.commits = repo.getCommits();
 		this.model = new CommitTableModel();
 		this.table = new JTable(model);
-		
-		langToolBar = new JToolBar();
-		langToolBar.setFloatable(false);
-		langBar = new LanguageBar();
-		langToolBar.add(langBar);
-		JButton button = new JButton("View");
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
 
-			}
-		});
-		langToolBar.add(button);
-		
 		toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		
@@ -95,14 +79,12 @@ public class CommitListPanel extends JScrollPane {
 		table.setShowGrid(false);
 		table.setFillsViewportHeight(true);
 		table.setIntercellSpacing(new Dimension(0, 0));
-		
-		currentToolBarItem = langToolBar;
-		
+				
 		panel = new JPanel();
 
 		panel.setLayout(new BorderLayout(0, 0));	
 		panel.add(table, BorderLayout.CENTER);
-		panel.add(currentToolBarItem, BorderLayout.NORTH);
+		panel.add(toolBar, BorderLayout.NORTH);
 
 		super.setViewportView(panel);
 		
@@ -211,21 +193,6 @@ public class CommitListPanel extends JScrollPane {
 		}
 		
 		branchBox.reload(repository.getBranches());
-		
-		if (currentToolBarItem == langToolBar) {
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						langBar.setLanguages(new LanguageScanner(repository).scan());
-						langBar.repaint();
-					} catch (Exception e) {
-						e.printStackTrace();
-						Main.displayError(e);
-					}
-				}
-			}).start();
-		}
 	}
 	
 	public void clear() {
@@ -248,20 +215,6 @@ public class CommitListPanel extends JScrollPane {
 	 */
 	public void removeListener(ICommitClickListener l) {
 		listeners.remove(l);
-	}
-	
-	public void setLanguageBar(boolean b) {
-		panel.remove(currentToolBarItem);
-		
-		if (!b) {
-			currentToolBarItem = toolBar;
-		} else {			
-			currentToolBarItem = langToolBar;
-		}
-		
-		panel.add(currentToolBarItem, BorderLayout.NORTH);
-		
-		revalidate();
 	}
 	
 	public class CommitRenderer extends DefaultTableCellRenderer {

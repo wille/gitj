@@ -91,7 +91,7 @@ public class MainFrame extends JFrame {
 				AbstractPanel panel = getSelectedPanel();
 				
 				if (panel instanceof MainPanel) {
-					((MainPanel) panel).getCommitPanel().setLanguageBar(item.isSelected());
+					
 				}
 			}
 		});
