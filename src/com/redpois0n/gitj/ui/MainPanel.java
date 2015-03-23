@@ -169,6 +169,10 @@ public class MainPanel extends AbstractPanel {
 		return this.parent;
 	}
 	
+	public CommitListPanel getCommitPanel() {
+		return this.jcommitPane;
+	}
+	
 	public class CommitClickListener implements ICommitClickListener {
 		@Override
 		public void onClick(Commit c) {

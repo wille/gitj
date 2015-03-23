@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -57,6 +58,10 @@ public class CommitListPanel extends JScrollPane {
 	private JTable table;
 	private CommitTableModel model;
 	private BranchComboBox branchBox;
+	private JComponent currentToolBarItem;
+	private LanguageBar langPanel;
+	private JToolBar toolBar;
+	private JPanel panel;
 	
 	public CommitListPanel(Repository repo) throws Exception {
 		this.repository = repo;
@@ -64,7 +69,7 @@ public class CommitListPanel extends JScrollPane {
 		this.model = new CommitTableModel();
 		this.table = new JTable(model);
 		
-		JToolBar toolBar = new JToolBar();
+		toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		
 		branchBox = new BranchComboBox(repo);
@@ -76,15 +81,13 @@ public class CommitListPanel extends JScrollPane {
 		table.setFillsViewportHeight(true);
 		table.setIntercellSpacing(new Dimension(0, 0));
 		
-		LanguageBar langPanel = new LanguageBar(new LanguageScanner(repository).scan());
+		currentToolBarItem = createLanguageBar();
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 
 		panel.setLayout(new BorderLayout(0, 0));	
 		panel.add(table, BorderLayout.CENTER);
-		//panel.add(toolBar, BorderLayout.NORTH);		
-		panel.add(langPanel, BorderLayout.NORTH);
-
+		panel.add(currentToolBarItem, BorderLayout.NORTH);
 
 		super.setViewportView(panel);
 		
@@ -204,6 +207,35 @@ public class CommitListPanel extends JScrollPane {
 	 */
 	public void removeListener(ICommitClickListener l) {
 		listeners.remove(l);
+	}
+	
+	public void setLanguageBar(boolean b) {
+		panel.remove(currentToolBarItem);
+		
+		if (!b) {
+			currentToolBarItem = toolBar;
+		} else {
+			if (langPanel == null) {
+				langPanel = createLanguageBar();
+			}
+			
+			currentToolBarItem = langPanel;
+		}
+		
+		panel.add(currentToolBarItem, BorderLayout.NORTH);
+		
+		revalidate();
+	}
+	
+	private LanguageBar createLanguageBar() {
+		try {
+			return new LanguageBar(new LanguageScanner(repository).scan());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Main.displayError(e);
+		}
+		
+		return null;
 	}
 
 	public class CommitRenderer extends DefaultTableCellRenderer {

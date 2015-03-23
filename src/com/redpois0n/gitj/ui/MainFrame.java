@@ -27,6 +27,7 @@ import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
+import javax.swing.JCheckBoxMenuItem;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -66,6 +67,24 @@ public class MainFrame extends JFrame {
 		});
 		mnRepository.add(mntmRemotes);
 		mnRepository.add(mntmRefresh);
+		
+		JMenu mnView = new JMenu("View");
+		menuBar.add(mnView);
+		
+		JCheckBoxMenuItem chckbxmntmViewLanguageBar = new JCheckBoxMenuItem("View Language Bar");
+		chckbxmntmViewLanguageBar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JCheckBoxMenuItem item = (JCheckBoxMenuItem) e.getSource();
+				
+				AbstractPanel panel = getSelectedPanel();
+				
+				if (panel instanceof MainPanel) {
+					((MainPanel) panel).getCommitPanel().setLanguageBar(item.isSelected());
+				}
+			}
+		});
+		chckbxmntmViewLanguageBar.setSelected(true);
+		mnView.add(chckbxmntmViewLanguageBar);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
