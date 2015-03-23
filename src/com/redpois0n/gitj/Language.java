@@ -3,7 +3,7 @@ package com.redpois0n.gitj;
 import java.awt.Color;
 import java.util.List;
 
-public class Language {
+public class Language implements Comparable<Language> {
 
 	private String language;
 	private Color color;
@@ -63,6 +63,17 @@ public class Language {
 
 	public void incrementFiles() {
 		files++;
+	}
+
+	@Override
+	public int compareTo(Language o) {
+		if (o.getLineCount() == getLineCount()) {
+			return 0;
+		} else if (o.getLineCount() < getLineCount()) {
+			return -1;
+		}
+
+		return 1;
 	}
 
 }

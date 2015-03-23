@@ -43,7 +43,7 @@ public class LanguageBar extends JComponent {
 			
 			int todraw = (int) (((float) l.getLineCount() / (float) max) * getWidth());
 			
-			g.fillRect(start, 0, todraw, getHeight());
+			g.fillRect(start, getHeight() / 2, todraw, getHeight() / 2);
 			
 			start += todraw;
 		}

@@ -3,6 +3,7 @@ package com.redpois0n.gitj;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.redpois0n.git.Repository;
@@ -53,6 +54,8 @@ public class LanguageScanner {
 				used.add(l);
 			}
 		}
+		
+		Collections.sort(used);
 		
 		return used;
 
