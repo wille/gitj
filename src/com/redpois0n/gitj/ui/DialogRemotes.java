@@ -29,6 +29,7 @@ public class DialogRemotes extends JDialog {
 
 	public DialogRemotes(Repository repo) {
 		setIconImage(IconUtils.getIcon("remote").getImage());
+		setTitle("Remotes");
 		setAlwaysOnTop(true);
 		setModal(true);
 		this.repo = repo;
