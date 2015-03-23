@@ -29,7 +29,7 @@ Put pyjar.py in the same directory as the downloaded source and run
 python pyjar.py [--jdk /path/to/jdk/bin/] --input src --output gitj.jar --mainclass com.redpois0n.gitj.Main
 ```
 
-*--jdk argument is only needed if javac isn't in your **$PATH***
+*--jdk argument is only needed if javac isn't in your __$PATH__*
 
 Then you can either double click the JAR or run it using
 
