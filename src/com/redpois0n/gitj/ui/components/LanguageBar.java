@@ -35,7 +35,11 @@ public class LanguageBar extends JComponent {
 		int start = 0;
 		
 		for (Language l : languages) {
-			g.setColor(l.getColor());
+			if (l.getColor() == null) {
+				g.setColor(Color.lightGray);
+			} else {
+				g.setColor(l.getColor());
+			}
 			
 			int todraw = (int) (((float) l.getLineCount() / (float) max) * getWidth());
 			
