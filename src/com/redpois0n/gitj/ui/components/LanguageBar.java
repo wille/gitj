@@ -35,7 +35,7 @@ public class LanguageBar extends JComponent {
 		int start = 0;
 		
 		for (Language l : languages) {
-			if (l.getColor() == null) {
+			if (l.isOther()) {
 				g.setColor(Color.lightGray);
 			} else {
 				g.setColor(l.getColor());

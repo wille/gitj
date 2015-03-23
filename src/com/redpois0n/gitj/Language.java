@@ -64,6 +64,14 @@ public class Language implements Comparable<Language> {
 	public void incrementFiles() {
 		files++;
 	}
+	
+	/**
+	 * If this language should be classified in the category "others"
+	 * @return
+	 */
+	public boolean isOther() {
+		return color == null;
+	}
 
 	@Override
 	public int compareTo(Language o) {
