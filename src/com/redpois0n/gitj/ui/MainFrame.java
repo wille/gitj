@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -215,19 +216,7 @@ public class MainFrame extends JFrame {
 		tree.addPathListener(new PathListener() {
 			@Override
 			public void pathSelected(String path) {
-				File dir = new File(path);
-				
-				if (dir.isDirectory()) {
-					for (File file : dir.listFiles()) {
-						String name = file.getName();
-						if (tree.exists(path + File.separator + name)) {
-							return;
-						}
-						
-						DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getNodeFromPath(path);
-						model.insertNodeInto(new PathTreeNode(name, null), node, node.getChildCount());
-					}
-				}
+				update(new File(path));
 			}
 		});
 		scrollPaneTree.setViewportView(tree);
@@ -246,12 +235,40 @@ public class MainFrame extends JFrame {
 	
 	public void addToTree(String dir) {
 		tree.setRootVisible(true);
-		model.addRoot(new PathTreeNode(dir, null));
+		model.addRoot(new PathTreeNode(dir, IconUtils.getIcon("repo")));
 
 		for (int i = 0; i < tree.getRowCount(); i++) {
 			tree.expandRow(i);
 		}
 		tree.setRootVisible(false);
+	}
+	
+	public void update(File dir) {		
+		List<File> dirs = new ArrayList<File>();
+		List<File> files = new ArrayList<File>();
+		
+		if (dir.isDirectory()) {
+			for (File file : dir.listFiles()) {
+				if (file.isDirectory()) {
+					dirs.add(file);
+				} else {
+					files.add(file);
+				}
+			}
+		}
+		
+		dirs.addAll(files);
+		for (File d : dirs) {
+			String name = d.getName();
+			if (tree.exists(dir.getAbsolutePath() + File.separator + name)) {
+				return;
+			}
+			
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getNodeFromPath(dir.getAbsolutePath());
+			model.insertNodeInto(new PathTreeNode(name, d.isDirectory() ? IconUtils.getFolderIcon() : IconUtils.getFileIcon(d)), node, node.getChildCount());
+		}
+		
+		
 	}
 	
 	/**
