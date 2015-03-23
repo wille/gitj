@@ -93,14 +93,18 @@ public class CommitPanel extends AbstractPanel {
 		reloadDividers();
 	}
 
-	public void loadDiffs(List<Diff> diffs) {
-		diffHolderPanel.clear();
+	public void loadDiffs(final List<Diff> diffs) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				diffHolderPanel.clear();
 
-		for (Diff diff : diffs) {
-			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
-		}
-		
-		diffHolderPanel.revalidate();
+				for (Diff diff : diffs) {
+					diffHolderPanel.addDiffPanel(new DiffPanel(diff));
+				}
+				
+				diffHolderPanel.revalidate();
+			}
+		});
 	}
 	
 	public class DiffSelectionListener implements IDiffSelectionListener {

@@ -145,7 +145,7 @@ public class MainPanel extends AbstractPanel {
 	 *            if we should clear and fill the JList containing the diffs
 	 *            with data from diffs list
 	 */
-	public void loadDiffs(Commit c, List<Diff> diffs, List<Diff> allDiffs, boolean reloadDiffList) {
+	public void loadDiffs(Commit c, final List<Diff> diffs, List<Diff> allDiffs, boolean reloadDiffList) {
 		if (allDiffs != null) {
 			splitPaneLow.setLeftComponent(panelSummary);
 			panelList = panelSummary;
@@ -161,14 +161,19 @@ public class MainPanel extends AbstractPanel {
 			panelList = pu;
 		}
 
-		diffHolderPanel.clear();
-		diffHolderPanel.revalidate();
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				diffHolderPanel.clear();
+				diffHolderPanel.revalidate();
 
-		for (Diff diff : diffs) {
-			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
-		}
+				for (Diff diff : diffs) {
+					diffHolderPanel.addDiffPanel(new DiffPanel(diff));
+				}
 
-		diffHolderPanel.revalidate();
+				diffHolderPanel.revalidate();
+			}
+		});
 
 		if (reloadDiffList) {
 			panelSummary.reload(c);
