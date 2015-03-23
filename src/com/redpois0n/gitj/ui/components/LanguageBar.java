@@ -45,7 +45,7 @@ public class LanguageBar extends JComponent {
 		
 		for (Language l : languages) {
 			String s = l.getLanguage();
-			String percent = String.format("%.2g%n", (((float) l.getLineCount() / (float) max) * 100)) + "%";
+			String percent = String.format("%.4g%n", (((float) l.getLineCount() / (float) max) * 100)) + "%";
 			
 			g.setColor(Color.black);
 			g.setFont(FONT_NORMAL);
