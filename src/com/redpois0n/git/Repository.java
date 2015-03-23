@@ -685,9 +685,41 @@ public class Repository {
 		return null;
 	}
 	
-
 	public void checkout(Branch b) throws Exception {
 		run("git", "checkout", b.getName());
+	}
+	
+	/**
+	 * Returns true if this file is tracked in this repository
+	 * @param file
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean isTracked(File file) throws Exception {
+		for (File f : getTrackedFiles()) {
+			if (f.equals(file)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Returns all tracked files in this repository
+	 * @return
+	 * @throws Exception
+	 */
+	public List<File> getTrackedFiles() throws Exception {
+		List<String> raw = run("git", "ls-files");
+		
+		List<File> files = new ArrayList<File>();
+		
+		for (String f : raw) {
+			files.add(new File(getFolder(), f));
+		}
+		
+		return files;
 	}
 
 	/**

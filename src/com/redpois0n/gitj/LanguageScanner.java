@@ -48,7 +48,7 @@ public class LanguageScanner {
 			}
 		}
 		
-		check(langs, repo.getFolder());
+		check(repo.getTrackedFiles(), langs, repo.getFolder());
 		
 		List<Language> used = new ArrayList<Language>();
 		
@@ -64,14 +64,14 @@ public class LanguageScanner {
 
 	}
 	
-	private void check(List<Language> langs, File dir) throws Exception {
-		for (File file : dir.listFiles()) {
+	private void check(List<File> tracked, List<Language> langs, File dir) throws Exception {
+		for (File file : dir.listFiles()) {			
 			if (file.isDirectory()) {
-				check(langs, file);
+				check(tracked, langs, file);
 			} else {
 				for (Language lang : langs) {
 					for (String s : lang.getExtensions()) {
-						if (file.getName().endsWith("." + s)) {
+						if (file.getName().endsWith("." + s) && tracked.contains(file)) {
 							lang.incrementFiles();
 							lang.addLineCount(count(file));
 						}

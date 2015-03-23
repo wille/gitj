@@ -16,7 +16,7 @@ public class LanguageBar extends JComponent {
 	
 	public LanguageBar(List<Language> languages) {
 		this.languages = languages;
-		super.setPreferredSize(new Dimension(50, 20));
+		super.setPreferredSize(new Dimension(50, 40));
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class LanguageBar extends JComponent {
 			
 			int todraw = (int) (((float) l.getLineCount() / (float) max) * getWidth());
 			
-			g.fillRect(start, getHeight() / 2, todraw, getHeight() / 2);
+			g.fillRect(start, getHeight() - 10, todraw, 10);
 			
 			start += todraw;
 		}

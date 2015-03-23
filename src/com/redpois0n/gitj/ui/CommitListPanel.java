@@ -82,7 +82,7 @@ public class CommitListPanel extends JScrollPane {
 
 		panel.setLayout(new BorderLayout(0, 0));	
 		panel.add(table, BorderLayout.CENTER);
-		panel.add(toolBar, BorderLayout.NORTH);		
+		//panel.add(toolBar, BorderLayout.NORTH);		
 		panel.add(langPanel, BorderLayout.NORTH);
 
 
