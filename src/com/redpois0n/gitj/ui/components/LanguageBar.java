@@ -64,7 +64,7 @@ public class LanguageBar extends JComponent implements MouseListener, MouseMotio
 				g.setColor(l.getColor());
 			}
 			
-			g.fillRect(startText, 10, 10, 10);
+			g.fillOval(startText, 10, 10, 10);
 			
 			startText += g.getFontMetrics().stringWidth(s) + 25;
 			startText += g.getFontMetrics().stringWidth(percent);
