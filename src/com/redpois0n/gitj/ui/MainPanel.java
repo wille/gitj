@@ -162,6 +162,7 @@ public class MainPanel extends AbstractPanel {
 		}
 
 		diffHolderPanel.clear();
+		diffHolderPanel.revalidate();
 
 		for (Diff diff : diffs) {
 			diffHolderPanel.addDiffPanel(new DiffPanel(diff));

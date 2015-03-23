@@ -64,7 +64,6 @@ public class CommitPanel extends AbstractPanel {
 	}
 	
 	public void reloadDividers() {
-		//splitPane.setDividerLocation(splitPane.getSize().height / 2);		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				topSplitPane.setDividerLocation(topSplitPane.getSize().width / 2);	
