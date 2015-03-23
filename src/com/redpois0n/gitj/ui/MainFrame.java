@@ -68,6 +68,14 @@ public class MainFrame extends JFrame {
 		mnRepository.add(mntmRemotes);
 		mnRepository.add(mntmRefresh);
 		
+		JMenuItem mntmTags = new JMenuItem("Tags");
+		mntmTags.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showTags();
+			}
+		});
+		mnRepository.add(mntmTags);
+		
 		JMenu mnView = new JMenu("View");
 		menuBar.add(mnView);
 		
@@ -378,6 +386,14 @@ public class MainFrame extends JFrame {
 		
 		if (repo != null) {
 			new DialogRemotes(repo).setVisible(true);
+		}
+	}
+	
+	public void showTags() {
+		Repository repo = getSelectedRepo();
+		
+		if (repo != null) {
+			new DialogTags(repo).setVisible(true);
 		}
 	}
 	

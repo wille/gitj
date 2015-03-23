@@ -44,10 +44,10 @@ public class DialogTags extends JDialog {
 
 		scrollPane = new JScrollPane();
 		
-		JButton btnEdit = new JButton("Edit");
-		btnEdit.addActionListener(new ActionListener() {
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				edit();
+				add();
 			}
 		});
 		
@@ -62,7 +62,7 @@ public class DialogTags extends JDialog {
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(btnEdit)
+					.addComponent(btnAdd)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnRemove)
 					.addPreferredGap(ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
@@ -77,7 +77,7 @@ public class DialogTags extends JDialog {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancel)
-						.addComponent(btnEdit)
+						.addComponent(btnAdd)
 						.addComponent(btnRemove))
 					.addContainerGap())
 		);
@@ -119,55 +119,7 @@ public class DialogTags extends JDialog {
 	}
 
 	public void add() {
-		setAlwaysOnTop(false);
-		
-		String name = JOptionPane.showInputDialog(null, "Input remote name", "Create new Remote", JOptionPane.QUESTION_MESSAGE);
-		
-		if (name == null || name != null && name.trim().length() == 0) {
-			return;
-		}
-		
-		String path = JOptionPane.showInputDialog(null, "Input remote URL", "Create new Remote", JOptionPane.QUESTION_MESSAGE);
-		
-		if (path == null || path != null && path.trim().length() == 0) {
-			return;
-		}
-		
-		try {
-			repo.addRemote(name, path);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Main.displayError(e);
-		}
-		
-		setAlwaysOnTop(true);
-		
-		reload();
-	}
-	
-	public void edit() {
-		setAlwaysOnTop(false);
-		int row = table.getSelectedRow();
-		
-		if (row != -1) {
-			String name = table.getValueAt(row, 0).toString();
-
-			String path = JOptionPane.showInputDialog(null, "Input new remote URL", "Edit Remote", JOptionPane.QUESTION_MESSAGE);
-			
-			if (path == null || path != null && path.trim().length() == 0) {
-				return;
-			}
-			
-			try {
-				repo.editRemote(name, path);
-			} catch (Exception e) {
-				e.printStackTrace();
-				Main.displayError(e);
-			}
-		}
-		setAlwaysOnTop(false);
-		
-		reload();
+		new DialogCreateTag(this).setVisible(true);
 	}
 	
 	public void remove() {

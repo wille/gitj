@@ -153,6 +153,8 @@ public class DialogRemotes extends JDialog {
 	}
 	
 	public void edit() {
+		setAlwaysOnTop(false);
+
 		int row = table.getSelectedRow();
 		
 		if (row != -1) {
@@ -171,6 +173,10 @@ public class DialogRemotes extends JDialog {
 				Main.displayError(e);
 			}
 		}
+		
+		setAlwaysOnTop(true);
+		
+		reload();
 	}
 	
 	public void remove() {
@@ -186,6 +192,8 @@ public class DialogRemotes extends JDialog {
 				Main.displayError(e);
 			}
 		}
+		
+		reload();
 	}
 
 	public class RemotesTableModel extends DefaultTableModel {

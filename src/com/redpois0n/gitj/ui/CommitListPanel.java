@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -74,6 +75,14 @@ public class CommitListPanel extends JScrollPane {
 		langToolBar.setFloatable(false);
 		langBar = new LanguageBar();
 		langToolBar.add(langBar);
+		JButton button = new JButton("View");
+		button.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		langToolBar.add(button);
 		
 		toolBar = new JToolBar();
 		toolBar.setFloatable(false);
