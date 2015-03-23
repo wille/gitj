@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
 import com.redpois0n.git.Commit;
@@ -32,36 +33,37 @@ public class MainPanel extends AbstractPanel {
 	private DiffHolderPanel diffHolderPanel;
 	private JScrollPane scrollPaneDiffs;
 	private PanelSummary panelSummary;
-	
+
 	private JPanel panelList;
-	
+
 	/**
 	 * Repository tab
+	 * 
 	 * @param repository
 	 * @throws Exception
 	 */
-	public MainPanel(JFrame parent, Repository repository) throws Exception {	
+	public MainPanel(JFrame parent, Repository repository) throws Exception {
 		super(repository);
 		this.parent = parent;
 		setBorder(new EmptyBorder(0, 0, 0, 0));
 		setLayout(new BorderLayout(0, 0));
-		
+
 		splitPaneMain = new JSplitPane();
 		splitPaneMain.setResizeWeight(0.5);
 		splitPaneMain.setOrientation(JSplitPane.VERTICAL_SPLIT);
-		
+
 		add(splitPaneMain, BorderLayout.CENTER);
-		
+
 		jcommitPane = new CommitListPanel(repository);
 		jcommitPane.addListener(new CommitClickListener());
-		
+
 		splitPaneMain.setLeftComponent(jcommitPane);
-		
+
 		splitPaneLow = new JSplitPane();
 		splitPaneLow.setResizeWeight(0.5);
-		
+
 		splitPaneMain.setRightComponent(splitPaneLow);
-		
+
 		diffHolderPanel = new DiffHolderPanel();
 		scrollPaneDiffs = new JScrollPane();
 		scrollPaneDiffs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -69,46 +71,61 @@ public class MainPanel extends AbstractPanel {
 		scrollPaneDiffs.setViewportView(diffHolderPanel);
 
 		splitPaneLow.setRightComponent(scrollPaneDiffs);
-		
+
 		panelSummary = new PanelSummary();
-		
+
 		splitPaneLow.setLeftComponent(panelSummary);
 		panelSummary.addListener(new DiffSelectionListener());
 	}
 	
+	public void reloadDividers() {
+		splitPaneMain.setDividerLocation(splitPaneMain.getSize().height / 2);
+		splitPaneLow.setDividerLocation(splitPaneLow.getSize().width / 2);
+		panelSummary.reloadDividers();
+	}
+
 	/**
 	 * Clears everything visible and reloads commit panel
+	 * 
 	 * @throws Exception
 	 */
 	@Override
 	public void reload() throws Exception {
 		clear();
 		reloadCommits();
-		reloadUncommited();
+		reloadUncommited();	
+		
+		reloadDividers();
 	}
-	
+
 	/**
 	 * Reloads commit list
+	 * 
 	 * @throws Exception
 	 */
 	public void reloadCommits() throws Exception {
 		List<Commit> commits = repo.getCommits(true);
 		jcommitPane.clear();
 		jcommitPane.reload(commits);
+		
+		reloadDividers();
 	}
-	
+
 	/**
 	 * Reloads staged and unstaged files
+	 * 
 	 * @throws Exception
 	 */
 	public void reloadUncommited() throws Exception {
 		if (panelList instanceof PanelUncommited) {
 			PanelUncommited panel = (PanelUncommited) panelList;
-			
+
 			panel.reload();
+			
+			reloadDividers();
 		}
 	}
-	
+
 	/**
 	 * Clears Diff and Commit panels
 	 */
@@ -116,12 +133,17 @@ public class MainPanel extends AbstractPanel {
 		diffHolderPanel.clear();
 		panelSummary.clear();
 	}
-	
+
 	/**
 	 * Loads diffs (On click on commit)
-	 * @param diffs Diffs to load
-	 * @param allDiffs All diffs for current commit
-	 * @param reloadDiffList if we should clear and fill the JList containing the diffs with data from diffs list
+	 * 
+	 * @param diffs
+	 *            Diffs to load
+	 * @param allDiffs
+	 *            All diffs for current commit
+	 * @param reloadDiffList
+	 *            if we should clear and fill the JList containing the diffs
+	 *            with data from diffs list
 	 */
 	public void loadDiffs(Commit c, List<Diff> diffs, List<Diff> allDiffs, boolean reloadDiffList) {
 		if (allDiffs != null) {
@@ -140,13 +162,13 @@ public class MainPanel extends AbstractPanel {
 		}
 
 		diffHolderPanel.clear();
-		
-		for (Diff diff : diffs) {		
- 			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
- 		}
-		
+
+		for (Diff diff : diffs) {
+			diffHolderPanel.addDiffPanel(new DiffPanel(diff));
+		}
+
 		diffHolderPanel.revalidate();
-			
+
 		if (reloadDiffList) {
 			panelSummary.reload(c);
 
@@ -154,25 +176,28 @@ public class MainPanel extends AbstractPanel {
 				panelSummary.getListModel().addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(IconUtils.getIconFromDiffType(diff.getType()))));
 			}
 		}
+		
+		reloadDividers();
 	}
-	
+
 	/**
 	 * Loads stage and unstaging panel
+	 * 
 	 * @throws Exception
 	 */
 	public void loadUncommited() throws Exception {
 		List<Diff> diffs = repo.getUncommitedDiffs();
 		loadDiffs(null, diffs, null, false);
 	}
-	
+
 	public JFrame getParentFrame() {
 		return this.parent;
 	}
-	
+
 	public CommitListPanel getCommitPanel() {
 		return this.jcommitPane;
 	}
-	
+
 	public class CommitClickListener implements ICommitClickListener {
 		@Override
 		public void onClick(Commit c) {

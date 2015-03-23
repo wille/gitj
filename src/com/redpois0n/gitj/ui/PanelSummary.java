@@ -141,4 +141,8 @@ public class PanelSummary extends JPanel {
 		textPane.setText("");
 	}
 
+	public void reloadDividers() {
+		splitPane.setDividerLocation(splitPane.getSize().height / 2);		
+	}
+
 }
