@@ -20,7 +20,7 @@ public class LanguageScanner {
 		this.repo = repo;
 	}
 
-	public List<Language> scan() throws Exception {
+	public List<Language> scan(boolean all) throws Exception {
 		List<String> raw = FileUtils.readFile(new File("languages.yml"));
 
 		List<Language> langs = new ArrayList<Language>();
