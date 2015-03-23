@@ -6,6 +6,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.List;
 
 import javax.swing.JComponent;
@@ -13,7 +16,7 @@ import javax.swing.JComponent;
 import com.redpois0n.gitj.Language;
 
 @SuppressWarnings("serial")
-public class LanguageBar extends JComponent {
+public class LanguageBar extends JComponent implements MouseListener, MouseMotionListener {
 	
 	public static final Font FONT_BOLD = new Font("Arial", Font.BOLD, 12);
 	public static final Font FONT_NORMAL = new Font("Arial", Font.PLAIN, 12);
@@ -23,6 +26,8 @@ public class LanguageBar extends JComponent {
 	public LanguageBar(List<Language> languages) {
 		this.languages = languages;
 		super.setPreferredSize(new Dimension(50, 40));
+		super.addMouseListener(this);
+		super.addMouseMotionListener(this);
 	}
 	
 	@Override
@@ -70,6 +75,41 @@ public class LanguageBar extends JComponent {
 			
 			start += todraw;
 		}
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		
+	}
+	
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		
 	}
 
 }

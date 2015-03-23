@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
@@ -59,7 +60,8 @@ public class CommitListPanel extends JScrollPane {
 	private CommitTableModel model;
 	private BranchComboBox branchBox;
 	private JComponent currentToolBarItem;
-	private LanguageBar langPanel;
+	private LanguageBar langBar;
+	private JToolBar langToolBar;
 	private JToolBar toolBar;
 	private JPanel panel;
 	
@@ -68,6 +70,11 @@ public class CommitListPanel extends JScrollPane {
 		this.commits = repo.getCommits();
 		this.model = new CommitTableModel();
 		this.table = new JTable(model);
+		
+		langToolBar = new JToolBar();
+		langToolBar.setFloatable(false);
+		langBar = new LanguageBar(new LanguageScanner(repository).scan());
+		langToolBar.add(langBar);
 		
 		toolBar = new JToolBar();
 		toolBar.setFloatable(false);
@@ -81,7 +88,7 @@ public class CommitListPanel extends JScrollPane {
 		table.setFillsViewportHeight(true);
 		table.setIntercellSpacing(new Dimension(0, 0));
 		
-		currentToolBarItem = createLanguageBar();
+		currentToolBarItem = langToolBar;
 		
 		panel = new JPanel();
 
@@ -214,28 +221,13 @@ public class CommitListPanel extends JScrollPane {
 		
 		if (!b) {
 			currentToolBarItem = toolBar;
-		} else {
-			if (langPanel == null) {
-				langPanel = createLanguageBar();
-			}
-			
-			currentToolBarItem = langPanel;
+		} else {			
+			currentToolBarItem = langToolBar;
 		}
 		
 		panel.add(currentToolBarItem, BorderLayout.NORTH);
 		
 		revalidate();
-	}
-	
-	private LanguageBar createLanguageBar() {
-		try {
-			return new LanguageBar(new LanguageScanner(repository).scan());
-		} catch (Exception e) {
-			e.printStackTrace();
-			Main.displayError(e);
-		}
-		
-		return null;
 	}
 
 	public class CommitRenderer extends DefaultTableCellRenderer {
