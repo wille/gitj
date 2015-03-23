@@ -245,11 +245,13 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void addToTree(String dir) {
+		tree.setRootVisible(true);
 		model.addRoot(new PathTreeNode(dir, null));
 
 		for (int i = 0; i < tree.getRowCount(); i++) {
 			tree.expandRow(i);
 		}
+		tree.setRootVisible(false);
 	}
 	
 	/**

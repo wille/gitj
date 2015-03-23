@@ -18,6 +18,10 @@ public class PathTreeModel extends DefaultTreeModel {
 		super.insertNodeInto(root, (DefaultMutableTreeNode) rootNode, 0);
 	}
 	
+	public void removeRoot(DefaultMutableTreeNode root) {
+		super.removeNodeFromParent(root);
+	}
+	
 	public TreeNode getRootNode() {
 		return rootNode;
 	}
