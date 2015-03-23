@@ -9,7 +9,7 @@ public class Language implements Comparable<Language> {
 	private Color color;
 	private List<String> extensions;
 	private int files;
-	private int linecount;
+	private int linecount = 1;
 	
 	public Language(String language, Color color, List<String> extensions, int files, int linecount) {
 		this.language = language;
