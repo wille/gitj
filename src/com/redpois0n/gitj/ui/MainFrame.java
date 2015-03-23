@@ -54,6 +54,7 @@ public class MainFrame extends JFrame {
 		menuBar.add(mnRepository);
 		
 		JMenuItem mntmRefresh = new JMenuItem("Refresh");
+		mntmRefresh.setIcon(IconUtils.getIcon("update-small"));
 		mntmRefresh.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				reloadCurrentRepo();
@@ -61,6 +62,7 @@ public class MainFrame extends JFrame {
 		});
 		
 		JMenuItem mntmRemotes = new JMenuItem("Remotes");
+		mntmRemotes.setIcon(IconUtils.getIcon("remote"));
 		mntmRemotes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				remotes();
@@ -70,6 +72,7 @@ public class MainFrame extends JFrame {
 		mnRepository.add(mntmRefresh);
 		
 		JMenuItem mntmTags = new JMenuItem("Tags");
+		mntmTags.setIcon(IconUtils.getIcon("tag-annotated"));
 		mntmTags.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showTags();

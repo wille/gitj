@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import com.redpois0n.git.Remote;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
 public class DialogRemotes extends JDialog {
@@ -27,6 +28,7 @@ public class DialogRemotes extends JDialog {
 	private RemotesTableModel model;
 
 	public DialogRemotes(Repository repo) {
+		setIconImage(IconUtils.getIcon("remote").getImage());
 		setAlwaysOnTop(true);
 		setModal(true);
 		this.repo = repo;
