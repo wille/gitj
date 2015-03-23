@@ -20,7 +20,13 @@ public class LanguageScanner {
 		this.repo = repo;
 	}
 
-	public List<Language> scan() throws Exception {
+	/**
+	 * Scans all tracked files in this repository
+	 * @param all If we include non-programming language files, like YAML, XML, Markdown
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Language> scan(boolean all) throws Exception {
 		List<String> raw = FileUtils.readFile(new File("languages.yml"));
 
 		List<Language> langs = new ArrayList<Language>();
@@ -29,7 +35,11 @@ public class LanguageScanner {
 		Language temp = null;
 		
 		for (String line : raw) {
-			 if (line.startsWith("  color: \"#")) {
+			 if (line.startsWith("  type: programming")) {
+	            if (!all) {
+	            	langs.add(temp);
+	            }
+			 } else if (line.startsWith("  color: \"#")) {
 		         String c = line.replace("  color: \"#", "").replace("\"", "").trim();
 		         temp.setColor(Color.decode("0x" + c));
 			 } else if (line.startsWith("  - .")) {
@@ -41,9 +51,11 @@ public class LanguageScanner {
 		         line = line.replace(":", "").trim();
 		         if (line.length() > 0) {
 		             temp = new Language(line);
-		             langs.add(temp);
 		             extensions = new ArrayList<String>();
 		             temp.setExtensions(extensions);
+		             if (all) {
+		            	 langs.add(temp);
+		             }
 		         }
 			}
 		}
