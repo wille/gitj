@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import com.redpois0n.git.Commit;
 import com.redpois0n.git.InvalidRepositoryException;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
@@ -254,6 +255,20 @@ public class MainFrame extends JFrame {
 		return null;
 	}
 	
+	public Commit getSelectedCommit() {
+		Component c = tabbedPane.getSelectedComponent();
+		
+		if (c instanceof MainPanel) {
+			MainPanel panel = (MainPanel) c;
+			
+			Commit commit = panel.getCommitPanel().getSelectedCommit();
+			
+			return commit;
+		}
+		
+		return null;
+	}
+	
 	/**
 	 * Reloads selected repo
 	 */
@@ -402,7 +417,12 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void tag() {
+		Commit commit = getSelectedCommit();
+		Repository repo = getSelectedRepo();
 		
+		if (commit != null && repo != null) {
+			new DialogCreateTag(null, repo, commit).setVisible(true);
+		}
 	}
 	
 	public class TabChangeListener implements ChangeListener {

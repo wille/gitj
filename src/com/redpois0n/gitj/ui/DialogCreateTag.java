@@ -35,7 +35,7 @@ public class DialogCreateTag extends JDialog {
 	private JLabel lblName;
 	private JTextField txtName;
 
-	public DialogCreateTag(DialogTags parent, Repository repo) {
+	public DialogCreateTag(DialogTags parent, Repository repo, Commit c) {
 		this.parent = parent;
 		this.repo = repo;
 		setResizable(false);
@@ -54,16 +54,20 @@ public class DialogCreateTag extends JDialog {
 		};
 		
 		rdbtnLatestCommit = new JRadioButton("Latest commit");
-		rdbtnLatestCommit.setSelected(true);
+		rdbtnLatestCommit.setSelected(c == null);
 		rdbtnLatestCommit.addActionListener(listener);
 		group.add(rdbtnLatestCommit);
 		
 		rdbtnSpecifiedCommit = new JRadioButton("Specified commit:");
 		rdbtnSpecifiedCommit.addActionListener(listener);
+		rdbtnSpecifiedCommit.setSelected(c != null);
 		group.add(rdbtnSpecifiedCommit);
 		
 		txtCommit = new JTextField();
-		txtCommit.setEnabled(false);
+		if (c != null) {
+			txtCommit.setText(c.getHash());
+		}
+		txtCommit.setEnabled(c != null);
 		txtCommit.setColumns(10);
 		
 		JButton btnCancel = new JButton("Cancel");

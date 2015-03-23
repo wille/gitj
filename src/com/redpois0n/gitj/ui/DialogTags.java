@@ -118,7 +118,7 @@ public class DialogTags extends JDialog {
 	}
 
 	public void add() {
-		new DialogCreateTag(this, repo).setVisible(true);
+		new DialogCreateTag(this, repo, null).setVisible(true);
 	}
 	
 	public void remove() {
