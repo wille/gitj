@@ -192,18 +192,20 @@ public class CommitListPanel extends JScrollPane {
 		
 		branchBox.reload(repository.getBranches());
 		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					langBar.setLanguages(new LanguageScanner(repository).scan());
-					langBar.repaint();
-				} catch (Exception e) {
-					e.printStackTrace();
-					Main.displayError(e);
+		if (currentToolBarItem == langToolBar) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						langBar.setLanguages(new LanguageScanner(repository).scan());
+						langBar.repaint();
+					} catch (Exception e) {
+						e.printStackTrace();
+						Main.displayError(e);
+					}
 				}
-			}
-		}).start();
+			}).start();
+		}
 	}
 	
 	public void clear() {
