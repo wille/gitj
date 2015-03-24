@@ -35,8 +35,8 @@ import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
 import com.redpois0n.pathtree.PathJTree;
 import com.redpois0n.pathtree.PathListener;
-import com.redpois0n.pathtree.PathTreeModel;
 import com.redpois0n.pathtree.PathTreeNode;
+import com.redpois0n.pathtree.PlaceHolderTreeNode;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -265,7 +265,7 @@ public class MainFrame extends JFrame {
 			tree.getPathModel().insertNodeInto(insertedNode, node, node.getChildCount());		
 			
 			if (d.isDirectory()) {
-				tree.getPathModel().insertNodeInto(new DefaultMutableTreeNode(), insertedNode, 0);
+				tree.getPathModel().insertNodeInto(new PlaceHolderTreeNode(), insertedNode, 0);
 			}
 		}				
 	}
