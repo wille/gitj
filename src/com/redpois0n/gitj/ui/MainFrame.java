@@ -212,7 +212,7 @@ public class MainFrame extends JFrame {
 		tree.addPathListener(new PathListener() {
 			@Override
 			public void pathSelected(String path) {
-				update(new File(path));
+				update(new File(path), null);
 			}
 		});
 		scrollPaneTree.setViewportView(tree);
@@ -230,18 +230,21 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void addToTree(String dir) {
-		tree.addRoot(new PathTreeNode(dir, IconUtils.getIcon("repo")));
-		tree.expandAll();
 		tree.setRootVisible(true);
+		PathTreeNode root = new PathTreeNode(dir, IconUtils.getIcon("repo"));
+		tree.addRoot(root);
+		update(new File(dir), root);
+		tree.expandAll();
+		tree.setRootVisible(false);
 	}
 	
-	public void update(File dir) {		
+	public void update(File dir, DefaultMutableTreeNode root) {		
 		List<File> dirs = new ArrayList<File>();
 		List<File> files = new ArrayList<File>();
 		
 		if (dir.isDirectory()) {
 			for (File file : dir.listFiles()) {
-				if (file.isDirectory()) {
+				if (file.isDirectory()) {					
 					dirs.add(file);
 				} else {
 					files.add(file);
@@ -256,12 +259,15 @@ public class MainFrame extends JFrame {
 			if (tree.exists(dir.getAbsolutePath() + File.separator + name)) {
 				return;
 			}
+
+			DefaultMutableTreeNode node = root != null ? root : (DefaultMutableTreeNode) tree.getNodeFromPath(dir.getAbsolutePath());
+			PathTreeNode insertedNode = new PathTreeNode(name, d.isDirectory() ? IconUtils.getFolderIcon() : IconUtils.getFileIcon(d));
+			tree.getPathModel().insertNodeInto(insertedNode, node, node.getChildCount());		
 			
-			DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getNodeFromPath(dir.getAbsolutePath());
-			tree.getPathModel().insertNodeInto(new PathTreeNode(name, d.isDirectory() ? IconUtils.getFolderIcon() : IconUtils.getFileIcon(d)), node, node.getChildCount());
-		}
-		
-		
+			if (d.isDirectory()) {
+				tree.getPathModel().insertNodeInto(new DefaultMutableTreeNode(), insertedNode, 0);
+			}
+		}				
 	}
 	
 	/**
