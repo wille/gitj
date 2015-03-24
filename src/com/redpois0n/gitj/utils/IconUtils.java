@@ -1,14 +1,10 @@
 package com.redpois0n.gitj.utils;
 
 import java.awt.Image;
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.filechooser.FileSystemView;
 
 import com.redpois0n.git.Change;
 import com.redpois0n.git.Diff;
@@ -78,34 +74,5 @@ public class IconUtils {
 		}
 		
 		return getIcon(s);
-	}
-	
-	public static Icon getFolderIcon() {
-		return getFileIconFromExtension("", true);
-	}
-	
-	public static Icon getFileIcon(File file) {
-		return getFileIconFromExtension(file.getAbsolutePath(), false);
-	}
-
-	public static Icon getFileIconFromExtension(String f, boolean dir) {
-		try {
-			Icon icon;
-			
-			if (dir) {
-				File temp = new File(System.getProperty("java.io.tmpdir") + "icon");
-				temp.mkdirs();
-				icon = FileSystemView.getFileSystemView().getSystemIcon(temp);
-				temp.delete();
-			} else {
-				File temp = File.createTempFile((new Random()).nextInt() + "", f.substring(f.lastIndexOf("."), f.length()));
-				icon = FileSystemView.getFileSystemView().getSystemIcon(temp);
-				temp.delete();
-			}	
-			
-			return icon;
-		} catch (Exception ex) {
-			return null;
-		}
 	}
 }

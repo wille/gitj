@@ -35,6 +35,7 @@ import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
+import com.redpois0n.pathtree.FileJTree;
 import com.redpois0n.pathtree.PathJTree;
 import com.redpois0n.pathtree.PathListener;
 import com.redpois0n.pathtree.PathTreeNode;
@@ -50,7 +51,7 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JTabbedPane leftTabbedPane;
 	private JSplitPane splitPane;
-	private PathJTree tree;
+	private FileJTree tree;
 
 	public MainFrame() {
 		setIconImage(IconUtils.getIcon("icon").getImage());
@@ -209,25 +210,8 @@ public class MainFrame extends JFrame {
 		splitPane.setRightComponent(tabbedPane);
 		
 		JScrollPane scrollPaneTree = new JScrollPane();
-		tree = new PathJTree();
-		tree.setDelimiter(File.separator);
-		tree.addPathListener(new PathListener() {
-			@Override
-			public void pathSelected(String path) {
-				File file = new File(path);
-				
-				if (file.isDirectory()) {
-					update(file, null);
-				} else {
-					try {
-						Desktop.getDesktop().open(file);
-					} catch (Exception e) {
-						e.printStackTrace();
-						Main.displayError(e);
-					}
-				}
-			}
-		});
+		tree = new FileJTree();
+		
 		scrollPaneTree.setViewportView(tree);
 		
 		leftTabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -242,47 +226,11 @@ public class MainFrame extends JFrame {
 		});
 	}
 	
-	public void addToTree(String dir) {
-		tree.setRootVisible(true);
-		PathTreeNode root = new PathTreeNode(dir, IconUtils.getIcon("repo"));
-		tree.addRoot(root);
-		update(new File(dir), root);
-		tree.expandAll();
-		tree.setRootVisible(false);
+	public void addRepoToTree(String dir) {
+		tree.add(dir,  IconUtils.getIcon("repo"));
 	}
 	
-	public void update(File dir, DefaultMutableTreeNode root) {		
-		List<File> dirs = new ArrayList<File>();
-		List<File> files = new ArrayList<File>();
 		
-		if (dir.isDirectory()) {
-			for (File file : dir.listFiles()) {
-				if (file.isDirectory()) {					
-					dirs.add(file);
-				} else {
-					files.add(file);
-				}
-			}
-		}
-		
-		dirs.addAll(files);
-		
-		for (File d : dirs) {
-			String name = d.getName();
-			if (tree.exists(dir.getAbsolutePath() + File.separator + name)) {
-				return;
-			}
-
-			DefaultMutableTreeNode node = root != null ? root : (DefaultMutableTreeNode) tree.getNodeFromPath(dir.getAbsolutePath());
-			PathTreeNode insertedNode = new PathTreeNode(name, d.isDirectory() ? IconUtils.getFolderIcon() : IconUtils.getFileIcon(d));
-			tree.getPathModel().insertNodeInto(insertedNode, node, node.getChildCount());		
-			
-			if (d.isDirectory()) {
-				tree.getPathModel().insertNodeInto(new PlaceHolderTreeNode(), insertedNode, 0);
-			}
-		}				
-	}
-	
 	/**
 	 * Loads repository in new panel
 	 * @param repository
@@ -293,7 +241,7 @@ public class MainFrame extends JFrame {
 			
 			addPanel(repository.getFolder().getName(), pane);
 			
-			addToTree(repository.getFolder().getAbsolutePath());
+			addRepoToTree(repository.getFolder().getAbsolutePath());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
