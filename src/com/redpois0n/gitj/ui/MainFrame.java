@@ -3,9 +3,11 @@ package com.redpois0n.gitj.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -212,7 +214,18 @@ public class MainFrame extends JFrame {
 		tree.addPathListener(new PathListener() {
 			@Override
 			public void pathSelected(String path) {
-				update(new File(path), null);
+				File file = new File(path);
+				
+				if (file.isDirectory()) {
+					update(file, null);
+				} else {
+					try {
+						Desktop.getDesktop().open(file);
+					} catch (Exception e) {
+						e.printStackTrace();
+						Main.displayError(e);
+					}
+				}
 			}
 		});
 		scrollPaneTree.setViewportView(tree);
