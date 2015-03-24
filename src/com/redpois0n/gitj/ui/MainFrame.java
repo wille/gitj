@@ -105,7 +105,7 @@ public class MainFrame extends JFrame {
 				AbstractPanel panel = getSelectedPanel();
 				
 				if (panel instanceof MainPanel) {
-					
+					// TODO
 				}
 			}
 		});
@@ -338,7 +338,11 @@ public class MainFrame extends JFrame {
 	 */
 	@Override
 	public void setTitle(String title) {
-		super.setTitle("gitj " + Version.getVersion() + " - " + title);
+		if (title == null || title.length() == 0) {
+			super.setTitle("gitj " + Version.getVersion());
+		} else {
+			super.setTitle("gitj " + Version.getVersion() + " - " + title);
+		}
 	}
 	
 	/**
@@ -476,6 +480,8 @@ public class MainFrame extends JFrame {
 			
 			if (repo != null) {
 				MainFrame.this.setTitle(repo.getName());
+			} else {
+				MainFrame.this.setTitle("");
 			}
 		}
 	}
