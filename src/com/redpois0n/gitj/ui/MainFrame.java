@@ -49,7 +49,6 @@ public class MainFrame extends JFrame {
 	private JTabbedPane leftTabbedPane;
 	private JSplitPane splitPane;
 	private PathJTree tree;
-	private PathTreeModel model;
 
 	public MainFrame() {
 		setIconImage(IconUtils.getIcon("icon").getImage());
@@ -209,9 +208,6 @@ public class MainFrame extends JFrame {
 		
 		JScrollPane scrollPaneTree = new JScrollPane();
 		tree = new PathJTree();
-		model = new PathTreeModel(new PathTreeNode("root", null));
-		//tree.setRootVisible(false);
-		tree.setModel(model);
 		tree.setDelimiter(File.separator);
 		tree.addPathListener(new PathListener() {
 			@Override
@@ -234,13 +230,9 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void addToTree(String dir) {
+		tree.addRoot(new PathTreeNode(dir, IconUtils.getIcon("repo")));
+		tree.expandAll();
 		tree.setRootVisible(true);
-		model.addRoot(new PathTreeNode(dir, IconUtils.getIcon("repo")));
-
-		for (int i = 0; i < tree.getRowCount(); i++) {
-			tree.expandRow(i);
-		}
-		tree.setRootVisible(false);
 	}
 	
 	public void update(File dir) {		
@@ -258,6 +250,7 @@ public class MainFrame extends JFrame {
 		}
 		
 		dirs.addAll(files);
+		
 		for (File d : dirs) {
 			String name = d.getName();
 			if (tree.exists(dir.getAbsolutePath() + File.separator + name)) {
@@ -265,7 +258,7 @@ public class MainFrame extends JFrame {
 			}
 			
 			DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getNodeFromPath(dir.getAbsolutePath());
-			model.insertNodeInto(new PathTreeNode(name, d.isDirectory() ? IconUtils.getFolderIcon() : IconUtils.getFileIcon(d)), node, node.getChildCount());
+			tree.getPathModel().insertNodeInto(new PathTreeNode(name, d.isDirectory() ? IconUtils.getFolderIcon() : IconUtils.getFileIcon(d)), node, node.getChildCount());
 		}
 		
 		
