@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -37,7 +38,7 @@ import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
 import com.redpois0n.pathtree.FileJTree;
 import com.redpois0n.pathtree.PathJTree;
-import com.redpois0n.pathtree.PathListener;
+import com.redpois0n.pathtree.LeafClickListener;
 import com.redpois0n.pathtree.PathTreeNode;
 import com.redpois0n.pathtree.PlaceHolderTreeNode;
 
@@ -239,7 +240,7 @@ public class MainFrame extends JFrame {
 		try {			
 			MainPanel pane = new MainPanel(this, repository);
 			
-			addPanel(repository.getFolder().getName(), pane);
+			addPanel(repository.getFolder().getName(), pane, IconUtils.getIcon("repo"));
 			
 			addRepoToTree(repository.getFolder().getAbsolutePath());
 		} catch (Exception ex) {
@@ -251,9 +252,10 @@ public class MainFrame extends JFrame {
 	 * Add tab
 	 * @param title Tab title
 	 * @param panel
+	 * @param icon 
 	 */
-	public void addPanel(String title, AbstractPanel panel) {
-		tabbedPane.addTab(title + "                   ", panel);
+	public void addPanel(String title, AbstractPanel panel, ImageIcon icon) {
+		tabbedPane.addTab(title, icon, panel);
 		tabbedPane.setSelectedComponent(panel);
 	}
 	
@@ -353,7 +355,7 @@ public class MainFrame extends JFrame {
 		AbstractPanel panel = getSelectedPanel();
 		
 		if (repo != null && panel instanceof MainPanel) {
-			addPanel("Commit", new CommitPanel(this, (MainPanel) panel, repo));
+			addPanel("Commit", new CommitPanel(this, (MainPanel) panel, repo), IconUtils.getIcon("commit-small"));
 		}
 	}
 	
