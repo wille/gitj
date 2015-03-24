@@ -231,13 +231,13 @@ public class MainFrame extends JFrame {
 		scrollPaneTree.setViewportView(tree);
 		
 		leftTabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		leftTabbedPane.addTab("File Tree", scrollPaneTree);
+		leftTabbedPane.addTab("File Tree", IconUtils.getIcon("folder-tree"), scrollPaneTree);
 		splitPane.setLeftComponent(leftTabbedPane);
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				splitPane.setDividerLocation(splitPane.getSize().width / 2);
+				splitPane.setDividerLocation(splitPane.getSize().width / 4);
 			}
 		});
 	}
