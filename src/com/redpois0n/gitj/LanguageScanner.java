@@ -15,9 +15,15 @@ public class LanguageScanner {
 	
 	private final Map<File, Integer> count = new HashMap<File, Integer>();
 	private Repository repo;
-
+	private boolean countLines;
+	
 	public LanguageScanner(Repository repo) {
+		this(repo, true);
+	}
+	
+	public LanguageScanner(Repository repo, boolean countLines) {
 		this.repo = repo;
+		this.countLines = countLines;
 	}
 
 	public List<Language> scan(boolean all) throws Exception {
@@ -79,7 +85,9 @@ public class LanguageScanner {
 					for (String s : lang.getExtensions()) {
 						if (file.getName().endsWith("." + s) && tracked.contains(file)) {
 							lang.incrementFiles();
-							lang.addLineCount(count(file));
+							if (countLines) {
+								lang.addLineCount(count(file));
+							}
 						}
 					}
 				}
