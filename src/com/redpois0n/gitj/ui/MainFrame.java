@@ -3,6 +3,7 @@ package com.redpois0n.gitj.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -33,6 +34,7 @@ import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
 import com.redpois0n.pathtree.FileJTree;
+import com.redpois0n.pathtree.LeafClickListener;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -211,7 +213,15 @@ public class MainFrame extends JFrame {
 		splitPane.setRightComponent(tabbedPane);
 		
 		JScrollPane scrollPaneTree = new JScrollPane();
-		tree = new FileJTree();
+		tree = new FileJTree(false);
+		tree.addLeafClickListener(new LeafClickListener() {
+			@Override
+			public void itemSelected(String path) {
+				File file = new File(path);
+
+				openFile(file);
+			}
+		});
 		
 		scrollPaneTree.setViewportView(tree);
 		
@@ -231,7 +241,10 @@ public class MainFrame extends JFrame {
 		tree.add(dir,  IconUtils.getIcon("repo"));
 	}
 	
-		
+	public void openFile(File file) {
+		System.out.println(file.getAbsolutePath());
+	}
+	
 	/**
 	 * Loads repository in new panel
 	 * @param repository
