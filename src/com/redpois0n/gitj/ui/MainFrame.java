@@ -30,11 +30,14 @@ import javax.swing.event.ChangeListener;
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.InvalidRepositoryException;
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.Language;
+import com.redpois0n.gitj.LanguageScanner;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
 import com.redpois0n.pathtree.FileJTree;
 import com.redpois0n.pathtree.LeafClickListener;
+import com.redpois0n.pathtree.PathTreeNode;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -242,7 +245,47 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void openFile(File file) {
-		System.out.println(file.getAbsolutePath());
+		PathTreeNode root = (PathTreeNode) tree.getModel().getRoot();
+
+		for (int i = 0; i < root.getChildCount(); i++) {
+			PathTreeNode child = (PathTreeNode) root.getChildAt(i);
+
+			File rootDir = new File(child.getText());
+			
+			Repository repo = getFromName(rootDir.getName());
+			
+			if (repo != null) {
+				try {
+					List<Language> langs = new LanguageScanner(repo, false).scan(true);
+					
+					for (Language lang : langs) {
+						for (String ext : lang.getExtensions()) {
+							if (child.getText().toLowerCase().endsWith(ext)) {
+								Desktop.getDesktop().open(file); // TODO
+								break;
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+	}
+	
+	public Repository getFromName(String name) {
+		for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+			AbstractPanel panel = (AbstractPanel) tabbedPane.getTabComponentAt(i);
+			
+			String tabName = tabbedPane.getTitleAt(i);
+			
+			if (tabName.equals(name)) {
+				return panel.getRepository();
+			}
+		}
+		
+		return null;
 	}
 	
 	/**
