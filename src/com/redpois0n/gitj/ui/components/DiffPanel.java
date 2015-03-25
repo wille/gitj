@@ -63,7 +63,7 @@ public class DiffPanel extends JPanel {
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		
 		if (prefWidth == 0 || prefHeight == 0) {
-			prefHeight += 20;
+			prefHeight += 30;
 			
 			if (diff.getChunks().size() == 0) {
 				prefHeight += 10;
@@ -85,7 +85,6 @@ public class DiffPanel extends JPanel {
 			if (metrics.stringWidth(diff.getLocalPath()) + 80 > prefWidth) {
 				prefWidth = metrics.stringWidth(diff.getLocalPath()) + 80;
 			}
-			prefWidth += 5;
 			
 			if (isImage) {
 				if (image.getWidth() + 80 > prefWidth) {
