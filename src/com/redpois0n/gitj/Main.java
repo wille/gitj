@@ -17,7 +17,7 @@ public class Main {
 			frame.setVisible(true);
 
 			if (argsContains("--debug", args)) {
-				File dir = new File(".");
+				File dir = new File(System.getProperty("user.dir"));
 				Repository repository = new Repository(dir);
 
 				frame.loadRepository(repository);
