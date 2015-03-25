@@ -3,12 +3,9 @@ package com.redpois0n.gitj.ui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -28,7 +25,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.tree.DefaultMutableTreeNode;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.InvalidRepositoryException;
@@ -37,10 +33,6 @@ import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
 import com.redpois0n.pathtree.FileJTree;
-import com.redpois0n.pathtree.PathJTree;
-import com.redpois0n.pathtree.LeafClickListener;
-import com.redpois0n.pathtree.PathTreeNode;
-import com.redpois0n.pathtree.PlaceHolderTreeNode;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -94,6 +86,14 @@ public class MainFrame extends JFrame {
 			}
 		});
 		mnRepository.add(mntmTags);
+		
+		JMenuItem mntmLineCount = new JMenuItem("Line Count");
+		mntmLineCount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lineCount();
+			}
+		});
+		mnRepository.add(mntmLineCount);
 		
 		JMenu mnView = new JMenu("View");
 		menuBar.add(mnView);
@@ -468,6 +468,14 @@ public class MainFrame extends JFrame {
 		
 		if (commit != null && repo != null) {
 			new DialogCreateTag(null, repo, commit).setVisible(true);
+		}
+	}
+	
+	public void lineCount() {
+		Repository repo = getSelectedRepo();
+		
+		if (repo != null) {
+			new DialogLineCount(repo).setVisible(true);
 		}
 	}
 	
