@@ -22,10 +22,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
+import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.tree.DefaultTreeModel;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.InvalidRepositoryException;
@@ -50,6 +52,7 @@ public class MainFrame extends JFrame {
 	private JTabbedPane leftTabbedPane;
 	private JSplitPane splitPane;
 	private FileJTree tree;
+	private ObjectsPanel objectPane;
 
 	public MainFrame() {
 		setIconImage(IconUtils.getIcon("icon").getImage());
@@ -228,8 +231,12 @@ public class MainFrame extends JFrame {
 		
 		scrollPaneTree.setViewportView(tree);
 		
+		objectPane = new ObjectsPanel(this);
+		
 		leftTabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		leftTabbedPane.addTab("File Tree", IconUtils.getIcon("folder-tree"), scrollPaneTree);
+		leftTabbedPane.addTab("Files", IconUtils.getIcon("folder-tree"), scrollPaneTree);
+		leftTabbedPane.addTab("Tags", IconUtils.getIcon("tag-annotated"), objectPane);
+
 		splitPane.setLeftComponent(leftTabbedPane);
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -276,8 +283,7 @@ public class MainFrame extends JFrame {
 	
 	public Repository getFromName(String name) {
 		for (int i = 0; i < tabbedPane.getTabCount(); i++) {
-			AbstractPanel panel = (AbstractPanel) tabbedPane.getTabComponentAt(i);
-			
+			AbstractPanel panel = (AbstractPanel) tabbedPane.getComponentAt(i);
 			String tabName = tabbedPane.getTitleAt(i);
 			
 			if (tabName.equals(name)) {
