@@ -112,7 +112,7 @@ public class MainPanel extends AbstractPanel {
 			@Override
 			public void run() {
 				try {
-					langBar.setLanguages(new LanguageScanner(repo).scan(true));
+					langBar.setLanguages(new LanguageScanner(repo).scan(false));
 					langBar.repaint();
 				} catch (Exception e) {
 					e.printStackTrace();
