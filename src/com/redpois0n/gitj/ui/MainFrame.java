@@ -22,12 +22,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
-import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.tree.DefaultTreeModel;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.InvalidRepositoryException;
@@ -38,7 +36,7 @@ import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.utils.IconUtils;
 import com.redpois0n.pathtree.FileJTree;
-import com.redpois0n.pathtree.LeafClickListener;
+import com.redpois0n.pathtree.NodeClickListener;
 import com.redpois0n.pathtree.PathTreeNode;
 
 @SuppressWarnings("serial")
@@ -220,12 +218,12 @@ public class MainFrame extends JFrame {
 		
 		JScrollPane scrollPaneTree = new JScrollPane();
 		tree = new FileJTree(false);
-		tree.addLeafClickListener(new LeafClickListener() {
+		tree.addFileClickListener(new NodeClickListener() {
 			@Override
-			public void itemSelected(String path) {
+			public void itemSelected(PathTreeNode node, String path) {
 				File file = new File(path);
 
-				openFile(file);
+				openFile(node, file);
 			}
 		});
 		
@@ -251,31 +249,26 @@ public class MainFrame extends JFrame {
 		tree.add(dir,  IconUtils.getIcon("repo"));
 	}
 	
-	public void openFile(File file) {
-		PathTreeNode root = (PathTreeNode) tree.getModel().getRoot();
+	public void openFile(PathTreeNode node, File file) {
 
-		for (int i = 0; i < root.getChildCount(); i++) {
-			PathTreeNode child = (PathTreeNode) root.getChildAt(i);
+		File rootDir = new File(node.getText());
 
-			File rootDir = new File(child.getText());
-			
-			Repository repo = getFromName(rootDir.getName());
-			
-			if (repo != null) {
-				try {
-					List<Language> langs = new LanguageScanner(repo, false).scan(true);
-					
-					for (Language lang : langs) {
-						for (String ext : lang.getExtensions()) {
-							if (child.getText().toLowerCase().endsWith(ext)) {
-								Desktop.getDesktop().open(file); // TODO
-								break;
-							}
+		Repository repo = getFromName(rootDir.getName());
+
+		if (repo != null) {
+			try {
+				List<Language> langs = new LanguageScanner(repo, false).scan(true);
+
+				for (Language lang : langs) {
+					for (String ext : lang.getExtensions()) {
+						if (node.getText().toLowerCase().endsWith(ext)) {
+							Desktop.getDesktop().open(file); // TODO
+							break;
 						}
 					}
-				} catch (Exception e) {
-					e.printStackTrace();
 				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 
