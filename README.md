@@ -37,6 +37,13 @@ Then you can either double click the JAR or run it using
 java -jar gitj.jar
 ```
 
+## Requirements
+
+- [graphslib](https://github.com/redpois0n/graphslib)
+- [pathtree](https://github.com/redpois0n/pathtree)
+
+Either extract the files into the src folder when using pyjar or use the --classpath argument grapslib.jar:pathtree.jar
+
 ## Tested with
 
 - Git version **1.9.5** (Windows)
