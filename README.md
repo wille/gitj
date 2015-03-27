@@ -26,7 +26,7 @@ Compile from source into an runnable JAR with [pyjar](https://github.com/redpois
 Put pyjar.py in the same directory as the downloaded source and run
 
 ```
-python pyjar.py [--jdk /path/to/jdk/bin/] --input src --output gitj.jar --mainclass com.redpois0n.gitj.Main
+python pyjar.py [--jdk /path/to/jdk/bin/] [--classpath graphslib.jar:pathtree.jar] --input src --output gitj.jar --mainclass com.redpois0n.gitj.Main
 ```
 
 *--jdk argument is only needed if javac isn't in your __$PATH__*
@@ -42,7 +42,7 @@ java -jar gitj.jar
 - [graphslib](https://github.com/redpois0n/graphslib)
 - [pathtree](https://github.com/redpois0n/pathtree)
 
-Either extract the files into the src folder when using pyjar or use the --classpath argument grapslib.jar:pathtree.jar
+Either extract the files into the src folder when using pyjar or use the --classpath argument graphslib.jar:pathtree.jar
 
 ## Tested with
 
