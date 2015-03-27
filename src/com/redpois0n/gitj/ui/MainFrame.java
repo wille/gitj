@@ -233,7 +233,7 @@ public class MainFrame extends JFrame {
 		
 		leftTabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		leftTabbedPane.addTab("Files", IconUtils.getIcon("folder-tree"), scrollPaneTree);
-		leftTabbedPane.addTab("Tags", IconUtils.getIcon("tag-annotated"), objectPane);
+		leftTabbedPane.addTab("Repository", IconUtils.getIcon("tag-annotated"), objectPane);
 
 		splitPane.setLeftComponent(leftTabbedPane);
 		

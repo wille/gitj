@@ -43,7 +43,7 @@ public class ObjectsPanel extends JScrollPane {
 		}
 		
 		RemoteTreeNode remotesNode = new RemoteTreeNode("Remotes");
-		treeModel.insertNodeInto(remotesNode, root, 1);
+		treeModel.insertNodeInto(remotesNode, root, 0);
 		
 		for (Remote remote : repo.getRemotes()) {
 			RemoteTreeNode node = new RemoteTreeNode(remote.getName());
