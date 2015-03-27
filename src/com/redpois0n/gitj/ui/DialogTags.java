@@ -13,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
+import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
@@ -104,7 +105,10 @@ public class DialogTags extends JDialog {
 		
 		try {
 			for (Tag tag : repo.getTags(true)) {
-				model.addRow(new Object[] { tag.getTag(), tag.getHash() } );
+				Commit c = repo.getCommit(tag.getHash());
+				String date = c == null ? null : c.getWhen();
+				
+				model.addRow(new Object[] { tag.getTag(), tag.getHash(), tag.getMessage(), date } );
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -144,6 +148,7 @@ public class DialogTags extends JDialog {
 			super.addColumn("Name");
 			super.addColumn("Commit");
 			super.addColumn("Message");
+			super.addColumn("Date");
 		}
 
 		@Override
