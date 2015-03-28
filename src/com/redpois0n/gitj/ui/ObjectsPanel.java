@@ -25,6 +25,7 @@ public class ObjectsPanel extends JScrollPane {
 	public ObjectsPanel(MainFrame parent) {
 		tree = new JTree();
 		tree.setCellRenderer(new Renderer());
+		tree.setShowsRootHandles(true);
 		setViewportView(tree);
 	}
 
@@ -52,6 +53,7 @@ public class ObjectsPanel extends JScrollPane {
 		}
 		
 		tree.expandRow(0);
+		tree.setRootVisible(false);
 	}
 
 	public class Renderer extends DefaultTreeCellRenderer {
