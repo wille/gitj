@@ -23,15 +23,15 @@ public class ObjectsPanel extends JScrollPane {
 	private DefaultMutableTreeNode root;
 
 	public ObjectsPanel(MainFrame parent) {
-		root = new DefaultMutableTreeNode("root");
-		treeModel = new DefaultTreeModel(root);
-		tree = new JTree(treeModel);
+		tree = new JTree();
 		tree.setCellRenderer(new Renderer());
 		setViewportView(tree);
 	}
 
 	public void reload(Repository repo) throws Exception {
-		root.removeAllChildren();
+		root = new DefaultMutableTreeNode("root");
+		treeModel = new DefaultTreeModel(root);
+		tree.setModel(treeModel);
 		
 		TagTreeNode tagsNode = new TagTreeNode("Tags");
 		treeModel.insertNodeInto(tagsNode, root, 0);

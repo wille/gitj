@@ -298,8 +298,6 @@ public class MainFrame extends JFrame {
 			addPanel(repository.getFolder().getName(), pane, IconUtils.getIcon("repo"));
 			
 			addRepoToTree(repository.getFolder().getAbsolutePath());
-			
-			objectPane.reload(repository);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -547,9 +545,15 @@ public class MainFrame extends JFrame {
 			
 			if (repo != null) {
 				MainFrame.this.setTitle(repo.getName());
+				
+				try {
+					objectPane.reload(repo);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			} else {
 				MainFrame.this.setTitle("");
-			}
+			}			
 		}
 	}
 	
