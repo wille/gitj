@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -122,6 +123,19 @@ public class ObjectsPanel extends JScrollPane {
 				label.setIcon(((IconTreeNode) value).getIcon());
 			}
 			
+			label.setFont(new Font(label.getFont().getName(), Font.PLAIN, label.getFont().getSize()));
+			
+			try {
+				if (value instanceof BranchTreeNode) {	
+					BranchTreeNode node = ((BranchTreeNode) value);
+					if (node.getBranch() != null && node.getBranch().equals(repo.getCurrentBranch())) {
+						label.setFont(new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize()));
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			return label;
 		}
 	}
@@ -167,6 +181,8 @@ public class ObjectsPanel extends JScrollPane {
 	
 	public class BranchTreeNode extends IconTreeNode {
 		
+		private Branch branch;
+		
 		public BranchTreeNode(String text, final Branch branch) {
 			super(text, IconUtils.getIcon("branch"), new ActionListener() {
 				@Override
@@ -181,6 +197,12 @@ public class ObjectsPanel extends JScrollPane {
 					}
 				}
 			});
+			
+			this.branch = branch;
+		}
+		
+		public Branch getBranch() {
+			return this.branch;
 		}
 	}
 	
