@@ -159,7 +159,6 @@ public class CommitListPanel extends JScrollPane {
 		reload(commits);
 	}
 	
-
 	public Commit getSelectedCommit() {
 		int row = table.getSelectedRow();
 		
@@ -168,6 +167,17 @@ public class CommitListPanel extends JScrollPane {
 		}
 		
 		return null;
+	}
+	
+	public void setSelectedCommit(Commit commit) {
+		for (int i = 0; i < model.getRowCount(); i++) {
+			Commit c = (Commit) table.getValueAt(i, 0);
+			
+			if (c == commit) {
+				table.setRowSelectionInterval(i, i);
+				break;
+			}
+		}
 	}
 	
 	/**

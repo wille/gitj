@@ -541,15 +541,18 @@ public class MainFrame extends JFrame {
 		 */
 		@Override
 		public void stateChanged(ChangeEvent arg0) {
+			AbstractPanel panel = MainFrame.this.getSelectedPanel();
 			Repository repo = MainFrame.this.getSelectedRepo();
 			
 			if (repo != null) {
 				MainFrame.this.setTitle(repo.getName());
 				
-				try {
-					objectPane.reload(repo);
-				} catch (Exception e) {
-					e.printStackTrace();
+				if (panel instanceof MainPanel) {
+					try {
+						objectPane.reload((MainPanel)panel, repo);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
 			} else {
 				MainFrame.this.setTitle("");
