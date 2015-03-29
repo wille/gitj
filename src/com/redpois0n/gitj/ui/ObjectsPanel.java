@@ -15,6 +15,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import com.redpois0n.git.Branch;
 import com.redpois0n.git.Remote;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
@@ -97,6 +98,17 @@ public class ObjectsPanel extends JScrollPane {
 			treeModel.insertNodeInto(node, remotesNode, 0);
 		}
 		
+		
+		
+		BranchTreeNode branchNode = new BranchTreeNode("Branches");
+		treeModel.insertNodeInto(branchNode, root, 0);
+		
+		for (Branch branch : repo.getBranches()) {
+			BranchTreeNode node = new BranchTreeNode(branch.getName());
+			
+			treeModel.insertNodeInto(node, branchNode, 0);
+		}
+		
 		tree.expandRow(0);
 		tree.setRootVisible(false);
 	}
@@ -152,6 +164,13 @@ public class ObjectsPanel extends JScrollPane {
 			});
 		}
 		
+	}
+	
+	public class BranchTreeNode extends IconTreeNode {
+		
+		public BranchTreeNode(String text) {
+			super(text, IconUtils.getIcon("branch"));
+		}
 	}
 	
 	public class RemoteTreeNode extends IconTreeNode {
