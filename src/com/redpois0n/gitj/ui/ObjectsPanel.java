@@ -19,6 +19,7 @@ import com.redpois0n.git.Branch;
 import com.redpois0n.git.Remote;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
+import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
@@ -96,15 +97,13 @@ public class ObjectsPanel extends JScrollPane {
 			RemoteTreeNode node = new RemoteTreeNode(remote.getName());
 			
 			treeModel.insertNodeInto(node, remotesNode, 0);
-		}
+		}	
 		
-		
-		
-		BranchTreeNode branchNode = new BranchTreeNode("Branches");
+		BranchTreeNode branchNode = new BranchTreeNode("Branches", null);
 		treeModel.insertNodeInto(branchNode, root, 0);
 		
 		for (Branch branch : repo.getBranches()) {
-			BranchTreeNode node = new BranchTreeNode(branch.getName());
+			BranchTreeNode node = new BranchTreeNode(branch.getName(), branch);
 			
 			treeModel.insertNodeInto(node, branchNode, 0);
 		}
@@ -168,8 +167,20 @@ public class ObjectsPanel extends JScrollPane {
 	
 	public class BranchTreeNode extends IconTreeNode {
 		
-		public BranchTreeNode(String text) {
-			super(text, IconUtils.getIcon("branch"));
+		public BranchTreeNode(String text, final Branch branch) {
+			super(text, IconUtils.getIcon("branch"), new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (branch != null) {
+						try {
+							repo.checkout(branch);
+						} catch (Exception e1) {
+							e1.printStackTrace();
+							Main.displayError(e1);
+						}
+					}
+				}
+			});
 		}
 	}
 	
