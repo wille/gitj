@@ -145,7 +145,9 @@ public class ObjectsPanel extends JScrollPane {
 			super(text, IconUtils.getIcon("tag-annotated"), new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					panel.getCommitPanel().setSelectedCommit(repo.getCommit(tag.getHash()));
+					if (tag != null) {
+						panel.getCommitPanel().setSelectedCommit(repo.getCommit(tag.getHash()));
+					}
 				}	
 			});
 		}
