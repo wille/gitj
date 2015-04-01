@@ -23,7 +23,7 @@ _at 627874114fac390c42c2779d7469b35646c87dd2_
 
 Compile from source into an runnable JAR with [pyjar](https://github.com/redpois0n/pyjar)
 
-Put pyjar.py in the same directory as the downloaded source and run
+Put pyjar.py in the parent directory of the downloaded source and run
 
 ```
 python pyjar.py [--jdk /path/to/jdk/bin/] [--classpath graphslib.jar:pathtree.jar] --input src --output gitj.jar --mainclass com.redpois0n.gitj.Main
