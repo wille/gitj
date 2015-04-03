@@ -12,7 +12,6 @@ import java.util.Enumeration;
 import java.util.List;
 
 import com.redpois0n.git.Change.Type;
-import com.redpois0n.gitj.Main;
 
 public class Repository {
 
@@ -96,8 +95,6 @@ public class Repository {
 				String s = e.nextElement();
 
 				while (s.startsWith("diff --git")) {
-					Main.print("Diff: " + s);
-
 					String sdiff = s.substring(s.lastIndexOf(" b/") + 3, s.length()).trim();
 
 					s = e.nextElement();
@@ -126,8 +123,6 @@ public class Repository {
 						} else if (s.startsWith("@@ ")) {
 							String chunk = s.substring(0, s.indexOf("@@", 3) + 2).trim();
 
-							Main.print("Chunk: " + chunk);
-
 							current = new Chunk(diff, chunk);
 							diff.addChunk(current);
 							continue;
@@ -135,9 +130,6 @@ public class Repository {
 						
 						if (current != null) {
 							current.addRawLine(s);
-							Main.print("Code: " + s);
-						} else {
-							Main.print("!Code: " + s);
 						}
 					}
 
@@ -166,14 +158,9 @@ public class Repository {
 
 				}
 
-				String changes = s;
-				Main.print("Changes: " + changes);
-
 				s = e.nextElement();
 
 				while (s.startsWith("diff --git")) {
-					Main.print("Diff: " + s);
-
 					String sdiff = s.substring(s.lastIndexOf(" b/") + 3, s.length()).trim();
 
 					s = e.nextElement();
@@ -205,8 +192,6 @@ public class Repository {
 						} else if (s.startsWith("@@ ")) {
 							String chunk = s.substring(0, s.indexOf("@@", 3) + 2).trim();
 
-							Main.print("Chunk: " + chunk);
-
 							current = new Chunk(diff, chunk);
 							diff.addChunk(current);
 							continue;
@@ -214,9 +199,6 @@ public class Repository {
 						
 						if (current != null) {
 							current.addRawLine(s);
-							Main.print("Code: " + s);
-						} else {
-							Main.print("!Code: " + s);
 						}
 					}
 
@@ -443,11 +425,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void stage(String path) throws Exception {
-		List<String> raw = run("git", "add", path);
-
-		for (String s : raw) {
-			Main.print(s);
-		}
+		run("git", "add", path);
 	}
 
 	/**
@@ -458,11 +436,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void unstage(String path) throws Exception {
-		List<String> raw = run("git", "reset", path);
-
-		for (String s : raw) {
-			Main.print(s);
-		}
+		run("git", "reset", path);
 	}
 	
 	/**
@@ -546,11 +520,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void init() throws Exception {
-		List<String> raw = run("git", "init" );
-
-		for (String s : raw) {
-			Main.print(s);
-		}
+		run("git", "init" );
 	}
 
 	/**
