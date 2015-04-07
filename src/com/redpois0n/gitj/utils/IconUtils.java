@@ -1,7 +1,9 @@
 package com.redpois0n.gitj.utils;
 
 import java.awt.Image;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
@@ -74,5 +76,13 @@ public class IconUtils {
 		}
 		
 		return getIcon(s);
+	}
+	
+	public static List<? extends Image> getIcons() {
+		List<Image> list = new ArrayList<Image>();
+		list.add(IconUtils.getIcon("icon").getImage());
+		list.add(IconUtils.getIcon("icon-big").getImage());
+
+		return list;
 	}
 }

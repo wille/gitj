@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
 	private ObjectsPanel objectPane;
 
 	public MainFrame() {
-		setIconImage(IconUtils.getIcon("icon").getImage());
+		setIconImages(IconUtils.getIcons());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		
