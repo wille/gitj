@@ -41,6 +41,7 @@ java -jar gitj.jar
 
 - [graphslib](https://github.com/redpois0n/graphslib)
 - [pathtree](https://github.com/redpois0n/pathtree)
+- [iconlib](https://github.com/redpois0n/iconlib)
 
 Either extract the files into the src folder when using pyjar or use the --classpath argument graphslib.jar:pathtree.jar
 

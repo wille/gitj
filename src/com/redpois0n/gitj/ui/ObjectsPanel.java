@@ -1,5 +1,7 @@
 package com.redpois0n.gitj.ui;
 
+import iconlib.IconUtils;
+
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -21,7 +23,6 @@ import com.redpois0n.git.Remote;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
-import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
 public class ObjectsPanel extends JScrollPane {

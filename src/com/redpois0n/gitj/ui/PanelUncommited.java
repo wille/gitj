@@ -1,5 +1,7 @@
 package com.redpois0n.gitj.ui;
 
+import iconlib.IconUtils;
+
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,7 +19,7 @@ import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.components.IDiffSelectionListener;
 import com.redpois0n.gitj.ui.components.JFileList;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
-import com.redpois0n.gitj.utils.IconUtils;
+import com.redpois0n.gitj.utils.GitIconUtils;
 
 @SuppressWarnings("serial")
 public class PanelUncommited extends AbstractPanel {
@@ -81,7 +83,7 @@ public class PanelUncommited extends AbstractPanel {
 			
 			System.out.println(change.getRepoPath());
 			
-			model.addElement(new JFileListEntry(change.getRepoPath(), IconUtils.getIconFromChangeType(change.getTypes().get(0))));
+			model.addElement(new JFileListEntry(change.getRepoPath(), GitIconUtils.getIconFromChangeType(change.getTypes().get(0))));
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package com.redpois0n.gitj.ui;
 
+import iconlib.IconUtils;
+
 import java.awt.BorderLayout;
 import java.util.List;
 
@@ -23,7 +25,7 @@ import com.redpois0n.gitj.ui.components.ICommitClickListener;
 import com.redpois0n.gitj.ui.components.IDiffSelectionListener;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
 import com.redpois0n.gitj.ui.components.LanguageBar;
-import com.redpois0n.gitj.utils.IconUtils;
+import com.redpois0n.gitj.utils.GitIconUtils;
 
 @SuppressWarnings("serial")
 public class MainPanel extends AbstractPanel {
@@ -203,7 +205,7 @@ public class MainPanel extends AbstractPanel {
 			panelSummary.reload(c);
 
 			for (Diff diff : allDiffs) {
-				panelSummary.getListModel().addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(IconUtils.getIconFromDiffType(diff.getType()))));
+				panelSummary.getListModel().addElement(new JFileListEntry(diff.getLocalPath(), new ImageIcon(GitIconUtils.getIconFromDiffType(diff.getType()))));
 			}
 		}
 		

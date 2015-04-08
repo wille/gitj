@@ -1,5 +1,7 @@
 package com.redpois0n.gitj.ui;
 
+import iconlib.IconUtils;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -34,7 +36,7 @@ import com.redpois0n.gitj.Language;
 import com.redpois0n.gitj.LanguageScanner;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
-import com.redpois0n.gitj.utils.IconUtils;
+import com.redpois0n.gitj.utils.GitIconUtils;
 import com.redpois0n.pathtree.FileJTree;
 import com.redpois0n.pathtree.NodeClickListener;
 import com.redpois0n.pathtree.PathTreeNode;
@@ -53,7 +55,7 @@ public class MainFrame extends JFrame {
 	private ObjectsPanel objectPane;
 
 	public MainFrame() {
-		setIconImages(IconUtils.getIcons());
+		setIconImages(GitIconUtils.getIcons());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
 		

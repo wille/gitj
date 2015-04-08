@@ -1,5 +1,7 @@
 package com.redpois0n.gitj.ui.components;
 
+import iconlib.IconUtils;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
@@ -16,7 +18,7 @@ import javax.swing.JPanel;
 import com.redpois0n.git.Chunk;
 import com.redpois0n.git.CodeLine;
 import com.redpois0n.git.Diff;
-import com.redpois0n.gitj.utils.IconUtils;
+import com.redpois0n.gitj.utils.GitIconUtils;
 
 @SuppressWarnings("serial")
 public class DiffPanel extends JPanel {
@@ -104,7 +106,7 @@ public class DiffPanel extends JPanel {
 		g.setColor(Color.gray);
 		g.drawString(diff.getLocalPath(), 20, 4 + metrics.getHeight());
 		
-		g.drawImage(IconUtils.getIconFromDiffType(diff.getType()), 2, 5, null);
+		g.drawImage(GitIconUtils.getIconFromDiffType(diff.getType()), 2, 5, null);
 		
 		// Left line number table
 		g.setColor(COLOR_PANEL);

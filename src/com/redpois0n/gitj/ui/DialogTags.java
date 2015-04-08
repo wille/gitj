@@ -1,5 +1,7 @@
 package com.redpois0n.gitj.ui;
 
+import iconlib.IconUtils;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,7 +19,6 @@ import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
-import com.redpois0n.gitj.utils.IconUtils;
 
 @SuppressWarnings("serial")
 public class DialogTags extends JDialog {
