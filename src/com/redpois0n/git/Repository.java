@@ -694,6 +694,27 @@ public class Repository {
 	}
 	
 	/**
+	 * Creates ZIP archive from specified commit
+	 * @param output Output file
+	 * @param c Commit
+	 * @throws Exception
+	 */
+	public void archive(File output, Commit c) throws Exception {
+		archive(output, "zip", c);
+	}
+	
+	/**
+	 * Creates archive from specified commit
+	 * @param output Output file
+	 * @param format Format (zip, tar, tar.gz...)
+	 * @param c Commit
+	 * @throws Exception
+	 */
+	public void archive(File output, String format, Commit c) throws Exception {
+		run("git", "archive", "--format", format, "--output", output.getAbsolutePath(), c.getHash());
+	}
+	
+	/**
 	 * Returns true if this file is tracked in this repository
 	 * @param file
 	 * @return
