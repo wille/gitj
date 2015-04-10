@@ -715,6 +715,15 @@ public class Repository {
 	}
 	
 	/**
+	 * Returns all available archive formats
+	 * @return
+	 * @throws Exception
+	 */
+	public String[] getArchiveFormats() throws Exception {
+		return run("git", "archive", "--list").toArray(new String[0]);
+	}
+	
+	/**
 	 * Returns true if this file is tracked in this repository
 	 * @param file
 	 * @return
