@@ -700,7 +700,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public void archive(File output, Commit c) throws Exception {
-		archive(output, "zip", c);
+		archive(output, "", "zip", c);
 	}
 	
 	/**
@@ -710,8 +710,8 @@ public class Repository {
 	 * @param c Commit
 	 * @throws Exception
 	 */
-	public void archive(File output, String format, Commit c) throws Exception {
-		run("git", "archive", "--format", format, "--output", output.getAbsolutePath(), c.getHash());
+	public void archive(File output, String prefix, String format, Commit c) throws Exception {
+		run("git", "archive", "--prefix=" + prefix, "--format", format, "--output", output.getAbsolutePath(), c.getHash());
 	}
 	
 	/**
