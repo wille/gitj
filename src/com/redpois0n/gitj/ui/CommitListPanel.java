@@ -140,6 +140,21 @@ public class CommitListPanel extends JScrollPane {
 		});
 		menu.add(imReset);
 		
+		JMenuItem imArchive = new JMenuItem("Archive");
+		imArchive.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int row = table.getSelectedRow();
+		        
+		        if (row != -1) {
+		        	Commit c = (Commit) table.getValueAt(row, 0);
+		        	
+		        	new DialogArchive(c, repository).setVisible(true);
+		        }
+			}		
+		});
+		menu.add(imArchive);
+		
 		JMenuItem imCopy = new JMenuItem("Copy SHA1 to clipboard");
 		imCopy.addActionListener(new ActionListener() {
 			@Override
