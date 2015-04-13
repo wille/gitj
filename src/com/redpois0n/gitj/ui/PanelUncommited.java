@@ -161,7 +161,7 @@ public class PanelUncommited extends AbstractPanel {
 			
 			JFileListEntry entry = list.getSelectedValue();
 			
-			if (e.getClickCount() == 2 && entry != null) {
+			if (entry != null && e.getClickCount() == 2 && entry != null) {
 				try {
 					if (list == stagedList) {
 						repo.unstage(entry.getText());
@@ -174,7 +174,7 @@ public class PanelUncommited extends AbstractPanel {
 					ex.printStackTrace();
 					Main.displayError(ex);
 				}
-			} else if (e.getClickCount() == 1) {
+			} else if (entry != null && e.getClickCount() == 1) {
 				List<Diff> diffs = repo.getUncommitedDiffs();
 				List<Diff> selected = new ArrayList<Diff>();
 				
