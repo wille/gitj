@@ -4,13 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.ResetMode;
@@ -31,24 +28,29 @@ public class DialogReset extends JDialog {
 		setModal(true);
 		setResizable(false);
 		setAlwaysOnTop(true);
+		setBounds(0, 0, 450, 200);
 		
 		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setBounds(369, 133, 65, 23);
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cancel();
+				close();
 			}
 		});
 		
 		JButton btnOk = new JButton("OK");
+		btnOk.setBounds(316, 133, 47, 23);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ok();
+				reset();
 			}
 		});
 		
 		JLabel lblMode = new JLabel("Mode");
+		lblMode.setBounds(48, 65, 26, 14);
 		
 		JLabel lblResetBranch = new JLabel("Reset branch");
+		lblResetBranch.setBounds(10, 30, 64, 14);
 		
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
 		
@@ -57,68 +59,36 @@ public class DialogReset extends JDialog {
 		}
 		
 		comboBox = new JComboBox<String>();
+		comboBox.setBounds(84, 62, 350, 20);
 		comboBox.setModel(model);
 		
 		lblBranch = new JLabel("Branch");
+		lblBranch.setBounds(84, 30, 33, 14);
 		
 		JLabel lblToCommit = new JLabel("To commit");
+		lblToCommit.setBounds(26, 100, 48, 14);
 		
 		lblCommit = new JLabel(c.getHash() + " - " + c.getComment());
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addComponent(btnOk)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnCancel))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblMode)
-								.addComponent(lblResetBranch)
-								.addComponent(lblToCommit))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblCommit)
-								.addComponent(lblBranch)
-								.addComponent(comboBox, 0, 350, Short.MAX_VALUE))))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGap(30)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblResetBranch)
-						.addComponent(lblBranch))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblMode)
-						.addComponent(comboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblToCommit)
-						.addComponent(lblCommit))
-					.addPreferredGap(ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnCancel)
-						.addComponent(btnOk))
-					.addContainerGap())
-		);
-		getContentPane().setLayout(groupLayout);
+		lblCommit.setBounds(84, 100, 120, 14);
+		getContentPane().setLayout(null);
+		getContentPane().add(btnOk);
+		getContentPane().add(btnCancel);
+		getContentPane().add(lblMode);
+		getContentPane().add(lblResetBranch);
+		getContentPane().add(lblToCommit);
+		getContentPane().add(lblCommit);
+		getContentPane().add(lblBranch);
+		getContentPane().add(comboBox);
 		
-		pack();
 		setLocationRelativeTo(null);
 	}
 	
-	public void cancel() {
+	public void close() {
 		setVisible(false);
 		dispose();
 	}
 	
-	public void ok() {
+	public void reset() {
 		setAlwaysOnTop(false);
 		ResetMode mode = null;
 		
@@ -133,12 +103,13 @@ public class DialogReset extends JDialog {
 		if (DialogUtils.confirm("Are you sure that you want to reset current branch to commit " + commit.getHash(), "Reset to Commit")) {
 			try {
 				commit.reset(mode);
+				close();
 			} catch (Exception e) {
 				e.printStackTrace();
 				Main.displayError(e);
 			}
 		}
-		
+	
 		setAlwaysOnTop(true);
 	}
 }
