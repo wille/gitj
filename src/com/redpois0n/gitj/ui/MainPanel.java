@@ -1,7 +1,5 @@
 package com.redpois0n.gitj.ui;
 
-import iconlib.IconUtils;
-
 import java.awt.BorderLayout;
 import java.util.List;
 

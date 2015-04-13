@@ -1,7 +1,5 @@
 package com.redpois0n.gitj.ui.components;
 
-import iconlib.IconUtils;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;

@@ -1,5 +1,6 @@
 package com.redpois0n.gitj.ui.components;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -20,6 +21,7 @@ public class DiffHolderPanel extends JPanel {
 		gridBagLayout.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
+		setBackground(Color.white);
 	}
 	
 	public void addDiffPanel(final DiffPanel panel) {
