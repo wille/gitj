@@ -1,14 +1,17 @@
 package com.redpois0n.gitj.ui;
 
-import iconlib.IconUtils;
-
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
@@ -19,7 +22,9 @@ import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.components.IDiffSelectionListener;
 import com.redpois0n.gitj.ui.components.JFileList;
 import com.redpois0n.gitj.ui.components.JFileListEntry;
+import com.redpois0n.gitj.utils.DialogUtils;
 import com.redpois0n.gitj.utils.GitIconUtils;
+import com.redpois0n.gitj.utils.MenuItemUtils;
 
 @SuppressWarnings("serial")
 public class PanelUncommited extends AbstractPanel {
@@ -32,7 +37,7 @@ public class PanelUncommited extends AbstractPanel {
 	private DefaultListModel<JFileListEntry> stagedModel;
 	private JFileList stagedList;
 	
-	public PanelUncommited(AbstractPanel parent, Repository repo) {
+	public PanelUncommited(AbstractPanel parent, final Repository repo) {
 		super(repo);
 		this.parent = parent;
 		setLayout(new BorderLayout(0, 0));
@@ -58,6 +63,32 @@ public class PanelUncommited extends AbstractPanel {
 		unstagedList.addMouseListener(new ClickListener());
 		unstagedScrollList.setViewportView(unstagedList);
 		splitPane.setRightComponent(unstagedScrollList);
+		
+		JPopupMenu menu = new JPopupMenu();
+		MenuItemUtils.addPopup(unstagedList, menu);
+		
+		JMenuItem btnRemove = new JMenuItem("Remove");
+		menu.add(btnRemove);
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				List<String> list = getSelectedUnstaged();
+				
+				if (DialogUtils.confirm("Remove", "Are you sure that you want to remove " + list.size() + " files?")) {
+					for (String s : list) {
+						File file = repo.getAbsoluteFile(s);
+						
+						file.delete();
+					}
+					
+					try {
+						reload();
+					} catch (Exception e1) {
+						e1.printStackTrace();
+						Main.displayError(e1);
+					}
+				}
+			}
+		});
 		
 		add(splitPane);
 	}
