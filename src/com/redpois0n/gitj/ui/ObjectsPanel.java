@@ -37,6 +37,9 @@ public class ObjectsPanel extends JScrollPane {
 		tree = new JTree();
 		tree.setCellRenderer(new Renderer());
 		tree.setShowsRootHandles(true);
+		root = new DefaultMutableTreeNode("root");
+		treeModel = new DefaultTreeModel(root);
+		tree.setModel(treeModel);
 		tree.addMouseListener(new MouseListener() {
 
 			@Override
@@ -78,10 +81,8 @@ public class ObjectsPanel extends JScrollPane {
 
 	public void reload(MainPanel panel, Repository repo) throws Exception {
 		this.panel = panel;
-		this.repo = repo;
-		root = new DefaultMutableTreeNode("root");
-		treeModel = new DefaultTreeModel(root);
-		tree.setModel(treeModel);
+		this.repo = repo;	
+		root.removeAllChildren();
 		
 		TagTreeNode tagsNode = new TagTreeNode("Tags", null);
 		treeModel.insertNodeInto(tagsNode, root, 0);
@@ -109,8 +110,8 @@ public class ObjectsPanel extends JScrollPane {
 			
 			treeModel.insertNodeInto(node, branchNode, 0);
 		}
-		
-		tree.expandRow(0);
+		treeModel.reload(root);
+
 		tree.setRootVisible(false);
 	}
 
