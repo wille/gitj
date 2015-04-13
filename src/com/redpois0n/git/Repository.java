@@ -772,4 +772,17 @@ public class Repository {
 		return getFolder().getName();
 	}
 
+	/**
+	 * Returns absolute path on file system
+	 * @param s
+	 * @return
+	 */
+	public String getAbsolutePath(String s) {
+		return getAbsoluteFile(s).getAbsolutePath();
+	}
+	
+	public File getAbsoluteFile(String s) {
+		return new File(getFolder(), s);
+	}
+
 }
