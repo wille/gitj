@@ -108,9 +108,9 @@ public class DiffPanel extends JPanel {
 		
 		// Left line number table
 		g.setColor(COLOR_PANEL);
-		g.fillRect(0, 25, 60, prefHeight - 25);
+		g.fillRect(0, 25, 60, getHeight() - 35);
 		g.setColor(COLOR_PANEL_BORDER);
-		g.drawRect(0, 25, 60, prefHeight - 25);
+		g.drawRect(0, 25, 60, getHeight() - 35);
 						
 		int y = 25;
 		
@@ -177,7 +177,10 @@ public class DiffPanel extends JPanel {
 		}
 		
 		g.setColor(COLOR_PANEL_BORDER);
-		g.drawRect(0, 0, prefWidth - 1, prefHeight - 1);
+		g.drawRect(0, 0, prefWidth - 1, getHeight() - 10);
+		
+		g.setColor(Color.white);
+		g.fillRect(0, getHeight() - 9, prefWidth, 9);
 
 		if (getWidth() != prefWidth || getHeight() != prefHeight) {
 			super.setPreferredSize(getDimension());
