@@ -7,6 +7,8 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -16,6 +18,42 @@ import com.redpois0n.gitj.ui.components.DiffPanel;
 public class IconGenerator {
 	
 	private static FontMetrics fontMetrics;
+	
+	/**
+	 * Creates one icon from multiple tag icons
+	 * @param tags
+	 * @return
+	 */
+	public static ImageIcon getTagIcons(List<Tag> tags) {
+		List<ImageIcon> icons = new ArrayList<ImageIcon>();
+		
+		int width = 0;
+		int height = 0;
+		
+		for (Tag tag : tags) {
+			ImageIcon icon = getTagIcon(tag);
+			width += icon.getIconWidth() + 2;
+			
+			if (height == 0) {
+				height = icon.getIconHeight();
+			}
+			
+			icons.add(icon);
+		}
+		
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		int pos = 0;
+		
+		for (int i = 0; i < icons.size(); i++) {
+			ImageIcon icon = icons.get(i);
+			
+			image.getGraphics().drawImage(icon.getImage(), pos, 0, null);
+			
+			pos += icon.getIconWidth() + 2;
+		}
+		
+		return new ImageIcon(image);
+	}
 	
 	/**
 	 * Gets commit table tag icon

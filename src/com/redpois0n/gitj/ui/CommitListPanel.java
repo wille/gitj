@@ -242,7 +242,7 @@ public class CommitListPanel extends JScrollPane {
 	
 	public class CommitRenderer extends DefaultTableCellRenderer {
 		
-		private final Map<Tag, ImageIcon> cache = new HashMap<Tag, ImageIcon>();
+		private final Map<Commit, ImageIcon> cache = new HashMap<Commit, ImageIcon>();
 		
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -256,17 +256,19 @@ public class CommitListPanel extends JScrollPane {
 				ImageIcon icon = null;
 				
 				if (c.getTags() != null) {
+					List<Tag> tags = new ArrayList<Tag>();
+					
 					for (Tag tag : c.getTags()) {
 						if (tag.getHash().equals(c.getHash())) {
-							if (cache.containsKey(tag)) {
-								icon = cache.get(tag);
-								break;
-							} else {
-								icon = IconGenerator.getTagIcon(tag);
-								cache.put(tag, icon);
-								break;
-							}
+							tags.add(tag);
 						}
+					}
+					
+					if (cache.containsKey(c)) {
+						icon = cache.get(c);
+					} else {
+						icon = IconGenerator.getTagIcons(tags);
+						cache.put(c, icon);
 					}
 				}
 				
