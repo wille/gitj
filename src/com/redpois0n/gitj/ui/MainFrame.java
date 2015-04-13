@@ -377,6 +377,10 @@ public class MainFrame extends JFrame {
 		if (mp != null) {
 			try {
 				mp.reload();
+				
+				if (mp instanceof MainPanel) {
+					objectPane.reload((MainPanel) mp, mp.repo);
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				Main.displayError(e);
