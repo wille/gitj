@@ -41,7 +41,7 @@ public class Branch {
 		if (o instanceof Branch) {
 			Branch branch = (Branch) o;
 			
-			return branch.commit.equals(this.commit) && branch.name.equals(this.name);
+			return branch.commit != null && branch.name != null && branch.commit.equals(this.commit) && branch.name.equals(this.name);
 		}
 		
 		return o == this;
