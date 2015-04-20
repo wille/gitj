@@ -1,11 +1,13 @@
 package com.redpois0n.git;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -321,10 +323,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public List<String> run(String... c) throws Exception {
-		ProcessBuilder pb = new ProcessBuilder(c);
-		pb.redirectErrorStream(true);
-		pb.directory(folder);
-		Process p = pb.start();
+		Process p = start(c);
 
 		List<String> lines = new ArrayList<String>();
 
@@ -342,6 +341,13 @@ public class Repository {
 		return lines;
 	}
 	
+	public Process start(String... c) throws Exception {
+		ProcessBuilder pb = new ProcessBuilder(c);
+		pb.redirectErrorStream(true);
+		pb.directory(folder);
+		return pb.start();
+	}
+	
 	/**
 	 * Reads binary input
 	 * @param c
@@ -349,9 +355,7 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public byte[] readBinary(String[] c) throws Exception {
-		ProcessBuilder pb = new ProcessBuilder(c);
-		pb.directory(folder);
-		Process p = pb.start();
+		Process p = start(c);
 
 		InputStream is = p.getInputStream();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -754,8 +758,25 @@ public class Repository {
 		return files;
 	}
 	
-	public void push(boolean setupstream) {
+	public void push(boolean setupstream) throws Exception {
+		Process p = start("git", "push");
 		
+		List<String> lines = new ArrayList<String>();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		String line;
+
+		while ((line = reader.readLine()) != null) {
+			if (line.length() > 0) {
+				System.out.println(line);
+				lines.add(line);
+			}
+		}
+
+		reader.close();
+
+		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
+		out.close();
 	}
 
 	/**

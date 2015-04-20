@@ -208,6 +208,11 @@ public class MainFrame extends JFrame {
 		toolBar.add(btnPull);
 		
 		JButton btnPush = new JButton("Push");
+		btnPush.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				push();
+			}
+		});
 		btnPush.setIcon(IconUtils.getIcon("push"));
 		toolBar.add(btnPush);
 		
@@ -532,6 +537,18 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
+	public void push() {
+		Repository repo = getSelectedRepo();
+
+		if (repo != null) {
+			try {
+				repo.push(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public void lineCount() {
 		Repository repo = getSelectedRepo();
 		
