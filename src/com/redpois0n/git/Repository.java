@@ -322,6 +322,7 @@ public class Repository {
 	 */
 	public List<String> run(String... c) throws Exception {
 		ProcessBuilder pb = new ProcessBuilder(c);
+		pb.redirectErrorStream(true);
 		pb.directory(folder);
 		Process p = pb.start();
 
@@ -751,6 +752,10 @@ public class Repository {
 		}
 		
 		return files;
+	}
+	
+	public void push(boolean setupstream) {
+		
 	}
 
 	/**
