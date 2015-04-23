@@ -592,7 +592,7 @@ public class Repository {
 			e.printStackTrace();
 		}
 		
-		return lines != null && lines.get(0).equalsIgnoreCase("true");
+		return lines != null && lines.size() > 0 &&  lines.get(0).equalsIgnoreCase("true");
 	}
 	
 	/**
