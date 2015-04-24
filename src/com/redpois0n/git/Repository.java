@@ -9,11 +9,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
 import com.redpois0n.git.Change.Type;
+import com.redpois0n.oslib.OperatingSystem;
 
 public class Repository {
 
@@ -341,10 +343,39 @@ public class Repository {
 		return lines;
 	}
 	
+	
+	/**
+	 * Starts process in current directory
+	 * @param c
+	 * @return
+	 * @throws Exception
+	 */
 	public Process start(String... c) throws Exception {
 		ProcessBuilder pb = new ProcessBuilder(c);
 		pb.redirectErrorStream(true);
 		pb.directory(folder);
+		return pb.start();
+	}
+	
+	/**
+	 * Starts process in current directory, and if on Windows, will run in command prompt (issues with ssh password)
+	 * @param c
+	 * @return
+	 * @throws Exception
+	 */
+	public Process startSpecial(String... c) throws Exception {
+		List<String> commands = Arrays.asList(c);
+		
+		if (OperatingSystem.getOperatingSystem().getType() == OperatingSystem.WINDOWS) {
+			commands.add(0, "cmd");
+			commands.add(1, "/c");
+			commands.add(2, "start");
+		}
+		
+		ProcessBuilder pb = new ProcessBuilder(commands);
+		pb.redirectErrorStream(true);
+		pb.directory(folder);
+
 		return pb.start();
 	}
 	
@@ -759,7 +790,7 @@ public class Repository {
 	}
 	
 	public void push(boolean setupstream) throws Exception {
-		Process p = start("git", "push");
+		Process p = startSpecial("git", "push");
 		
 		List<String> lines = new ArrayList<String>();
 
@@ -768,15 +799,11 @@ public class Repository {
 
 		while ((line = reader.readLine()) != null) {
 			if (line.length() > 0) {
-				System.out.println(line);
 				lines.add(line);
-			}
+			} 
 		}
 
-		reader.close();
-
-		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(p.getOutputStream()));
-		out.close();
+		reader.close();	
 	}
 
 	/**
