@@ -249,6 +249,9 @@ public class MainFrame extends JFrame {
 
 		splitPane.setLeftComponent(leftTabbedPane);
 		
+		StatusBar status = new StatusBar();
+		contentPane.add(status, BorderLayout.SOUTH);
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
