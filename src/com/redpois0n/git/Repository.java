@@ -1,13 +1,11 @@
 package com.redpois0n.git;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -364,13 +362,17 @@ public class Repository {
 	 * @throws Exception
 	 */
 	public Process startSpecial(String... c) throws Exception {
-		List<String> commands = Arrays.asList(c);
-		
+		List<String> commands = new ArrayList<String>();
+
 		if (OperatingSystem.getOperatingSystem().getType() == OperatingSystem.WINDOWS) {
 			commands.add(0, "cmd");
 			commands.add(1, "/c");
 			commands.add(2, "start");
 		}
+		
+		commands.addAll(Arrays.asList(c));
+		
+		
 		
 		ProcessBuilder pb = new ProcessBuilder(commands);
 		pb.redirectErrorStream(true);
