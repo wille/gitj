@@ -9,4 +9,13 @@ public class DialogPull extends DialogRemoteAction {
 		super(repo);
 		super.setTitle("Pull");
 	}
+
+	@Override
+	public void ok() {
+		try {
+			repo.pull(remoteComboBox.getSelectedRemote(), branchComboBox.getSelectedBranch());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
