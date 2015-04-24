@@ -361,7 +361,7 @@ public class Repository {
 	 * @return
 	 * @throws Exception
 	 */
-	public Process startSpecial(String... c) throws Exception {
+	public ProcessBuilder createSpecial(String... c) throws Exception {
 		List<String> commands = new ArrayList<String>();
 
 		if (OperatingSystem.getOperatingSystem().getType() == OperatingSystem.WINDOWS) {
@@ -372,13 +372,11 @@ public class Repository {
 		
 		commands.addAll(Arrays.asList(c));
 		
-		
-		
 		ProcessBuilder pb = new ProcessBuilder(commands);
 		pb.redirectErrorStream(true);
 		pb.directory(folder);
 
-		return pb.start();
+		return pb;
 	}
 	
 	/**
@@ -791,8 +789,57 @@ public class Repository {
 		return files;
 	}
 	
-	public void push(boolean setupstream) throws Exception {
-		Process p = startSpecial("git", "push");
+	/**
+	 * git push
+	 * @param branch
+	 * @throws Exception
+	 */
+	public void push(Remote remote, Branch branch) throws Exception {
+		push(remote, branch, false);
+	}
+	
+	/**
+	 * git push, 
+	 * @param setupstream if we should add argument --set-upstream
+	 * @throws Exception
+	 */
+	public void push(Remote remote, Branch branch, boolean setupstream) throws Exception {
+		ProcessBuilder pb = createSpecial("git", "push", "--tags");
+		
+		if (setupstream) {
+			pb.command().add("--set-upstream");
+		}
+		
+		pb.command().add(remote.getName());
+		pb.command().add(branch.getName());
+		
+		Process p = pb.start();
+		
+		List<String> lines = new ArrayList<String>();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		String line;
+
+		while ((line = reader.readLine()) != null) {
+			if (line.length() > 0) {
+				lines.add(line);
+			} 
+		}
+
+		reader.close();	
+	}
+	
+	/**
+	 * git push, 
+	 * @throws Exception
+	 */
+	public void pull(Remote remote, Branch branch) throws Exception {
+		ProcessBuilder pb = createSpecial("git", "pull");
+		
+		pb.command().add(remote.getName());
+		pb.command().add(branch.getName());
+		
+		Process p = pb.start();
 		
 		List<String> lines = new ArrayList<String>();
 
