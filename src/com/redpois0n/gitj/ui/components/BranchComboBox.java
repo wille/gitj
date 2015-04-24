@@ -52,6 +52,10 @@ public class BranchComboBox extends JComboBox<Branch> {
 		reload(repo.getBranches());
 	}
 	
+	public Branch getSelectedBranch() {
+		return (Branch) model.getSelectedItem();
+	}
+	
 	public void reload(List<Branch> list) {
 		model.removeAllElements();
 
