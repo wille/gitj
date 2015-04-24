@@ -6,8 +6,8 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -40,7 +40,7 @@ public class ObjectsPanel extends JScrollPane {
 		root = new DefaultMutableTreeNode("root");
 		treeModel = new DefaultTreeModel(root);
 		tree.setModel(treeModel);
-		tree.addMouseListener(new MouseListener() {
+		tree.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -53,26 +53,6 @@ public class ObjectsPanel extends JScrollPane {
 		            	node.getListener().actionPerformed(new ActionEvent(node, 0, null));
 		            }
 		        }
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent arg0) {
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				
 			}
 			
 		});
