@@ -258,7 +258,6 @@ public class Repository {
 					String line = null;
 
 					while (rawtext.size() >= i + 1 && !(line = rawtext.get(i++)).startsWith("commit ")) {
-						System.out.println("LINE: " + line);
 						if (line.startsWith("diff --git")) {
 							break;
 						} else {
@@ -504,9 +503,7 @@ public class Repository {
 			String[] split = line.split(" ")[0].split("\t");
 			String name = split[0];
 			String path = split[1];
-			
-			System.out.println(name + ", " + path);
-			
+						
 			Remote remote = new Remote(this, name, path);
 			
 			if (!remotes.contains(remote)) {
@@ -569,7 +566,6 @@ public class Repository {
 	public String getFileAt(Commit c, String repopath) throws Exception {
 		List<String> raw = run("git", "show", c.getHash() + ":" + repopath);
 
-		System.out.println("git show " + c.getHash() + ":" + repopath);
 		if (raw.size() == 0 || raw.size() > 0 && raw.get(0).startsWith("fatal: Path ") || raw.size() > 0 && raw.get(0).startsWith("fatal: Invalid object name")) {
 			throw new FileNotFoundException(raw.get(0));
 		}
