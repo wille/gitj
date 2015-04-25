@@ -593,7 +593,9 @@ public class MainFrame extends JFrame {
 					t.execute();
 				} catch (Exception e) {
 					e.printStackTrace();
+					Main.displayError(e);
 				}
+
 				statusBar.setVisible(false);
 			}
 		}).start();
