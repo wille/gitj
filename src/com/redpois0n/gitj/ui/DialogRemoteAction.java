@@ -17,11 +17,13 @@ import com.redpois0n.gitj.ui.components.RemoteComboBox;
 @SuppressWarnings("serial")
 public abstract class DialogRemoteAction extends JDialog {
 
+	protected MainFrame parent;
 	protected Repository repo;
 	protected RemoteComboBox remoteComboBox;
 	protected BranchComboBox branchComboBox;
 	
-	public DialogRemoteAction(Repository repo) throws Exception {
+	public DialogRemoteAction(MainFrame parent, Repository repo) throws Exception {
+		this.parent = parent;
 		this.repo = repo;
 
 		setBounds(100, 100, 450, 300);

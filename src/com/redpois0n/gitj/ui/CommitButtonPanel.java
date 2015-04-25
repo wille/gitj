@@ -17,6 +17,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.redpois0n.git.CommitOption;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.tasks.CommitTask;
+import com.redpois0n.gitj.tasks.Task;
 import com.redpois0n.gitj.utils.DialogUtils;
 
 @SuppressWarnings("serial")
@@ -139,13 +141,11 @@ public class CommitButtonPanel extends JPanel {
 			}
 		}
 		
-		try {
-			parent.getRepository().commit(textPane.getText().trim(), mode);
-			parent.cancel();
-		} catch (Exception e) {
-			e.printStackTrace();
-			Main.displayError(e);
-		}
+		final CommitOption m = mode;
+		
+		parent.getParentFrame().runTask(new CommitTask(parent.getRepository(), textPane.getText(), m));
+		
+		parent.cancel();
 	}
 	
 	public void cancel() {

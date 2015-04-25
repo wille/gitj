@@ -92,6 +92,10 @@ public class CommitPanel extends AbstractPanel {
 		
 		reloadDividers();
 	}
+	
+	public MainFrame getParentFrame() {
+		return parent;
+	}
 
 	public void loadDiffs(final List<Diff> diffs) {
 		SwingUtilities.invokeLater(new Runnable() {
