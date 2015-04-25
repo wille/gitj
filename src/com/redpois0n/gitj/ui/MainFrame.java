@@ -36,6 +36,7 @@ import com.redpois0n.gitj.Language;
 import com.redpois0n.gitj.LanguageScanner;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.Version;
+import com.redpois0n.gitj.tasks.Task;
 import com.redpois0n.gitj.utils.GitIconUtils;
 import com.redpois0n.pathtree.FileJTree;
 import com.redpois0n.pathtree.NodeClickListener;
@@ -552,7 +553,7 @@ public class MainFrame extends JFrame {
 
 		if (repo != null) {
 			try {
-				new DialogPush(repo).setVisible(true);
+				new DialogPush(this, repo).setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -564,7 +565,7 @@ public class MainFrame extends JFrame {
 
 		if (repo != null) {
 			try {
-				new DialogPull(repo).setVisible(true);
+				new DialogPull(this, repo).setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -581,6 +582,21 @@ public class MainFrame extends JFrame {
 	
 	public StatusBar getStatusBar() {
 		return statusBar;
+	}
+	
+	public void runTask(final Task t) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				statusBar.setVisible(true);
+				try {
+					t.execute();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				statusBar.setVisible(false);
+			}
+		}).start();
 	}
 	
 	public class TabChangeListener implements ChangeListener {
