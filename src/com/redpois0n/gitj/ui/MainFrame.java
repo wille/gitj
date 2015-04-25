@@ -585,7 +585,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void runTask(final Task t) {
-		new Thread(new Runnable() {
+		new Thread() {
 			@Override
 			public void run() {
 				statusBar.setVisible(true);
@@ -598,7 +598,7 @@ public class MainFrame extends JFrame {
 
 				statusBar.setVisible(false);
 			}
-		}).start();
+		}.start();
 	}
 	
 	public class TabChangeListener implements ChangeListener {
