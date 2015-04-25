@@ -1,6 +1,7 @@
 package com.redpois0n.gitj.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +22,20 @@ public class StatusBar extends JPanel {
 		
 		add(statusLabel, BorderLayout.WEST);
 		add(progressBar, BorderLayout.EAST);
+	}
+	
+	public void setError(String s) {
+		statusLabel.setForeground(Color.red);
+		statusLabel.setText(s);
+	}
+	
+	public void setText(String s) {
+		statusLabel.setForeground(Color.black);
+		statusLabel.setText(s);
+	}
+	
+	public JProgressBar getProgressBar() {
+		return progressBar;
 	}
 
 }
