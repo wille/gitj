@@ -53,6 +53,7 @@ public class MainFrame extends JFrame {
 	private JSplitPane splitPane;
 	private FileJTree tree;
 	private ObjectsPanel objectPane;
+	private StatusBar statusBar;
 
 	public MainFrame() {
 		setIconImages(GitIconUtils.getIcons());
@@ -249,8 +250,9 @@ public class MainFrame extends JFrame {
 
 		splitPane.setLeftComponent(leftTabbedPane);
 		
-		StatusBar status = new StatusBar();
-		contentPane.add(status, BorderLayout.SOUTH);
+		statusBar = new StatusBar();
+		statusBar.setVisible(false);
+		contentPane.add(statusBar, BorderLayout.SOUTH);
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
@@ -575,6 +577,10 @@ public class MainFrame extends JFrame {
 		if (repo != null) {
 			new DialogLineCount(repo).setVisible(true);
 		}
+	}
+	
+	public StatusBar getStatusBar() {
+		return statusBar;
 	}
 	
 	public class TabChangeListener implements ChangeListener {
