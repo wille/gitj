@@ -4,14 +4,9 @@
 Built from my experience with git, as I learn more, this software will expand.
 Focus on graphics
 
-## Currently not supported
+## Currently not implemented
 
-- Pushing
-- Pulling
-- Fetching
-- Anything with branches (supports checkout)
 - Bookmarks
-- ...
 
 ## Screenshot(s)
 
