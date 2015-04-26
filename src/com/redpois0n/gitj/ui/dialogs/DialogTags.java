@@ -1,4 +1,4 @@
-package com.redpois0n.gitj.ui;
+package com.redpois0n.gitj.ui.dialogs;
 
 import iconlib.IconUtils;
 
@@ -10,27 +10,28 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import com.redpois0n.git.Remote;
+import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
+import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.ui.DefaultRenderer;
 
 @SuppressWarnings("serial")
-public class DialogRemotes extends JDialog {
+public class DialogTags extends JDialog {
 
 	private Repository repo;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private RemotesTableModel model;
 
-	public DialogRemotes(Repository repo) {
-		setIconImage(IconUtils.getIcon("remote").getImage());
-		setTitle("Remotes");
+	public DialogTags(Repository repo) {
+		setIconImage(IconUtils.getIcon("tag-annotated").getImage());
+		setTitle("Tags");
 		setAlwaysOnTop(true);
 		setModal(true);
 		this.repo = repo;
@@ -45,17 +46,10 @@ public class DialogRemotes extends JDialog {
 
 		scrollPane = new JScrollPane();
 		
-		JButton btnAdd = new JButton("New");
+		JButton btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				add();
-			}
-		});
-		
-		JButton btnEdit = new JButton("Edit");
-		btnEdit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				edit();
 			}
 		});
 		
@@ -72,10 +66,8 @@ public class DialogRemotes extends JDialog {
 					.addContainerGap()
 					.addComponent(btnAdd)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnEdit)
-					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnRemove)
-					.addPreferredGap(ComponentPlacement.RELATED, 164, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
 					.addComponent(btnCancel)
 					.addContainerGap())
 				.addComponent(scrollPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
@@ -83,12 +75,11 @@ public class DialogRemotes extends JDialog {
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 221, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnCancel)
 						.addComponent(btnAdd)
-						.addComponent(btnEdit)
 						.addComponent(btnRemove))
 					.addContainerGap())
 		);
@@ -115,8 +106,11 @@ public class DialogRemotes extends JDialog {
 		}
 		
 		try {
-			for (Remote remote : repo.getRemotes()) {
-				model.addRow(new Object[] { remote.getName(), remote.getPath() } );
+			for (Tag tag : repo.getTags(true)) {
+				Commit c = repo.getCommit(tag.getHash());
+				String date = c == null ? null : c.getWhen();
+				
+				model.addRow(new Object[] { tag.getTag(), tag.getHash(), tag.getMessage(), date } );
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -130,57 +124,7 @@ public class DialogRemotes extends JDialog {
 	}
 
 	public void add() {
-		setAlwaysOnTop(false);
-		
-		String name = JOptionPane.showInputDialog(null, "Input remote name", "Create new Remote", JOptionPane.QUESTION_MESSAGE);
-		
-		if (name == null || name != null && name.trim().length() == 0) {
-			return;
-		}
-		
-		String path = JOptionPane.showInputDialog(null, "Input remote URL", "Create new Remote", JOptionPane.QUESTION_MESSAGE);
-		
-		if (path == null || path != null && path.trim().length() == 0) {
-			return;
-		}
-		
-		try {
-			repo.addRemote(name, path);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Main.displayError(e);
-		}
-		
-		setAlwaysOnTop(true);
-		
-		reload();
-	}
-	
-	public void edit() {
-		setAlwaysOnTop(false);
-
-		int row = table.getSelectedRow();
-		
-		if (row != -1) {
-			String name = table.getValueAt(row, 0).toString();
-
-			String path = JOptionPane.showInputDialog(null, "Input new remote URL", "Edit Remote", JOptionPane.QUESTION_MESSAGE);
-			
-			if (path == null || path != null && path.trim().length() == 0) {
-				return;
-			}
-			
-			try {
-				repo.editRemote(name, path);
-			} catch (Exception e) {
-				e.printStackTrace();
-				Main.displayError(e);
-			}
-		}
-		
-		setAlwaysOnTop(true);
-		
-		reload();
+		new DialogCreateTag(this, repo, null).setVisible(true);
 	}
 	
 	public void remove() {
@@ -190,7 +134,7 @@ public class DialogRemotes extends JDialog {
 			String name = table.getValueAt(row, 0).toString();
 			
 			try {
-				repo.removeRemote(name);
+				repo.deleteTag(name);
 			} catch (Exception e) {
 				e.printStackTrace();
 				Main.displayError(e);
@@ -204,7 +148,9 @@ public class DialogRemotes extends JDialog {
 
 		public RemotesTableModel() {
 			super.addColumn("Name");
-			super.addColumn("Path");
+			super.addColumn("Commit");
+			super.addColumn("Message");
+			super.addColumn("Date");
 		}
 
 		@Override

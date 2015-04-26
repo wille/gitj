@@ -1,4 +1,4 @@
-package com.redpois0n.gitj.ui;
+package com.redpois0n.gitj.ui.dialogs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.ui.MainFrame;
 import com.redpois0n.gitj.ui.components.BranchComboBox;
 import com.redpois0n.gitj.ui.components.RemoteComboBox;
 

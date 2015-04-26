@@ -1,4 +1,4 @@
-package com.redpois0n.gitj.ui;
+package com.redpois0n.gitj.ui.dialogs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

@@ -32,6 +32,8 @@ import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.components.BranchComboBox;
 import com.redpois0n.gitj.ui.components.ICommitClickListener;
+import com.redpois0n.gitj.ui.dialogs.DialogArchive;
+import com.redpois0n.gitj.ui.dialogs.DialogReset;
 import com.redpois0n.gitj.utils.DialogUtils;
 import com.redpois0n.gitj.utils.IOUtils;
 import com.redpois0n.gitj.utils.IconGenerator;

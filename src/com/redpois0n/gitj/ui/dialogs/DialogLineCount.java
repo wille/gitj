@@ -1,4 +1,4 @@
-package com.redpois0n.gitj.ui;
+package com.redpois0n.gitj.ui.dialogs;
 
 import javax.swing.JDialog;
 
