@@ -9,7 +9,7 @@ public class CommitTask extends Task {
 	private CommitOption mode;
 	
 	public CommitTask(Repository repo, String message, CommitOption mode) {
-		super(repo);
+		super("Committing...", repo);
 		this.message = message;
 		this.mode = mode;
 	}

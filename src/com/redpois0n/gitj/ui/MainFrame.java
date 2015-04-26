@@ -589,11 +589,14 @@ public class MainFrame extends JFrame {
 			@Override
 			public void run() {
 				statusBar.setVisible(true);
+				statusBar.setText(t.getText());
+				
 				try {
 					t.execute();
 				} catch (Exception e) {
 					e.printStackTrace();
 					Main.displayError(e);
+					statusBar.setError(e.getClass().getSimpleName() + ": " + e.getMessage());
 				}
 
 				statusBar.setVisible(false);

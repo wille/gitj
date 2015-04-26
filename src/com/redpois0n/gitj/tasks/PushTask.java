@@ -10,7 +10,7 @@ public class PushTask extends Task {
 	private Remote remote;
 	
 	public PushTask(Repository repo, Branch branch, Remote remote) {
-		super(repo);
+		super("Pushing...", repo);
 		this.branch = branch;
 		this.remote = remote;
 	}

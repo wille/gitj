@@ -10,7 +10,7 @@ public class PullTask extends Task {
 	private Remote remote;
 	
 	public PullTask(Repository repo, Branch branch, Remote remote) {
-		super(repo);
+		super("Pulling...", repo);
 		this.branch = branch;
 		this.remote = remote;
 	}
