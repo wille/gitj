@@ -22,9 +22,13 @@ public class Repository {
 	private List<Tag> tags;
 
 	public Repository(File folder) throws InvalidRepositoryException {
+		this(folder, true);
+	}
+	
+	private Repository(File folder, boolean check) throws InvalidRepositoryException {
 		this.folder = folder;
 		
-		if (!isValidRepo()) {
+		if (check && !isValidRepo()) {
 			throw new InvalidRepositoryException();
 		}
 	}
@@ -865,6 +869,20 @@ public class Repository {
 	 */
 	public String getName() {
 		return getFolder().getName();
+	}
+	
+	
+	public static Repository create(File folder){
+		Repository repo = null;
+		
+		try {
+			repo = new Repository(folder, false);
+			repo.init();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return repo;
 	}
 
 	/**
