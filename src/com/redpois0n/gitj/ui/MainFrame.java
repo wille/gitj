@@ -39,6 +39,7 @@ import com.redpois0n.gitj.Version;
 import com.redpois0n.gitj.tasks.Task;
 import com.redpois0n.gitj.ui.dialogs.DialogCreateTag;
 import com.redpois0n.gitj.ui.dialogs.DialogLineCount;
+import com.redpois0n.gitj.ui.dialogs.DialogNew;
 import com.redpois0n.gitj.ui.dialogs.DialogPull;
 import com.redpois0n.gitj.ui.dialogs.DialogPush;
 import com.redpois0n.gitj.ui.dialogs.DialogRemotes;
@@ -138,6 +139,11 @@ public class MainFrame extends JFrame {
 		contentPane.add(toolBar, BorderLayout.NORTH);
 		
 		JButton btnCloneNew = new JButton("Clone/New");
+		btnCloneNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent paramActionEvent) {
+				newRepo();
+			}
+		});
 		btnCloneNew.setIcon(IconUtils.getIcon("database-add"));
 		toolBar.add(btnCloneNew);
 		
@@ -576,6 +582,10 @@ public class MainFrame extends JFrame {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void newRepo() {
+		new DialogNew().setVisible(true);
 	}
 
 	public void lineCount() {
