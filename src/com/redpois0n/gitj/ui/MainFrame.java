@@ -45,6 +45,7 @@ import com.redpois0n.gitj.ui.dialogs.DialogPush;
 import com.redpois0n.gitj.ui.dialogs.DialogRemotes;
 import com.redpois0n.gitj.ui.dialogs.DialogTags;
 import com.redpois0n.gitj.utils.GitIconUtils;
+import com.redpois0n.pathtree.FileFilter;
 import com.redpois0n.pathtree.FileJTree;
 import com.redpois0n.pathtree.NodeClickListener;
 import com.redpois0n.pathtree.PathTreeNode;
@@ -275,8 +276,20 @@ public class MainFrame extends JFrame {
 		});
 	}
 	
-	public void addRepoToTree(String dir) {
-		tree.add(dir,  IconUtils.getIcon("repo"));
+	public void addRepoToTree(final Repository repo, String dir) {
+		tree.setFilter(new FileFilter() {
+			@Override
+			public boolean allow(File file) {
+				try {
+					return !file.getName().startsWith(".") || repo.isTracked(file);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				return true;
+			}
+		});
+		tree.add(dir, IconUtils.getIcon("repo"));
 	}
 	
 	public void openFile(PathTreeNode node, File file) {
@@ -327,7 +340,7 @@ public class MainFrame extends JFrame {
 			
 			addPanel(repository.getFolder().getName(), pane, IconUtils.getIcon("repo"));
 			
-			addRepoToTree(repository.getFolder().getAbsolutePath());
+			addRepoToTree(repository, repository.getFolder().getAbsolutePath());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
