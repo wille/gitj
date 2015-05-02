@@ -21,6 +21,7 @@ public class Main {
 				Repository repository = new Repository(dir);
 
 				frame.loadRepository(repository);
+				frame.addBookmark(repository);
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
