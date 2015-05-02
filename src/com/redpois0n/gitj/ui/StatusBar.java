@@ -18,6 +18,7 @@ public class StatusBar extends JPanel {
 		
 		statusLabel = new JLabel("Status");
 		progressBar = new JProgressBar();
+		progressBar.setVisible(false);
 		progressBar.setIndeterminate(true);
 		
 		add(statusLabel, BorderLayout.WEST);

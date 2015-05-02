@@ -273,7 +273,6 @@ public class MainFrame extends JFrame {
 		splitPane.setLeftComponent(leftTabbedPane);
 		
 		statusBar = new StatusBar();
-		statusBar.setVisible(false);
 		contentPane.add(statusBar, BorderLayout.SOUTH);
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -633,7 +632,7 @@ public class MainFrame extends JFrame {
 		new Thread() {
 			@Override
 			public void run() {
-				statusBar.setVisible(true);
+				statusBar.getProgressBar().setVisible(true);
 				statusBar.setText(t.getText());
 				
 				try {
@@ -644,7 +643,8 @@ public class MainFrame extends JFrame {
 					statusBar.setError(e.getClass().getSimpleName() + ": " + e.getMessage());
 				}
 
-				statusBar.setVisible(false);
+				statusBar.getProgressBar().setVisible(false);
+				statusBar.setText("");
 			}
 		}.start();
 	}
