@@ -8,12 +8,17 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import com.redpois0n.git.Repository;
+
 @SuppressWarnings("serial")
 public class BookmarkPanel extends JPanel {
 	
+	private Repository repo;
 	private boolean focused;
 	
-	public BookmarkPanel() {
+	public BookmarkPanel(Repository repo) {
+		this.repo = repo;
+		
 		setPreferredSize(new Dimension(250, 50));
 	}
 	

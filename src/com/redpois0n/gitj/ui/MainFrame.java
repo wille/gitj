@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.Book;
 import java.io.File;
 import java.util.List;
 
@@ -62,6 +63,7 @@ public class MainFrame extends JFrame {
 	private JSplitPane splitPane;
 	private FileJTree tree;
 	private ObjectsPanel objectPane;
+	private BookmarksPanel bookmarksPanel;
 	private StatusBar statusBar;
 
 	public MainFrame() {
@@ -254,11 +256,17 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
+		bookmarksPanel = new BookmarksPanel();
+		
+		JScrollPane scrollPaneBookmarks = new JScrollPane();
+		scrollPaneBookmarks.setViewportView(bookmarksPanel);
+		
 		scrollPaneTree.setViewportView(tree);
 		
 		objectPane = new ObjectsPanel(this);
 		
 		leftTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		leftTabbedPane.addTab("Bookmarks", IconUtils.getIcon("bookmark-folder"), scrollPaneBookmarks);
 		leftTabbedPane.addTab("Files", IconUtils.getIcon("folder-tree"), scrollPaneTree);
 		leftTabbedPane.addTab("Repository", IconUtils.getIcon("tag-annotated"), objectPane);
 
@@ -344,6 +352,14 @@ public class MainFrame extends JFrame {
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Add repository into bookmarks bar
+	 * @param repo
+	 */
+	public void addBookmark(Repository repo) {
+		bookmarksPanel.addBookmarkPanel(new BookmarkPanel(repo));
 	}
 	
 	/**
