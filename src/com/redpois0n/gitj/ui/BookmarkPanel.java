@@ -5,6 +5,7 @@ import iconlib.IconUtils;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 
 import javax.swing.JPanel;
 
@@ -38,7 +39,11 @@ public class BookmarkPanel extends JPanel {
 			g.setColor(Color.black);
 		}
 
-		g.drawImage(IconUtils.getIcon("icon").getImage(), 5, 5, null);
+		Image icon = IconUtils.getIcon("icon").getImage();
+		
+		g.drawImage(icon, 4, 4, null);
+		g.drawString(repo.getName(), 10 + icon.getWidth(null), 2 + g.getFontMetrics().getHeight());
+		g.drawString(repo.getFolder().getAbsolutePath(), 15 + icon.getWidth(null) + g.getFontMetrics().stringWidth(repo.getName()), 2 + g.getFontMetrics().getHeight());
 	}
 
 	public void setFocused(boolean b) {
