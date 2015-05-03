@@ -52,6 +52,10 @@ public class Change {
 		return types;
 	}
 	
+	public Type getFirstType() {
+		return types.get(0);
+	}
+	
 	public boolean isStaged() {		
 		boolean b1 = types.get(0).isStaged();
 		

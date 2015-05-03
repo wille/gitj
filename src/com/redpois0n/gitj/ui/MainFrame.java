@@ -8,6 +8,7 @@ import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.print.Book;
 import java.io.File;
 import java.util.List;
 
@@ -45,6 +46,7 @@ import com.redpois0n.gitj.ui.dialogs.DialogPush;
 import com.redpois0n.gitj.ui.dialogs.DialogRemotes;
 import com.redpois0n.gitj.ui.dialogs.DialogTags;
 import com.redpois0n.gitj.utils.GitIconUtils;
+import com.redpois0n.pathtree.FileFilter;
 import com.redpois0n.pathtree.FileJTree;
 import com.redpois0n.pathtree.NodeClickListener;
 import com.redpois0n.pathtree.PathTreeNode;
@@ -61,6 +63,7 @@ public class MainFrame extends JFrame {
 	private JSplitPane splitPane;
 	private FileJTree tree;
 	private ObjectsPanel objectPane;
+	private BookmarksPanel bookmarksPanel;
 	private StatusBar statusBar;
 
 	public MainFrame() {
@@ -253,18 +256,23 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
+		bookmarksPanel = new BookmarksPanel();
+		
+		JScrollPane scrollPaneBookmarks = new JScrollPane();
+		scrollPaneBookmarks.setViewportView(bookmarksPanel);
+		
 		scrollPaneTree.setViewportView(tree);
 		
 		objectPane = new ObjectsPanel(this);
 		
 		leftTabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		leftTabbedPane.addTab("Bookmarks", IconUtils.getIcon("bookmark-folder"), scrollPaneBookmarks);
 		leftTabbedPane.addTab("Files", IconUtils.getIcon("folder-tree"), scrollPaneTree);
 		leftTabbedPane.addTab("Repository", IconUtils.getIcon("tag-annotated"), objectPane);
 
 		splitPane.setLeftComponent(leftTabbedPane);
 		
 		statusBar = new StatusBar();
-		statusBar.setVisible(false);
 		contentPane.add(statusBar, BorderLayout.SOUTH);
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -275,8 +283,20 @@ public class MainFrame extends JFrame {
 		});
 	}
 	
-	public void addRepoToTree(String dir) {
-		tree.add(dir,  IconUtils.getIcon("repo"));
+	public void addRepoToTree(final Repository repo, String dir) {
+		tree.setFilter(new FileFilter() {
+			@Override
+			public boolean allow(File file) {
+				try {
+					return !file.getName().startsWith(".") || repo.isTracked(file);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				return true;
+			}
+		});
+		tree.add(dir, IconUtils.getIcon("repo"));
 	}
 	
 	public void openFile(PathTreeNode node, File file) {
@@ -327,10 +347,20 @@ public class MainFrame extends JFrame {
 			
 			addPanel(repository.getFolder().getName(), pane, IconUtils.getIcon("repo"));
 			
-			addRepoToTree(repository.getFolder().getAbsolutePath());
+			addRepoToTree(repository, repository.getFolder().getAbsolutePath());
+		
+			statusBar.loadIcons(repository);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Add repository into bookmarks bar
+	 * @param repo
+	 */
+	public void addBookmark(Repository repo) {
+		bookmarksPanel.addBookmarkPanel(new BookmarkPanel(repo));
 	}
 	
 	/**
@@ -408,6 +438,7 @@ public class MainFrame extends JFrame {
 				
 				if (mp instanceof MainPanel) {
 					objectPane.reload((MainPanel) mp, mp.repo);
+					statusBar.loadIcons(mp.repo);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -604,7 +635,7 @@ public class MainFrame extends JFrame {
 		new Thread() {
 			@Override
 			public void run() {
-				statusBar.setVisible(true);
+				statusBar.getProgressBar().setVisible(true);
 				statusBar.setText(t.getText());
 				
 				try {
@@ -615,7 +646,8 @@ public class MainFrame extends JFrame {
 					statusBar.setError(e.getClass().getSimpleName() + ": " + e.getMessage());
 				}
 
-				statusBar.setVisible(false);
+				statusBar.getProgressBar().setVisible(false);
+				statusBar.setText("");
 			}
 		}.start();
 	}
