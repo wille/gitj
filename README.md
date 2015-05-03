@@ -21,8 +21,9 @@ Compile from source into an runnable JAR with [pyjar](https://github.com/redpois
 Put pyjar.py in the parent directory of the downloaded source and run
 
 ```
-python pyjar.py [--jdk /path/to/jdk/bin/] [--classpath graphslib.jar:pathtree.jar] --input src --output gitj.jar --mainclass com.redpois0n.gitj.Main
+python pyjar.py [--jdk /path/to/jdk/bin/] [--classpath graphslib.jar:pathtree.jar:oslib.jar:iconlib.jar] --input src --output gitj.jar --mainclass com.redpois0n.gitj.Main
 ```
+_path separator depends on system, ; for Windows, : for *nix_
 
 *--jdk argument is only needed if javac isn't in your __$PATH__*
 
