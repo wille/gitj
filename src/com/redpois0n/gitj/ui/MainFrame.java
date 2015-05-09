@@ -8,7 +8,6 @@ import java.awt.Component;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.print.Book;
 import java.io.File;
 import java.util.List;
 
@@ -57,6 +56,8 @@ public class MainFrame extends JFrame {
 	public static final Color TABLE_SELECTED = new Color(51, 153, 255);
 	public static final Color TABLE_GRAY = new Color(240, 240, 240);
 
+	private File latestDir;
+	
 	private JPanel contentPane;
 	private JTabbedPane tabbedPane;
 	private JTabbedPane leftTabbedPane;
@@ -545,11 +546,13 @@ public class MainFrame extends JFrame {
 	
 	public void open() {
 		JFileChooser c = new JFileChooser();
+		c.setSelectedFile(latestDir);
 		c.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
 		c.showOpenDialog(null);
 		
 		File file = c.getSelectedFile();
+		latestDir = file;
 		
 		if (file != null) {
 			try {
