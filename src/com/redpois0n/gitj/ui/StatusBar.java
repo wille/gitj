@@ -71,4 +71,9 @@ public class StatusBar extends JPanel {
 		statusLabel.setIcon(IconUtils.getIcon("reload-gray"));
 	}
 
+	public void error(Exception e) {
+		statusLabel.setIcon(IconUtils.getIcon("warning"));
+		setError("Error: " + e.getClass().getSimpleName() + ": " + e.getMessage());
+	}
+
 }

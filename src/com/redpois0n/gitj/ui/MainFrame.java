@@ -359,6 +359,7 @@ public class MainFrame extends JFrame {
 					bookmarksPanel.reload(repository);
 				} catch (Exception ex) {
 					ex.printStackTrace();
+					statusBar.error(ex);
 				}
 			}
 		}.start();
@@ -454,8 +455,10 @@ public class MainFrame extends JFrame {
 								objectPane.reload((MainPanel) mp, mp.repo);
 								bookmarksPanel.reload(mp.repo);
 								statusBar.update(mp.repo);
+								statusBar.setText("");
 							} catch (Exception e) {
 								e.printStackTrace();
+								statusBar.error(e);
 							}
 						}
 					}.start();
@@ -665,7 +668,8 @@ public class MainFrame extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 					Main.displayError(e);
-					statusBar.setError(e.getClass().getSimpleName() + ": " + e.getMessage());
+					statusBar.error(e);
+					return;
 				}
 
 				statusBar.getProgressBar().setVisible(false);
