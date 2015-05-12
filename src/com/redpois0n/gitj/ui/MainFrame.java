@@ -342,19 +342,26 @@ public class MainFrame extends JFrame {
 	 * Loads repository in new panel
 	 * @param repository
 	 */
-	public void loadRepository(Repository repository) {
-		try {			
-			MainPanel pane = new MainPanel(this, repository);
-			
-			addPanel(repository.getFolder().getName(), pane, IconUtils.getIcon("repo"));
-			
-			addRepoToTree(repository, repository.getFolder().getAbsolutePath());
-		
-			statusBar.update(repository);
-			bookmarksPanel.reload(repository);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
+	public void loadRepository(final Repository repository) {
+		new Thread() {
+			@Override
+			public void run() {
+				try {			
+					statusBar.setUpdating();
+					
+					MainPanel pane = new MainPanel(MainFrame.this, repository);
+					
+					addPanel(repository.getFolder().getName(), pane, IconUtils.getIcon("repo"));
+					
+					addRepoToTree(repository, repository.getFolder().getAbsolutePath());
+				
+					statusBar.update(repository);
+					bookmarksPanel.reload(repository);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		}.start();
 	}
 	
 	/**
@@ -432,16 +439,26 @@ public class MainFrame extends JFrame {
 	 * Reloads selected repo
 	 */
 	public void reloadCurrentRepo() {
-		AbstractPanel mp = getSelectedPanel();
+		final AbstractPanel mp = getSelectedPanel();
 		
 		if (mp != null) {
 			try {
 				mp.reload();
 				
 				if (mp instanceof MainPanel) {
-					objectPane.reload((MainPanel) mp, mp.repo);
-					statusBar.update(mp.repo);
-					bookmarksPanel.reload(mp.repo);
+					new Thread() {
+						@Override
+						public void run() {
+							try {
+								statusBar.setUpdating();
+								objectPane.reload((MainPanel) mp, mp.repo);
+								bookmarksPanel.reload(mp.repo);
+								statusBar.update(mp.repo);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					}.start();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

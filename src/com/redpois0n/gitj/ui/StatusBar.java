@@ -1,5 +1,7 @@
 package com.redpois0n.gitj.ui;
 
+import iconlib.IconUtils;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ public class StatusBar extends JPanel {
 	}
 	
 	public void update(Repository repo) {
+		statusLabel.setIcon(null);
 		for (JLabel label : statusLabels) {
 			toolBar.remove(label);
 		}
@@ -62,6 +65,10 @@ public class StatusBar extends JPanel {
 		}
 		
 		toolBar.revalidate();
+	}
+
+	public void setUpdating() {
+		statusLabel.setIcon(IconUtils.getIcon("reload-gray"));
 	}
 
 }
