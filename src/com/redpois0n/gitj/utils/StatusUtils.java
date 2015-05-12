@@ -77,6 +77,12 @@ public class StatusUtils {
 				lbl.setIcon(IconUtils.getIcon("unknown"));
 				list.add(lbl);
 			}
+			
+			if (added == 0 && removed == 0 && modified == 0 && renamed == 0 && unknown == 0) {
+				JLabel lbl = new JLabel("Clean");
+				lbl.setIcon(IconUtils.getIcon("ok"));
+				list.add(lbl);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
