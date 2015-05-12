@@ -6,12 +6,18 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.redpois0n.git.Repository;
+
 @SuppressWarnings("serial")
 public class BookmarksPanel extends JPanel {
+	
+	private List<BookmarkPanel> panels = new ArrayList<BookmarkPanel>();
 	
 	public BookmarksPanel() {
 		super.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -30,14 +36,14 @@ public class BookmarksPanel extends JPanel {
 				for (Component co : getComponents()) {
 					if (co instanceof BookmarkPanel) {
 						BookmarkPanel panel = (BookmarkPanel) co;
-						panel.setFocused(false);
+						//panel.setFocused(false); // TODO
 					}
 				}
 				
 				if (c != null && c instanceof BookmarkPanel) {
 					BookmarkPanel panel = (BookmarkPanel) c;
 					
-					panel.setFocused(true);
+					//panel.setFocused(true); // TODO
 				}
 				
 				repaint();
@@ -51,6 +57,17 @@ public class BookmarksPanel extends JPanel {
 		grid.gridy = getComponentCount();
 		grid.anchor = GridBagConstraints.WEST;
 		add(panel, grid);
+		panels.add(panel);
+	}
+	
+	public BookmarkPanel getFromRepo(Repository repo) {
+		for (BookmarkPanel panel : panels) {
+			if (panel.getRepository().equals(repo)) {
+				return panel;
+			}
+		}
+		
+		return null;
 	}
 
 }

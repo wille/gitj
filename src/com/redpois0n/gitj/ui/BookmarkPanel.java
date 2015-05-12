@@ -40,4 +40,8 @@ public class BookmarkPanel extends JPanel {
 		lblPath.setForeground(Color.gray);
 		b1.add(lblPath);
 	}
+	
+	public Repository getRepository() {
+		return this.repo;
+	}
 }
