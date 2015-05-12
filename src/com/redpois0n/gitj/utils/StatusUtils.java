@@ -49,23 +49,33 @@ public class StatusUtils {
 			}
 
 			if (added > 0) {
-				list.add(new JLabel(added + "", IconUtils.getIcon("added"), 10));
+				JLabel lbl = new JLabel(added + "");
+				lbl.setIcon(IconUtils.getIcon("added"));
+				list.add(lbl);
 			}
 
 			if (removed > 0) {
-				list.add(new JLabel(removed + "", IconUtils.getIcon("removed"), 10));
+				JLabel lbl = new JLabel(removed + "");
+				lbl.setIcon(IconUtils.getIcon("removed"));
+				list.add(lbl);
 			}
 
 			if (modified > 0) {
-				list.add(new JLabel(modified + "", IconUtils.getIcon("modified"), 10));
+				JLabel lbl = new JLabel(modified + "");
+				lbl.setIcon(IconUtils.getIcon("modified"));
+				list.add(lbl);
 			}
 
 			if (renamed > 0) {
-				list.add(new JLabel(renamed + "", IconUtils.getIcon("renamed"), 10));
+				JLabel lbl = new JLabel(renamed + "");
+				lbl.setIcon(IconUtils.getIcon("renamed"));
+				list.add(lbl);
 			}
 
 			if (unknown > 0) {
-				list.add(new JLabel(unknown + "", IconUtils.getIcon("unknown"), 10));
+				JLabel lbl = new JLabel(unknown + "");
+				lbl.setIcon(IconUtils.getIcon("unknown"));
+				list.add(lbl);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
