@@ -2,12 +2,13 @@ package com.redpois0n.gitj.ui;
 
 import iconlib.IconUtils;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Image;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 
 import com.redpois0n.git.Repository;
 
@@ -15,39 +16,28 @@ import com.redpois0n.git.Repository;
 public class BookmarkPanel extends JPanel {
 	
 	private Repository repo;
-	private boolean focused;
 	
 	public BookmarkPanel(Repository repo) {
 		this.repo = repo;
 		
 		setPreferredSize(new Dimension(250, 50));
-	}
-	
-	@Override
-	public void paintComponent(Graphics g) {
-		if (focused) {
-			g.setColor(new Color(191, 205, 219));
-		} else {
-			g.setColor(Color.white);
-		}
 		
-		g.fillRect(0, 0, getWidth(), getHeight());
+		setLayout(new BorderLayout(0, 0));
 		
-		if (focused) {
-			g.setColor(Color.white);
-		} else {
-			g.setColor(Color.black);
-		}
+		JToolBar b1 = new JToolBar();
+		b1.setFloatable(false);
+		add(b1, BorderLayout.NORTH);
 
-		Image icon = IconUtils.getIcon("icon").getImage();
+		JToolBar b2 = new JToolBar();
+		b2.setFloatable(false);
+		add(b2, BorderLayout.SOUTH);
 		
-		g.drawImage(icon, 4, 4, null);
-		g.drawString(repo.getName(), 10 + icon.getWidth(null), 2 + g.getFontMetrics().getHeight());
-		g.drawString(repo.getFolder().getAbsolutePath(), 15 + icon.getWidth(null) + g.getFontMetrics().stringWidth(repo.getName()), 2 + g.getFontMetrics().getHeight());
+		JLabel lblName = new JLabel(repo.getName() + "  ");
+		lblName.setIcon(IconUtils.getIcon("icon"));
+		b1.add(lblName);
+		
+		JLabel lblPath = new JLabel(repo.getFolder().getAbsolutePath());
+		lblPath.setForeground(Color.gray);
+		b1.add(lblPath);
 	}
-
-	public void setFocused(boolean b) {
-		this.focused = b;
-	}
-
 }
