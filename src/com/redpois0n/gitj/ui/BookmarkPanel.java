@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.utils.StatusUtils;
 
 @SuppressWarnings("serial")
 public class BookmarkPanel extends JPanel {
@@ -23,6 +24,16 @@ public class BookmarkPanel extends JPanel {
 		setPreferredSize(new Dimension(250, 50));
 		
 		setLayout(new BorderLayout(0, 0));
+		
+		reload();
+	}
+	
+	public Repository getRepository() {
+		return this.repo;
+	}
+
+	public void reload() {
+		removeAll();
 		
 		JToolBar b1 = new JToolBar();
 		b1.setFloatable(false);
@@ -39,13 +50,11 @@ public class BookmarkPanel extends JPanel {
 		JLabel lblPath = new JLabel(repo.getFolder().getAbsolutePath());
 		lblPath.setForeground(Color.gray);
 		b1.add(lblPath);
-	}
-	
-	public Repository getRepository() {
-		return this.repo;
-	}
-
-	public void reload() {
 		
+		for (JLabel label : StatusUtils.getIcons(repo)) {
+			b2.add(label);
+		}
+		
+		revalidate();
 	}
 }
