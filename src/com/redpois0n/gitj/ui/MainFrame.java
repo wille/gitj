@@ -653,6 +653,8 @@ public class MainFrame extends JFrame {
 
 				statusBar.getProgressBar().setVisible(false);
 				statusBar.setText("");
+				
+				reloadCurrentRepo();
 			}
 		}.start();
 	}
