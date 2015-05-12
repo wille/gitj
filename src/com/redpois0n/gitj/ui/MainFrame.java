@@ -459,7 +459,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	/**
-	 * Sets title beginning with "gitj - "
+	 * Sets title beginning with "gitj version - "
 	 */
 	@Override
 	public void setTitle(String title) {
