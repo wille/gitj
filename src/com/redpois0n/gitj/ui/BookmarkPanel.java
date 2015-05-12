@@ -44,4 +44,8 @@ public class BookmarkPanel extends JPanel {
 	public Repository getRepository() {
 		return this.repo;
 	}
+
+	public void reload() {
+		
+	}
 }

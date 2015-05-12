@@ -70,4 +70,16 @@ public class BookmarksPanel extends JPanel {
 		return null;
 	}
 
+	/**
+	 * Tries to reload bookmark panel if it exists for a repo
+	 * @param repo
+	 */
+	public void reload(Repository repo) {
+		BookmarkPanel panel = getFromRepo(repo);
+		
+		if (panel != null) {
+			panel.reload();
+		}
+	}
+
 }
