@@ -348,6 +348,7 @@ public class MainFrame extends JFrame {
 			public void run() {
 				try {			
 					statusBar.setUpdating();
+					statusBar.setText("Loading...");
 					
 					MainPanel pane = new MainPanel(MainFrame.this, repository);
 					
@@ -357,6 +358,7 @@ public class MainFrame extends JFrame {
 				
 					statusBar.update(repository);
 					bookmarksPanel.reload(repository);
+					statusBar.setText("");
 				} catch (Exception ex) {
 					ex.printStackTrace();
 					statusBar.error(ex);
@@ -452,6 +454,7 @@ public class MainFrame extends JFrame {
 						public void run() {
 							try {
 								statusBar.setUpdating();
+								statusBar.setText("Reloading");
 								objectPane.reload((MainPanel) mp, mp.repo);
 								bookmarksPanel.reload(mp.repo);
 								statusBar.update(mp.repo);
