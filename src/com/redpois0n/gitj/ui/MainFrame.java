@@ -350,7 +350,7 @@ public class MainFrame extends JFrame {
 			
 			addRepoToTree(repository, repository.getFolder().getAbsolutePath());
 		
-			statusBar.loadIcons(repository);
+			statusBar.update(repository);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -439,7 +439,7 @@ public class MainFrame extends JFrame {
 				
 				if (mp instanceof MainPanel) {
 					objectPane.reload((MainPanel) mp, mp.repo);
-					statusBar.loadIcons(mp.repo);
+					statusBar.update(mp.repo);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

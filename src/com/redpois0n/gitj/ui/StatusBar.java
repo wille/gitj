@@ -52,7 +52,7 @@ public class StatusBar extends JPanel {
 		return progressBar;
 	}
 
-	public void loadIcons(Repository repo) {
+	public void update(Repository repo) {
 		for (JLabel label : statusLabels) {
 			toolBar.remove(label);
 		}
