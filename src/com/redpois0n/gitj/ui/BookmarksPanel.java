@@ -31,27 +31,6 @@ public class BookmarksPanel extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		setBackground(Color.white);
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Component c = BookmarksPanel.this.getComponentAt(e.getX(), e.getY());
-
-				for (Component co : getComponents()) {
-					if (co instanceof BookmarkPanel) {
-						BookmarkPanel panel = (BookmarkPanel) co;
-						panel.setFocused(false);
-					}
-				}
-				
-				if (c != null && c instanceof BookmarkPanel) {
-					BookmarkPanel panel = (BookmarkPanel) c;
-					
-					panel.setFocused(true);
-				}
-				
-				repaint();
-			}
-		});
 	}
 	
 	public MainFrame getParentFrame() {

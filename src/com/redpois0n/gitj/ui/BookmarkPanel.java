@@ -22,6 +22,9 @@ public class BookmarkPanel extends JPanel {
 	private BookmarksPanel parent;
 	private Repository repo;
 	
+	private JToolBar b1;
+	private JToolBar b2;
+	
 	public BookmarkPanel(BookmarksPanel parent, Repository repo) {
 		this.parent = parent;
 		this.repo = repo;
@@ -38,11 +41,11 @@ public class BookmarkPanel extends JPanel {
 	public void reload() {
 		removeAll();
 		
-		JToolBar b1 = new JToolBar();
+		b1 = new JToolBar();
 		b1.setFloatable(false);
 		add(b1, BorderLayout.NORTH);
 
-		JToolBar b2 = new JToolBar();
+		b2 = new JToolBar();
 		b2.setFloatable(false);
 		add(b2, BorderLayout.SOUTH);
 		
@@ -81,9 +84,5 @@ public class BookmarkPanel extends JPanel {
 		b2.add(btnReload);
 		
 		revalidate();
-	}
-
-	public void setFocused(boolean b) {
-		
 	}
 }
