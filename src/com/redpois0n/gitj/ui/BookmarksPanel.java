@@ -18,8 +18,11 @@ import com.redpois0n.git.Repository;
 public class BookmarksPanel extends JPanel {
 	
 	private List<BookmarkPanel> panels = new ArrayList<BookmarkPanel>();
+	
+	private MainFrame mainFrame;
 		
-	public BookmarksPanel() {
+	public BookmarksPanel(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
 		super.setBorder(new EmptyBorder(0, 0, 0, 0));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
@@ -36,19 +39,23 @@ public class BookmarksPanel extends JPanel {
 				for (Component co : getComponents()) {
 					if (co instanceof BookmarkPanel) {
 						BookmarkPanel panel = (BookmarkPanel) co;
-						//panel.setFocused(false); // TODO
+						panel.setFocused(false);
 					}
 				}
 				
 				if (c != null && c instanceof BookmarkPanel) {
 					BookmarkPanel panel = (BookmarkPanel) c;
 					
-					//panel.setFocused(true); // TODO
+					panel.setFocused(true);
 				}
 				
 				repaint();
 			}
 		});
+	}
+	
+	public MainFrame getParentFrame() {
+		return mainFrame;
 	}
 	
 	public void addBookmarkPanel(BookmarkPanel panel) {
@@ -58,6 +65,12 @@ public class BookmarksPanel extends JPanel {
 		grid.anchor = GridBagConstraints.WEST;
 		add(panel, grid);
 		panels.add(panel);
+	}
+	
+	public void removeBookmarkPanel(BookmarkPanel panel) {
+		panels.remove(panel);
+		remove(panel);
+		repaint();
 	}
 	
 	public BookmarkPanel getFromRepo(Repository repo) {

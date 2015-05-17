@@ -257,7 +257,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		
-		bookmarksPanel = new BookmarksPanel();
+		bookmarksPanel = new BookmarksPanel(this);
 		
 		JScrollPane scrollPaneBookmarks = new JScrollPane();
 		scrollPaneBookmarks.setViewportView(bookmarksPanel);
@@ -376,7 +376,7 @@ public class MainFrame extends JFrame {
 	 * @param repo
 	 */
 	public void addBookmark(Repository repo) {
-		bookmarksPanel.addBookmarkPanel(new BookmarkPanel(this, repo));
+		bookmarksPanel.addBookmarkPanel(new BookmarkPanel(bookmarksPanel, repo));
 	}
 	
 	/**

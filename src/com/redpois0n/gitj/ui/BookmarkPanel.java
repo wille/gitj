@@ -19,10 +19,10 @@ import com.redpois0n.gitj.utils.StatusUtils;
 @SuppressWarnings("serial")
 public class BookmarkPanel extends JPanel {
 	
-	private MainFrame parent;
+	private BookmarksPanel parent;
 	private Repository repo;
 	
-	public BookmarkPanel(MainFrame parent, Repository repo) {
+	public BookmarkPanel(BookmarksPanel parent, Repository repo) {
 		this.parent = parent;
 		this.repo = repo;
 				
@@ -60,16 +60,30 @@ public class BookmarkPanel extends JPanel {
 		
 		b2.add(Box.createHorizontalGlue());
 		
+		JButton btnRemove = new JButton();
+		btnRemove.setIcon(IconUtils.getIcon("cross"));
+		btnRemove.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				parent.removeBookmarkPanel(BookmarkPanel.this);
+			}
+		});
+		b2.add(btnRemove);
+		
 		JButton btnReload = new JButton();
 		btnReload.setIcon(IconUtils.getIcon("blue-folder-open"));
 		btnReload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				parent.loadRepository(repo);
+				parent.getParentFrame().loadRepository(repo);
 			}
 		});
 		b2.add(btnReload);
 		
 		revalidate();
+	}
+
+	public void setFocused(boolean b) {
+		
 	}
 }
