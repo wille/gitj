@@ -372,7 +372,7 @@ public class MainFrame extends JFrame {
 	 * @param repo
 	 */
 	public void addBookmark(Repository repo) {
-		bookmarksPanel.addBookmarkPanel(new BookmarkPanel(repo));
+		bookmarksPanel.addBookmarkPanel(new BookmarkPanel(this, repo));
 	}
 	
 	/**

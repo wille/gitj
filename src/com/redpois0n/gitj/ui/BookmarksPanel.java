@@ -18,7 +18,7 @@ import com.redpois0n.git.Repository;
 public class BookmarksPanel extends JPanel {
 	
 	private List<BookmarkPanel> panels = new ArrayList<BookmarkPanel>();
-	
+		
 	public BookmarksPanel() {
 		super.setBorder(new EmptyBorder(0, 0, 0, 0));
 		GridBagLayout gridBagLayout = new GridBagLayout();

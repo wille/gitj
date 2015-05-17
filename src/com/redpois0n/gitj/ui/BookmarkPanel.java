@@ -19,9 +19,11 @@ import com.redpois0n.gitj.utils.StatusUtils;
 @SuppressWarnings("serial")
 public class BookmarkPanel extends JPanel {
 	
+	private MainFrame parent;
 	private Repository repo;
 	
-	public BookmarkPanel(Repository repo) {
+	public BookmarkPanel(MainFrame parent, Repository repo) {
+		this.parent = parent;
 		this.repo = repo;
 				
 		setLayout(new BorderLayout(0, 0));
@@ -63,7 +65,7 @@ public class BookmarkPanel extends JPanel {
 		btnReload.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				parent.loadRepository(repo);
 			}
 		});
 		b2.add(btnReload);
