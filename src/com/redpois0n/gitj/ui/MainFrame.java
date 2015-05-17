@@ -343,28 +343,32 @@ public class MainFrame extends JFrame {
 	 * @param repository
 	 */
 	public void loadRepository(final Repository repository) {
-		new Thread() {
-			@Override
-			public void run() {
-				try {			
-					statusBar.setUpdating();
-					statusBar.setText("Loading...");
+		if (!isOpen(repository)) {
+			new Thread() {
+				@Override
+				public void run() {
+					try {			
+						statusBar.setUpdating();
+						statusBar.setText("Loading...");
+						
+						MainPanel pane = new MainPanel(MainFrame.this, repository);
+						
+						addPanel(repository.getFolder().getName(), pane, IconUtils.getIcon("repo"));
+						
+						addRepoToTree(repository, repository.getFolder().getAbsolutePath());
 					
-					MainPanel pane = new MainPanel(MainFrame.this, repository);
-					
-					addPanel(repository.getFolder().getName(), pane, IconUtils.getIcon("repo"));
-					
-					addRepoToTree(repository, repository.getFolder().getAbsolutePath());
-				
-					statusBar.update(repository);
-					bookmarksPanel.reload(repository);
-					statusBar.setText("");
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					statusBar.error(ex);
+						statusBar.update(repository);
+						bookmarksPanel.reload(repository);
+						statusBar.setText("");
+					} catch (Exception ex) {
+						ex.printStackTrace();
+						statusBar.error(ex);
+					}
 				}
-			}
-		}.start();
+			}.start();
+		} else {
+			select(repository);
+		}
 	}
 	
 	/**
@@ -410,6 +414,37 @@ public class MainFrame extends JFrame {
 		return null;
 	}
 	
+	/**
+	 * Checks if repository has a panel
+	 * @param repo
+	 * @return
+	 */
+	public boolean isOpen(Repository repo) {
+		for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+			AbstractPanel panel = (AbstractPanel) tabbedPane.getComponentAt(i);
+			
+			if (panel instanceof MainPanel && ((MainPanel) panel).getRepository().equals(repo)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Selects the repository panel
+	 * @param repo
+	 */
+	public void select(Repository repo) {
+		for (int i = 0; i < tabbedPane.getTabCount(); i++) {
+			AbstractPanel panel = (AbstractPanel) tabbedPane.getComponentAt(i);
+			
+			if (panel instanceof MainPanel && ((MainPanel) panel).getRepository().equals(repo)) {
+				tabbedPane.setSelectedIndex(i);
+			}
+		}
+	}
+
 	/**
 	 * Gets selected tab
 	 * @return
