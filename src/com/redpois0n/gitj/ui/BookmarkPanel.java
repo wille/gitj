@@ -4,8 +4,11 @@ import iconlib.IconUtils;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
@@ -20,9 +23,7 @@ public class BookmarkPanel extends JPanel {
 	
 	public BookmarkPanel(Repository repo) {
 		this.repo = repo;
-		
-		setPreferredSize(new Dimension(250, 50));
-		
+				
 		setLayout(new BorderLayout(0, 0));
 		
 		reload();
@@ -54,6 +55,18 @@ public class BookmarkPanel extends JPanel {
 		for (JLabel label : StatusUtils.getIcons(repo)) {
 			b2.add(label);
 		}
+		
+		b2.add(Box.createHorizontalGlue());
+		
+		JButton btnReload = new JButton();
+		btnReload.setIcon(IconUtils.getIcon("blue-folder-open"));
+		btnReload.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		b2.add(btnReload);
 		
 		revalidate();
 	}
