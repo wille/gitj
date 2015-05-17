@@ -898,4 +898,12 @@ public class Repository {
 		return new File(getFolder(), s);
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Repository) {
+			return ((Repository) o).getFolder().equals(this.folder);
+		}
+		
+		return o == this;
+	}
 }
