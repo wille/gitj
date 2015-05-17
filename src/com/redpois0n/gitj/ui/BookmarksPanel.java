@@ -61,6 +61,10 @@ public class BookmarksPanel extends JPanel {
 		
 		return null;
 	}
+	
+	public List<BookmarkPanel> getPanels() {
+		return panels;
+	}
 
 	/**
 	 * Tries to reload bookmark panel if it exists for a repo

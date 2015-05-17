@@ -32,6 +32,7 @@ import javax.swing.event.ChangeListener;
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.InvalidRepositoryException;
 import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.Bookmarks;
 import com.redpois0n.gitj.Language;
 import com.redpois0n.gitj.LanguageScanner;
 import com.redpois0n.gitj.Main;
@@ -58,6 +59,8 @@ public class MainFrame extends JFrame {
 
 	private File latestDir;
 	
+	private Bookmarks bookmarks;
+
 	private JPanel contentPane;
 	private JTabbedPane tabbedPane;
 	private JTabbedPane leftTabbedPane;
@@ -258,6 +261,18 @@ public class MainFrame extends JFrame {
 		});
 		
 		bookmarksPanel = new BookmarksPanel(this);
+		
+		for (String bookmark : Bookmarks.load()) {
+			File folder = new File(bookmark);
+			
+			if (folder.exists() && folder.isDirectory()) {
+				try {
+					bookmarksPanel.addBookmarkPanel(new BookmarkPanel(bookmarksPanel, new Repository(folder)));
+				} catch (InvalidRepositoryException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		
 		JScrollPane scrollPaneBookmarks = new JScrollPane();
 		scrollPaneBookmarks.setViewportView(bookmarksPanel);
