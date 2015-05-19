@@ -136,6 +136,21 @@ public class MainFrame extends JFrame {
 		});
 		chckbxmntmViewLanguageBar.setSelected(true);
 		mnView.add(chckbxmntmViewLanguageBar);
+		
+		mnView.addSeparator();
+		
+		JMenuItem mntmAddBookmark = new JMenuItem("Add bookmark");
+		mntmAddBookmark.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent paramActionEvent) {
+				Repository repo = getSelectedRepo();
+				
+				if (repo != null) {
+					addBookmark(repo);
+				}
+			}
+		});
+		mnView.add(mntmAddBookmark);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -488,9 +503,6 @@ public class MainFrame extends JFrame {
 		return null;
 	}
 	
-	/**
-	 * Reloads selected repo
-	 */
 	public void reloadCurrentRepo() {
 		final AbstractPanel mp = getSelectedPanel();
 		
@@ -498,29 +510,34 @@ public class MainFrame extends JFrame {
 			try {
 				mp.reload();
 				
-				if (mp instanceof MainPanel) {
-					new Thread() {
-						@Override
-						public void run() {
-							try {
-								statusBar.setUpdating();
-								statusBar.setText("Reloading");
-								objectPane.reload((MainPanel) mp, mp.repo);
-								bookmarksPanel.reload(mp.repo);
-								statusBar.update(mp.repo);
-								statusBar.setText("");
-							} catch (Exception e) {
-								e.printStackTrace();
-								statusBar.error(e);
-							}
-						}
-					}.start();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				Main.displayError(e);
+				reloadRepo(mp.repo);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
 		}
+	}
+	
+	/**
+	 * Reloads selected repo
+	 */
+	public void reloadRepo(final Repository repo) {
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					statusBar.setUpdating();
+					statusBar.setText("Reloading");
+					objectPane.reload(null, repo);
+					bookmarksPanel.reload(repo);
+					statusBar.update(repo);
+					statusBar.setText("");
+				} catch (Exception e) {
+					e.printStackTrace();
+					statusBar.error(e);
+				}
+			}
+		}.start();
+
 	}
 	
 	/**
@@ -552,6 +569,8 @@ public class MainFrame extends JFrame {
 		
 		if (repo != null && panel instanceof MainPanel) {
 			addPanel("Commit", new CommitPanel(this, (MainPanel) panel, repo), IconUtils.getIcon("commit-small"));
+		
+		
 		}
 	}
 	
@@ -707,6 +726,10 @@ public class MainFrame extends JFrame {
 	
 	public StatusBar getStatusBar() {
 		return statusBar;
+	}
+	
+	public BookmarksPanel getBookmarksPanel() {
+		return bookmarksPanel;
 	}
 	
 	public void runTask(final Task t) {
