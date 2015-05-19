@@ -46,6 +46,7 @@ public class CommitPanel extends AbstractPanel {
 
 		diffHolderPanel = new DiffHolderPanel();
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.getVerticalScrollBar().setUnitIncrement(10);
 		scrollPane.setViewportView(diffHolderPanel);
 		topSplitPane.setRightComponent(scrollPane);
 

@@ -71,6 +71,7 @@ public class MainPanel extends AbstractPanel {
 
 		diffHolderPanel = new DiffHolderPanel();
 		scrollPaneDiffs = new JScrollPane();
+		scrollPaneDiffs.getVerticalScrollBar().setUnitIncrement(10);
 		scrollPaneDiffs.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPaneDiffs.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneDiffs.setViewportView(diffHolderPanel);
