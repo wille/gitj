@@ -23,6 +23,8 @@ public class Main {
 				frame.loadRepository(repository);
 				frame.addBookmark(repository);
 			}
+			
+			Runtime.getRuntime().addShutdownHook(new BookmarksShutdownHook(frame));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
