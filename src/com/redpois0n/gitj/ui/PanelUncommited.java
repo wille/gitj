@@ -47,6 +47,7 @@ public class PanelUncommited extends AbstractPanel {
 		splitPane.setResizeWeight(0.5);	
 		
 		JScrollPane stagedScrollList = new JScrollPane();
+		stagedScrollList.getVerticalScrollBar().setUnitIncrement(10);
 		stagedScrollList.setBorder(null);
 		stagedModel = new DefaultListModel<JFileListEntry>();
 		stagedList = new JFileList();
@@ -56,6 +57,7 @@ public class PanelUncommited extends AbstractPanel {
 		splitPane.setLeftComponent(stagedScrollList);
 		
 		JScrollPane unstagedScrollList = new JScrollPane();
+		unstagedScrollList.getVerticalScrollBar().setUnitIncrement(10);
 		unstagedScrollList.setBorder(null);
 		unstagedModel = new DefaultListModel<JFileListEntry>();
 		unstagedList = new JFileList();

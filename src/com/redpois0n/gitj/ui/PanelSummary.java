@@ -85,6 +85,7 @@ public class PanelSummary extends JPanel {
 			}		
 		});
 		JScrollPane scrollList = new JScrollPane();
+		scrollList.getVerticalScrollBar().setUnitIncrement(10);
 		scrollList.setBorder(null);
 		scrollList.setViewportView(list);
 		splitPane.setRightComponent(scrollList);
