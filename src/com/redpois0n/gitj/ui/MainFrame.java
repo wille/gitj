@@ -518,15 +518,23 @@ public class MainFrame extends JFrame {
 	}
 	
 	/**
+	 * Reloads current repo with default status string "Reloading"
+	 * @param repo
+	 */
+	public void reloadRepo(Repository repo) {
+		reloadRepo("Reloading", repo);
+	}
+	
+	/**
 	 * Reloads selected repo
 	 */
-	public void reloadRepo(final Repository repo) {
+	public void reloadRepo(final String status, final Repository repo) {
 		new Thread() {
 			@Override
 			public void run() {
 				try {
 					statusBar.setUpdating();
-					statusBar.setText("Reloading");
+					statusBar.setText(status);
 					objectPane.reload(null, repo);
 					bookmarksPanel.reload(repo);
 					statusBar.update(repo);
@@ -569,8 +577,6 @@ public class MainFrame extends JFrame {
 		
 		if (repo != null && panel instanceof MainPanel) {
 			addPanel("Commit", new CommitPanel(this, (MainPanel) panel, repo), IconUtils.getIcon("commit-small"));
-		
-		
 		}
 	}
 	
