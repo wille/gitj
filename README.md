@@ -14,6 +14,8 @@ _at 2dfab43de7b96183dbcded830284bfdc1e5cee19_
 
 ![Screenshot](screenshots/windows.png)
 
+![Screenshot](screenshots/linux.png)
+
 ## How to build
 
 Compile from source into an runnable JAR with [pyjar](https://github.com/redpois0n/pyjar)
