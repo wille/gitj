@@ -85,4 +85,15 @@ public class BookmarkPanel extends JPanel {
 		
 		revalidate();
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof BookmarkPanel) {
+			BookmarkPanel panel = (BookmarkPanel) o;
+			
+			return panel.repo.equals(this.repo);
+		}
+		
+		return this == o;
+	}
 }

@@ -37,7 +37,10 @@ public class BookmarksPanel extends JPanel {
 		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		add(panel, BorderLayout.NORTH);
-		panels.add(panel);
+		
+		if (!panels.contains(panel)) {
+			panels.add(panel);
+		}
 	}
 	
 	public void removeBookmarkPanel(BookmarkPanel panel) {
