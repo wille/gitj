@@ -12,7 +12,7 @@ Focus on graphics
 
 _at 2dfab43de7b96183dbcded830284bfdc1e5cee19_
 
-![Screenshot](screenshots/main.png)
+![Screenshot](screenshots/windows.png)
 
 ## How to build
 
