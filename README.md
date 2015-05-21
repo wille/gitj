@@ -4,10 +4,6 @@
 Built from my experience with git, as I learn more, this software will expand.
 Focus on graphics
 
-## Currently not implemented
-
-- Bookmarks
-
 ## Screenshot(s)
 
 _at 2dfab43de7b96183dbcded830284bfdc1e5cee19_
