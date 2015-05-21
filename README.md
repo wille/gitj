@@ -6,7 +6,7 @@ Focus on graphics
 
 ## Screenshot(s)
 
-_at 2dfab43de7b96183dbcded830284bfdc1e5cee19_
+_at d420ee2fd976e1984bc88133e705372491355c29_
 
 ![Screenshot](screenshots/windows.png)
 
