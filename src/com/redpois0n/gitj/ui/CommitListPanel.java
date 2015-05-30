@@ -67,6 +67,8 @@ public class CommitListPanel extends JScrollPane {
 		this.model = new CommitTableModel();
 		this.table = new JTable(model);
 
+        super.getVerticalScrollBar().setUnitIncrement(10);
+
 		toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		
