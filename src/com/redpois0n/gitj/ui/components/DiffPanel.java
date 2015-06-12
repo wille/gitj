@@ -62,15 +62,17 @@ public class DiffPanel extends JPanel {
 		
 		FontMetrics metrics = g.getFontMetrics(g.getFont());
 		
+		int textHeight = metrics.getHeight();
+		
 		if (prefWidth == 0 || prefHeight == 0) {
-			prefHeight += 15;
+			prefHeight = 25;
 			
 			if (diff.getChunks().size() == 0) {
 				prefHeight += 10;
 			}
 			
 			for (Chunk chunk : diff.getChunks()) {
-				prefHeight += 11 + metrics.getHeight();
+				prefHeight += 6 + textHeight;
 				for (CodeLine line : chunk.getLines()) {
 					int sw = metrics.stringWidth(line.getFixedLine()) + 80;
 					
@@ -78,7 +80,7 @@ public class DiffPanel extends JPanel {
 						prefWidth = sw;
 					}
 					
-					prefHeight += metrics.getHeight() + 2;
+					prefHeight += textHeight + 2;
 				}
 			}
 			
@@ -102,7 +104,7 @@ public class DiffPanel extends JPanel {
 		g.drawRect(0, 0, prefWidth, 25);
 		
 		g.setColor(Color.gray);
-		g.drawString(diff.getLocalPath(), 20, 4 + metrics.getHeight());
+		g.drawString(diff.getLocalPath(), 20, 4 + textHeight);
 		
 		g.drawImage(GitIconUtils.getIconFromDiffType(diff.getType()), 2, 5, null);
 		
@@ -118,11 +120,11 @@ public class DiffPanel extends JPanel {
 		
 		for (Chunk chunk : chunks) {			
 			g.setColor(Color.black);
-			g.drawString(chunk.getName(), 63, y + metrics.getHeight());
+			g.drawString(chunk.getName(), 63, y + textHeight);
 			g.setColor(COLOR_PANEL_BORDER);
-			g.drawRect(60, y, prefWidth - 60, 5 + metrics.getHeight());
+			g.drawRect(60, y, prefWidth - 60, 5 + textHeight);
 
-			y += 6 + metrics.getHeight();
+			y += 6 + textHeight;
 			
 			int startLine = chunk.getStartLine();
 			int startRemovedLine = chunk.getStartRemovedLine();
@@ -133,12 +135,12 @@ public class DiffPanel extends JPanel {
 				g.setColor(Color.gray);
 				
 				if (line.getType() == CodeLine.Type.ADDED) {
-					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + metrics.getHeight());
+					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + textHeight);
 				} else if (line.getType() == CodeLine.Type.REMOVED) {
-					g.drawString(startRemovedLine++ + "", 5, y + metrics.getHeight());
+					g.drawString(startRemovedLine++ + "", 5, y + textHeight);
 				} else {					
-					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + metrics.getHeight());
-					g.drawString(startRemovedLine++ + "", 5, y + metrics.getHeight());
+					g.drawString(startLine++ + "", 60 - metrics.stringWidth(startLine + "") - 5, y + textHeight);
+					g.drawString(startRemovedLine++ + "", 5, y + textHeight);
 				}
 								
 				if (line.getType() == CodeLine.Type.ADDED) {
@@ -149,9 +151,9 @@ public class DiffPanel extends JPanel {
 					g.setColor(Color.white);
 				}			
 								
-				g.fillRect(61, y, prefWidth - 61, metrics.getHeight() + 2);
+				g.fillRect(61, y, prefWidth - 61, textHeight + 2);
 								
-				y += metrics.getHeight() + 2;
+				y += textHeight + 2;
 			}
 			
 			y = startY;
@@ -159,16 +161,16 @@ public class DiffPanel extends JPanel {
 			for (CodeLine line : chunk.getLines()) {		
 				if (line.getType() == CodeLine.Type.ADDED) {
 					g.setColor(COLOR_ADDED.darker());
-					g.drawString("+", 67 - (metrics.stringWidth("+") / 2), y + metrics.getHeight() - 1);
+					g.drawString("+", 67 - (metrics.stringWidth("+") / 2), y + textHeight - 1);
 				} else if (line.getType() == CodeLine.Type.REMOVED) {
 					g.setColor(COLOR_REMOVED.darker());
-					g.drawString("-", 67 - (metrics.stringWidth("-") / 2), y + metrics.getHeight() - 1);
+					g.drawString("-", 67 - (metrics.stringWidth("-") / 2), y + textHeight - 1);
 				}
 				
 				g.setColor(Color.black);
-				g.drawString(line.getFixedLine(), 80, y + metrics.getHeight());						
+				g.drawString(line.getFixedLine(), 80, y + textHeight);						
 				
-				y += metrics.getHeight() + 2;
+				y += textHeight + 2;
 			}
 		}
 		
