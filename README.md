@@ -31,6 +31,12 @@ Then you can either double click the JAR or run it using
 java -jar gitj.jar
 ```
 
+## Arguments
+
+| Argument      | Description
+| --- 			| :---
+| --debug       | Loads current directory for fast testing
+
 ## Requirements
 
 - [graphslib](https://github.com/redpois0n/graphslib)
