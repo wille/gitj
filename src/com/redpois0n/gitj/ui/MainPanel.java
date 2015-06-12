@@ -174,7 +174,7 @@ public class MainPanel extends AbstractPanel {
 		if (allDiffs != null) {
 			splitPaneLow.setLeftComponent(panelSummary);
 			panelList = panelSummary;
-		} else {
+		} else if (!(panelList instanceof PanelUncommited)){
 			PanelUncommited pu = new PanelUncommited(this, repo);
 			pu.addListener(new DiffSelectionListener());
 			try {
