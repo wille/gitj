@@ -40,6 +40,9 @@ $ java -jar gitj.jar
 ## Requirements
 
 - git installed and added in __$PATH__
+- Python 3.x if building with [pyjar](https://github.com/redpois0n/pyjar)
+- JDK >= 6 for compiling
+- JRE >= 6 for running
 
 ## Dependencies
 
