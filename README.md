@@ -40,6 +40,9 @@ $ java -jar gitj.jar
 ## Requirements
 
 - git installed and added in __$PATH__
+
+## Dependencies
+
 - [graphslib](https://github.com/redpois0n/graphslib)
 - [pathtree](https://github.com/redpois0n/pathtree)
 - [iconlib](https://github.com/redpois0n/iconlib)
