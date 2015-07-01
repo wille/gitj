@@ -69,6 +69,8 @@ public class Repository {
 			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph");
 			Enumeration<String> e = Collections.enumeration(raw);
 			
+			GraphEntry entry = null;
+			
 			while (e.hasMoreElements()) {
 				String s = e.nextElement();
 				
@@ -92,15 +94,17 @@ public class Repository {
 					
 					graphData = s.substring(0, s.indexOf("Commit;"));
 				} else {
-					graphData = s;
+					graphData = s;	
 				}
 				
 				graphData = graphData.replace(" ", "").trim();
 				
-				GraphEntry entry = new GraphEntry(graphData, c);
-				System.out.println(graphData);
-
-				graph.add(entry);
+				if (c != null) {
+					entry = new GraphEntry(graphData, c);
+					graph.add(entry);
+				} else {
+					entry.addData(graphData);
+				}			
 			}
 		}
 		

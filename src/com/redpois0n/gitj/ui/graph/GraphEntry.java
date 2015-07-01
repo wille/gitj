@@ -3,6 +3,8 @@ package com.redpois0n.gitj.ui.graph;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -16,6 +18,7 @@ public class GraphEntry {
 	public static final Color[] COLORS = new Color[] { Color.blue, Color.red, Color.green, Color.magenta };
 
 	private String graphData;
+	private List<String> additional = new ArrayList<String>();
 	private Commit commit;
 	
 	public GraphEntry(String graphData, Commit c) {
@@ -59,6 +62,10 @@ public class GraphEntry {
 	
 	public Commit getCommit() {
 		return this.commit;
+	}
+
+	public void addData(String graphData) {
+		additional.add(graphData);
 	}
 	
 }
