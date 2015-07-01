@@ -129,9 +129,8 @@ public class MainPanel extends AbstractPanel {
 	 * @throws Exception
 	 */
 	public void reloadCommits() throws Exception {
-		List<Commit> commits = repo.getCommits(true);
 		jcommitPane.clear();
-		jcommitPane.reload(commits);
+		jcommitPane.reload();
 		
 		reloadDividers();
 	}

@@ -59,7 +59,7 @@ public class Repository {
 	 * @return Commits either freshly loaded or from cache
 	 * @throws Exception
 	 */
-	public List<Commit> getCommits(boolean update, boolean all, String branch) throws Exception {
+	public List<Commit> getCommits(boolean update, boolean all, Branch branch) throws Exception {
 		if (!update && commits != null) {
 			return commits;
 		} else {
@@ -71,7 +71,7 @@ public class Repository {
 
 			graph = new GitGraph();
 			List<Tag> tags = getTags();
-			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph", all ? "--all" : "", !all ? branch : "");
+			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph", all ? "--all" : "", !all ? branch.getName() : "");
 			Enumeration<String> e = Collections.enumeration(raw);
 			
 			GraphEntry entry = null;

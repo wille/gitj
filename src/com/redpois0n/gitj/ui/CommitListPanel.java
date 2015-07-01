@@ -26,6 +26,7 @@ import javax.swing.JToolBar;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import com.redpois0n.git.Branch;
 import com.redpois0n.git.Commit;
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
@@ -118,7 +119,7 @@ public class CommitListPanel extends JScrollPane {
 		        	if (DialogUtils.confirm("Are you sure that you want to create a new commit,\nreversing all the changes in " + c.getHash(), "Revert commit")) {
 		        		try {
 							c.revert();
-							reload(repository.getCommits(true));
+							reload();
 						} catch (Exception e) {
 							e.printStackTrace();
 							Main.displayError(e);
@@ -176,7 +177,7 @@ public class CommitListPanel extends JScrollPane {
 		
 		MenuItemUtils.addPopup(table, menu);
 		
-		reload(commits);
+		reload();
 	}
 	
 	public Commit getSelectedCommit() {
@@ -206,7 +207,10 @@ public class CommitListPanel extends JScrollPane {
 	 * @param commits
 	 * @throws Exception
 	 */
-	public void reload(List<Commit> commits) throws Exception {
+	public void reload() throws Exception {
+		Branch selectedBranch = branchBox.getSelectedBranch();
+		
+		List<Commit> commits = repository.getCommits(true, selectedBranch == null, selectedBranch);
 		this.commits = commits;
 		
 		clear();
