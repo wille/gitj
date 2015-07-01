@@ -62,12 +62,11 @@ public class Repository {
 			}
 
 			List<Tag> tags = getTags();
-			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s");
+			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph");
 			Enumeration<String> e = Collections.enumeration(raw);
 			
 			while (e.hasMoreElements()) {
 				String s = e.nextElement();
-				//Main.print("Raw commit data: " + s);
 				
 				String[] split = s.replace("Commit;", "").split(";");
 				String hash = split[0];
