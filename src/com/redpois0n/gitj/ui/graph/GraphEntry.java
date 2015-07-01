@@ -32,10 +32,22 @@ public class GraphEntry {
 		
 		int location = SPACE;
 		
-		for (int i = 0; i < graphData.length(); i++) {
-			char c = graphData.charAt(i);
+		/*List<String> list = new ArrayList<String>();
+		list.addAll(additional);
+		list.add(0, graphData);
+		
+		for (int i = 0; i < list.size(); i++) {
+			String str = list.get(i);
 			
-			g.setColor(COLORS[i]);
+			for (int s = 0; s < str.length(); s++) {
+				
+			}
+		}*/
+		
+		for (int s = 0; s < graphData.length(); s++) {
+			char c = graphData.charAt(s);
+			
+			g.setColor(COLORS[s]);
 			
 			if (c == '*') {
 				g.fillOval(location - BALL_DIAMETER / 2, height / 2 - BALL_DIAMETER / 2, BALL_DIAMETER, BALL_DIAMETER);
@@ -46,12 +58,11 @@ public class GraphEntry {
 			} else if (c == '/') {
 				g.drawLine(location, 0, location + 5, height);
 			} else if (c == '\\') {
-				g.drawLine(location - 5, 0, location, height);
+				g.drawLine(location, 0, location - 5, height);
 			}
 			
 			location += SPACE;
 		}
-		
 		
 		return image;
 	}
