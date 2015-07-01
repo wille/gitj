@@ -45,16 +45,21 @@ public class Repository {
 	public List<Commit> getCommits() throws Exception {
 		return getCommits(false);
 	}
+	
+	public List<Commit> getCommits(boolean update) throws Exception {
+		return getCommits(update, true, null);
+	}
 
 	/**
 	 * Returns all commits from this repository
 	 * 
-	 * @param update
-	 *            If git log should be executed and read
+	 * @param update If git log should be executed and read
+	 * @param all Show all commits
+	 * @param branch What branch to show commits from, can be null if all is true
 	 * @return Commits either freshly loaded or from cache
 	 * @throws Exception
 	 */
-	public List<Commit> getCommits(boolean update) throws Exception {
+	public List<Commit> getCommits(boolean update, boolean all, String branch) throws Exception {
 		if (!update && commits != null) {
 			return commits;
 		} else {
@@ -66,7 +71,7 @@ public class Repository {
 
 			graph = new GitGraph();
 			List<Tag> tags = getTags();
-			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph");
+			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph", all ? "--all" : "", !all ? branch : "");
 			Enumeration<String> e = Collections.enumeration(raw);
 			
 			GraphEntry entry = null;
