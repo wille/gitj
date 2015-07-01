@@ -20,6 +20,7 @@ public class Repository {
 	private File folder;
 	private List<Commit> commits;
 	private List<Tag> tags;
+	private GitGraph graph;
 
 	public Repository(File folder) throws InvalidRepositoryException {
 		this(folder, true);
@@ -61,6 +62,7 @@ public class Repository {
 				commits.clear();
 			}
 
+			graph = new GitGraph();
 			List<Tag> tags = getTags();
 			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph");
 			Enumeration<String> e = Collections.enumeration(raw);
@@ -68,18 +70,33 @@ public class Repository {
 			while (e.hasMoreElements()) {
 				String s = e.nextElement();
 				
-				String[] split = s.replace("Commit;", "").split(";");
-				String hash = split[0];
+				Commit c = null;
+				String graphData = null;
 				
-				Commit c = new Commit(this, split);
-				
-				for (Tag tag : tags) {
-					if (tag.getHash().equals(hash)) {
-						c.addTag(tag);
+				if (s.contains("Commit;")) {
+					String[] split = s.substring(s.indexOf("Commit;"), s.length()).replace("Commit;", "").split(";");
+					
+					String hash = split[0];
+					
+					c = new Commit(this, split);
+					
+					for (Tag tag : tags) {
+						if (tag.getHash().equals(hash)) {
+							c.addTag(tag);
+						}
 					}
-				}
 
-				commits.add(c);
+					commits.add(c);
+					
+					graphData = s.substring(0, s.indexOf("Commit;"));
+				} else {
+					graphData = s;
+				}
+				
+				GraphEntry entry = new GraphEntry(graphData, c);
+				System.out.println(graphData);
+
+				graph.add(entry);
 			}
 		}
 		
