@@ -95,6 +95,8 @@ public class Repository {
 					graphData = s;
 				}
 				
+				graphData = graphData.replace(" ", "").trim();
+				
 				GraphEntry entry = new GraphEntry(graphData, c);
 				System.out.println(graphData);
 
