@@ -58,7 +58,9 @@ public class BranchComboBox extends JComboBox<Branch> {
 	
 	public void reload(List<Branch> list) {
 		model.removeAllElements();
-
+		
+		this.addItem(null); // add "show all" item
+		
 		for (Branch branch : list) {
 			this.addItem(branch);
 		}
@@ -78,6 +80,8 @@ public class BranchComboBox extends JComboBox<Branch> {
 				if (branch.isSelected()) {
 					label.setFont(new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize()));
 				}
+			} else if (value == null) {
+				label.setText("Show all");
 			}
 						
 			return label;
