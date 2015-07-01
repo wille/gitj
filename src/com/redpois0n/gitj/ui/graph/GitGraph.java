@@ -15,7 +15,7 @@ public class GitGraph {
 	
 	public GraphEntry get(Commit c) {
 		for (GraphEntry entry : list) {
-			if (entry.getCommit().equals(c)) {
+			if (entry.getCommit() != null && entry.getCommit().equals(c)) {
 				return entry;
 			}
 		}
