@@ -15,14 +15,17 @@ import javax.swing.JList;
 import com.redpois0n.git.Branch;
 import com.redpois0n.git.Repository;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.ui.CommitListPanel;
 
 @SuppressWarnings("serial")
 public class BranchComboBox extends JComboBox<Branch> {
 
+	private CommitListPanel parent;
 	private Repository repository;
 	private DefaultComboBoxModel<Branch> model;
 
-	public BranchComboBox(Repository repo) throws Exception {
+	public BranchComboBox(CommitListPanel p, Repository repo) throws Exception {
+		this.parent = p;
 		this.repository = repo;
 		model = new DefaultComboBoxModel<Branch>();
 		
@@ -33,17 +36,10 @@ public class BranchComboBox extends JComboBox<Branch> {
 			@Override
 			public void itemStateChanged(ItemEvent event) {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
-					Object o = event.getItem();
-
-					if (o instanceof Branch) {
-						Branch branch = (Branch) o;
-												
-						try {
-							repository.checkout(branch);
-						} catch (Exception e1) {
-							e1.printStackTrace();
-							Main.displayError(e1);
-						}
+					try {
+						parent.reload();
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			}

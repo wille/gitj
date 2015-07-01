@@ -73,7 +73,7 @@ public class CommitListPanel extends JScrollPane {
 		toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		
-		branchBox = new BranchComboBox(repo);
+		branchBox = new BranchComboBox(this, repo);
 		toolBar.add(branchBox);
 				
 		table.setDefaultRenderer(Object.class, new CommitRenderer());
