@@ -44,12 +44,12 @@ public class CommitListPanel extends JScrollPane {
 	
 	public static final Color TABLE_SELECTED = new Color(51, 153, 255);
 	public static final Color TABLE_GRAY = new Color(240, 240, 240);
-
-	public static final String[] DEFAULT_VALUES = new String[] { "Description", "Date", "Author", "Commit" };
-	public static final int INDEX_DESCRIPTION = 0;
-	public static final int INDEX_DATE = 1;
-	public static final int INDEX_AUTHOR = 2;
-	public static final int INDEX_COMMIT = 3;
+	
+	public static final String COLUMN_GRAPH = "Graph";
+	public static final String COLUMN_DESCRIPTION = "Description";
+	public static final String COLUMN_DATE = "Date";
+	public static final String COLUMN_AUTHOR = "Author";
+	public static final String COLUMN_COMMIT = "Commit";
 	
 	private List<ICommitClickListener> listeners = new ArrayList<ICommitClickListener>();
 	
@@ -277,21 +277,24 @@ public class CommitListPanel extends JScrollPane {
 				}
 				
 				label.setIcon(null);
-				if (column == INDEX_DESCRIPTION) {										
+
+				if (table.getColumnName(column).equals(COLUMN_GRAPH)) {										
+					// Graph
+				} else if (table.getColumnName(column).equals(COLUMN_DESCRIPTION)) {										
 					label.setIcon(icon);
 					label.setText(c.getComment());
-				} else if (column == INDEX_DATE) {
+				} else if (table.getColumnName(column).equals(COLUMN_DATE)) {
 					label.setText(c.getWhen());
-				} else if (column == INDEX_AUTHOR) {
+				} else if (table.getColumnName(column).equals(COLUMN_AUTHOR)) {
 					label.setText(c.getDisplayAuthor());
-				} else if (column == INDEX_COMMIT) {
+				} else if (table.getColumnName(column).equals(COLUMN_COMMIT)) {
 					label.setText(c.getDisplayHash());
 				} else {
 					throw new IndexOutOfBoundsException();
 				}
 				
 			} else if (obj == null) {
-				if (column == INDEX_DESCRIPTION) {
+				if (table.getColumnName(column).equals(COLUMN_DESCRIPTION)) {										
 					label.setText("Uncommitted changes");
 					label.setFont(new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize()));
 				} else {
@@ -313,10 +316,12 @@ public class CommitListPanel extends JScrollPane {
 	
 	public static class CommitTableModel extends DefaultTableModel {
 				
-		public CommitTableModel() {
-			for (String s : DEFAULT_VALUES) {
-				super.addColumn(s);
-			}
+		public CommitTableModel() {					
+			super.addColumn(COLUMN_GRAPH);
+			super.addColumn(COLUMN_DESCRIPTION);
+			super.addColumn(COLUMN_DATE);
+			super.addColumn(COLUMN_AUTHOR);
+			super.addColumn(COLUMN_COMMIT);
 		}
 		
 		@Override
