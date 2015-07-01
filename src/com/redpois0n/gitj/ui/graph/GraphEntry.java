@@ -1,4 +1,6 @@
-package com.redpois0n.git;
+package com.redpois0n.gitj.ui.graph;
+
+import com.redpois0n.git.Commit;
 
 public class GraphEntry {
 

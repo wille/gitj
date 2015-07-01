@@ -1,4 +1,4 @@
-package com.redpois0n.git;
+package com.redpois0n.gitj.ui.graph;
 
 import java.util.ArrayList;
 import java.util.List;
