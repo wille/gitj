@@ -917,6 +917,10 @@ public class Repository {
 	public File getAbsoluteFile(String s) {
 		return new File(getFolder(), s);
 	}
+	
+	public GitGraph getGraph() {
+		return graph;
+	}
 
 	@Override
 	public boolean equals(Object o) {

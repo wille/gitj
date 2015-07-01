@@ -278,8 +278,9 @@ public class CommitListPanel extends JScrollPane {
 				
 				label.setIcon(null);
 
-				if (table.getColumnName(column).equals(COLUMN_GRAPH)) {										
-					// Graph
+				if (table.getColumnName(column).equals(COLUMN_GRAPH)) {
+					label.setIcon(c.getRepository().getGraph().get(c).renderIcon(table.getRowHeight()));
+					label.setText("");
 				} else if (table.getColumnName(column).equals(COLUMN_DESCRIPTION)) {										
 					label.setIcon(icon);
 					label.setText(c.getComment());
