@@ -76,7 +76,7 @@ public class BranchComboBox extends JComboBox<Branch> {
 	public void reload(List<Branch> list) {
 		model.removeAllElements();
 		
-		//this.addItem(null); // add "show all" item
+		this.addItem(null); // add "show all" item
 		
 		for (Branch branch : list) {
 			this.addItem(branch);
