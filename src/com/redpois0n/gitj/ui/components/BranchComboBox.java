@@ -63,18 +63,20 @@ public class BranchComboBox extends JComboBox<Branch> {
 				}
 			}
 		});
-
-		reload(repo.getBranches());
 	}
 	
 	public Branch getSelectedBranch() {
 		return (Branch) model.getSelectedItem();
 	}
 	
+	public void reload() throws Exception {
+		reload(repository.getBranches());
+	}
+	
 	public void reload(List<Branch> list) {
 		model.removeAllElements();
 		
-		this.addItem(null); // add "show all" item
+		//this.addItem(null); // add "show all" item
 		
 		for (Branch branch : list) {
 			this.addItem(branch);

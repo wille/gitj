@@ -74,6 +74,7 @@ public class CommitListPanel extends JScrollPane {
 		toolBar.setFloatable(false);
 		
 		branchBox = new BranchComboBox(this, repo);
+		branchBox.reload();
 		toolBar.add(branchBox);
 				
 		table.setDefaultRenderer(Object.class, new CommitRenderer());
@@ -85,7 +86,7 @@ public class CommitListPanel extends JScrollPane {
 		panel = new JPanel();
 
 		panel.setLayout(new BorderLayout(0, 0));	
-		panel.add(table, BorderLayout.CENTER);
+		panel.add(table, BorderLayout.SOUTH);
 		panel.add(toolBar, BorderLayout.NORTH);
 
 		super.setViewportView(panel);
@@ -222,8 +223,6 @@ public class CommitListPanel extends JScrollPane {
 		for (Commit c : commits) {
 			model.addRow(new Object[] { c });
 		}
-		
-		branchBox.reload(repository.getBranches());
 	}
 	
 	public void clear() {
