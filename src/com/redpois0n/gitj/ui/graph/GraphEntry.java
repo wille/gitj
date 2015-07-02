@@ -51,9 +51,27 @@ public class GraphEntry {
 				if (c == '*' || c == '|') {
 					g.drawLine(location, 0, location, height);
 				} else if (c == '/') {
-					g.drawLine(location, 0, location - 5, height);
+					g.drawLine(location, height / 2, location - SPACE, height);
 				} else if (c == '\\') {
-					g.drawLine(location, 0, location + 5, height);
+					g.drawLine(location - SPACE, height / 2, location, height);
+				}
+				
+				location += SPACE;
+			}
+			
+			location = SPACE;
+		}
+		
+		for (int i = 0; i < list.size(); i++) {
+			String str = list.get(i);
+			
+			for (int s = 0; s < str.length(); s++) {
+				char c = str.charAt(s);
+				
+				g.setColor(COLORS[s]);
+				
+				if (c == '*') {
+					g.fillOval(location - BALL_DIAMETER / 2, height / 2 - BALL_DIAMETER / 2, BALL_DIAMETER, BALL_DIAMETER);
 				}
 				
 				location += SPACE;
