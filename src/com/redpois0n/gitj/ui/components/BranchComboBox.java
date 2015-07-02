@@ -23,6 +23,10 @@ public class BranchComboBox extends JComboBox<Branch> {
 	private CommitListPanel parent;
 	private Repository repository;
 	private DefaultComboBoxModel<Branch> model;
+	
+	public BranchComboBox(Repository repo) throws Exception {
+		this(null, repo);
+	}
 
 	public BranchComboBox(CommitListPanel p, Repository repo) throws Exception {
 		this.parent = p;
@@ -36,11 +40,26 @@ public class BranchComboBox extends JComboBox<Branch> {
 			@Override
 			public void itemStateChanged(ItemEvent event) {
 				if (event.getStateChange() == ItemEvent.SELECTED) {
-					try {
-						parent.reload();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+					if (parent == null) {
+	                    Object o = event.getItem();
+
+	                    if (o instanceof Branch) {
+	                        Branch branch = (Branch) o;
+	                                                
+	                        try {
+	                            repository.checkout(branch);
+	                        } catch (Exception e1) {
+	                            e1.printStackTrace();
+	                            Main.displayError(e1);
+	                        }
+	                    }
+					} else {
+						try {
+							parent.reload();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}			
 				}
 			}
 		});
