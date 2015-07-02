@@ -107,7 +107,7 @@ public class Repository {
 				if (c != null) {
 					entry = new GraphEntry(graphData, c);
 					graph.add(entry);
-				} else {
+				} else if (entry != null) {
 					entry.addData(graphData);
 				}			
 			}
