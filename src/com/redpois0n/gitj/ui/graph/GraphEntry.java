@@ -77,7 +77,7 @@ public class GraphEntry {
 				if (!occupied[s] && drawn) {
 					if (c == '*' || c == '|') {	
 						GraphEntry previous = parent.getPrevious(this);
-						boolean draw = c == '*' || false;
+						boolean draw = c == '*';
 						
 						if (!draw && previous != null) {
 							String parentData = previous.graphData;

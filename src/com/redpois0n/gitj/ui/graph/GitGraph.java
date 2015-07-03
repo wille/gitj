@@ -41,6 +41,16 @@ public class GitGraph {
 		return null;
 	}
 	
+	public GraphEntry getPrevious(GraphEntry entry) {
+		int index = list.indexOf(entry);
+		
+		if (index < 1) {
+			return null;
+		}
+		
+		return list.get(index - 1);
+	}
+	
 	public GraphEntry getNext(GraphEntry entry) {
 		int index = list.indexOf(entry);
 		
