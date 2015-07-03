@@ -15,8 +15,6 @@ public class GraphEntry {
 	public static final int BALL_DIAMETER = 8;
 	public static final int SPACE = 10;
 	
-	public static final Color[] COLORS = new Color[] { Color.blue, Color.red, Color.green, Color.magenta };
-
 	private String graphData;
 	private List<String> additional = new ArrayList<String>();
 	private Commit commit;
