@@ -1,7 +1,8 @@
 package com.redpois0n.gitj.ui.graph;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +10,11 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import com.redpois0n.git.Commit;
+import com.redpois0n.gitj.utils.RenderUtils;
 
 public class GraphEntry {
 	
-	public static final int BALL_DIAMETER = 8;
+	public static final int BALL_DIAMETER = 12;
 	public static final int SPACE = 10;
 	
 	private GitGraph parent;
@@ -28,7 +30,7 @@ public class GraphEntry {
 	
 	public BufferedImage render(int height) {
 		BufferedImage image = new BufferedImage(100, height, BufferedImage.TYPE_INT_ARGB);
-		Graphics g = image.createGraphics();
+		Graphics2D g = image.createGraphics();
 		
 		int location = SPACE;
 		
@@ -59,6 +61,8 @@ public class GraphEntry {
 				}
 			}
 		}
+		
+        g.setStroke(new BasicStroke(2));
 
 		for (int i = list.size() - 1; i >= 0; i--) {
 			String str = list.get(i);
@@ -69,7 +73,7 @@ public class GraphEntry {
 				g.setColor(Color.red);
 				
 				if (c == '*') {
-					g.fillOval(location - BALL_DIAMETER / 2, height / 2 - BALL_DIAMETER / 2, BALL_DIAMETER, BALL_DIAMETER);
+					RenderUtils.drawCircle(g, g.getColor(), location - BALL_DIAMETER / 2 + 1, height / 2 - BALL_DIAMETER / 2 + 1, BALL_DIAMETER , BALL_DIAMETER);
 				}
 				
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
