@@ -15,11 +15,13 @@ public class GraphEntry {
 	public static final int BALL_DIAMETER = 8;
 	public static final int SPACE = 10;
 	
+	private GitGraph parent;
 	private String graphData;
 	private List<String> additional = new ArrayList<String>();
 	private Commit commit;
 	
-	public GraphEntry(String graphData, Commit c) {
+	public GraphEntry(GitGraph parent, String graphData, Commit c) {
+		this.parent = parent;
 		this.graphData = graphData;
 		this.commit = c;
 	}

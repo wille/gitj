@@ -105,7 +105,7 @@ public class Repository {
 				graphData = graphData.replace(" ", "").trim();
 				
 				if (c != null) {
-					entry = new GraphEntry(graphData, c);
+					entry = new GraphEntry(graph, graphData, c);
 					graph.add(entry);
 				} else if (entry != null) {
 					entry.addData(graphData);
