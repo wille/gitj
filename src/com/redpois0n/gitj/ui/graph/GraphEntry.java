@@ -75,8 +75,23 @@ public class GraphEntry {
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
 				
 				if (!occupied[s] && drawn) {
-					if (c == '*' || c == '|') {											
-						g.drawLine(location, 0, location, height);
+					if (c == '*' || c == '|') {	
+						GraphEntry previous = parent.getPrevious(this);
+						boolean draw = c == '*' || false;
+						
+						if (!draw && previous != null) {
+							String parentData = previous.graphData;
+							
+							if (parentData.length() > s && (parentData.charAt(s) == '*' || parentData.charAt(s) == '|' || parentData.charAt(s) == '/')) {
+								draw = true;
+							}
+						} else {
+							draw = true;
+						}
+
+						if (draw) {
+							g.drawLine(location, 0, location, height);
+						}
 					} else if (c == '/') {
 						if (dot[s]) {
 							g.drawLine(location, 0, location, height / 2);
