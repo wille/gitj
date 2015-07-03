@@ -71,7 +71,7 @@ public class Repository {
 
 			graph = new GitGraph();
 			List<Tag> tags = getTags();
-			List<String> raw = run("git", "log", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph", all ? "--all" : "", !all ? branch.getName() : "");
+			List<String> raw = run("git", "log", "--color", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph", all ? "--all" : "", !all ? branch.getName() : "");
 			Enumeration<String> e = Collections.enumeration(raw);
 			
 			GraphEntry entry = null;
