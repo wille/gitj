@@ -86,10 +86,10 @@ public class GraphEntry {
 							g.drawLine(location - SPACE, height / 2, location - SPACE, height);
 						}
 						
-						GraphEntry previous = parent.getNext(this);
+						GraphEntry next = parent.getNext(this);
 						
-						if (previous != null) {
-							String parentData = previous.graphData;
+						if (next != null) {
+							String parentData = next.graphData;
 							
 							if (parentData.length() > s && parentData.charAt(s) == '|') {
 								g.drawLine(location, 0, location, height);
