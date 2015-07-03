@@ -10,22 +10,26 @@ import com.redpois0n.git.Commit;
 
 public class GitGraph {
 	
+	public static final Color DEFAULT_COLOR = Color.black;
+	
 	public static final Map<String, Color> COLORS = new HashMap<String, Color>();
 	
 	static {
 		COLORS.put("[30m", Color.black);
-		COLORS.put("[31m", Color.red);
-		COLORS.put("[32m", Color.green);
-		COLORS.put("[33m", Color.yellow);
+		COLORS.put("[31m", Color.red.darker());
+		COLORS.put("[32m", Color.green.darker());
+		COLORS.put("[33m", Color.yellow.darker());
 		COLORS.put("[34m", Color.blue);
-		COLORS.put("[35m", Color.magenta);
-		COLORS.put("[36m", Color.cyan);
+		COLORS.put("[35m", Color.magenta.darker());
+		COLORS.put("[36m", Color.cyan.darker());
 		COLORS.put("[37m", Color.white);
 	}
 	
 	public static final String ANSI_RESET = "\u001B[0m";
 
+	private int depth;
 	private List<GraphEntry> list = new ArrayList<GraphEntry>();
+	private Color[] latestColor;
 	
 	public void add(GraphEntry entry) {
 		this.list.add(entry);
