@@ -42,9 +42,23 @@ public class GraphEntry {
 			}
 		}
 		
-		boolean[] b = new boolean[depth];
+		boolean[] occupied = new boolean[depth];
 		
-		for (int i = 0; i < list.size(); i++) {
+		boolean[] dot = new boolean[depth];
+		
+		for (int i = list.size() - 1; i >= 0; i--) {
+			String str = list.get(i);
+			
+			for (int s = 0; s < str.length(); s++) {
+				char c = str.charAt(s);
+				
+				if (c == '*') {
+					dot[s] = true;
+				}
+			}
+		}
+
+		for (int i = list.size() - 1; i >= 0; i--) {
 			String str = list.get(i);
 			
 			for (int s = 0; s < str.length(); s++) {
@@ -58,38 +72,21 @@ public class GraphEntry {
 				
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
 				
-				if (!b[s] && drawn) {
-					if (c == '*' || c == '|') {
+				if (!occupied[s] && drawn) {
+					if (c == '*' || c == '|') {						
 						g.drawLine(location, 0, location, height);
 					} else if (c == '/') {
-						g.drawLine(location, 0, location - SPACE, height / 2);
+						if (dot[s]) {
+							g.drawLine(location, 0, location, height / 2);
+							g.drawLine(location, height / 2, location - SPACE, height);
+						} else {
+							g.drawLine(location, 0, location - SPACE, height / 2);
+						}
 					} else if (c == '\\') {
 						g.drawLine(location - SPACE, height / 2, location, height);
 					}
 
-					b[s] = true;
-				}
-				
-				if (drawn) {
-					location += SPACE;
-				}
-			}
-			
-			location = SPACE;
-		}
-		
-		for (int i = 0; i < list.size(); i++) {
-			String str = list.get(i);
-			
-			for (int s = 0; s < str.length(); s++) {
-				char c = str.charAt(s);
-				
-				g.setColor(Color.red);
-				
-				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
-
-				if (c == '*') {
-					g.fillOval(location - BALL_DIAMETER / 2, height / 2 - BALL_DIAMETER / 2, BALL_DIAMETER, BALL_DIAMETER);
+					occupied[s] = true;
 				}
 				
 				if (drawn) {
