@@ -73,7 +73,7 @@ public class GraphEntry {
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
 				
 				if (!occupied[s] && drawn) {
-					if (c == '*' || c == '|') {						
+					if (c == '*' || c == '|') {											
 						g.drawLine(location, 0, location, height);
 					} else if (c == '/') {
 						if (dot[s]) {
@@ -81,9 +81,11 @@ public class GraphEntry {
 							g.drawLine(location, height / 2, location - SPACE, height);
 						} else {
 							g.drawLine(location, 0, location - SPACE, height / 2);
+							g.drawLine(location - SPACE, height / 2, location - SPACE, height);
 						}
 					} else if (c == '\\') {
 						g.drawLine(location - SPACE, height / 2, location, height);
+						g.drawLine(location - SPACE, 0, location - SPACE, height / 2);
 					}
 
 					occupied[s] = true;
