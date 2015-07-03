@@ -76,13 +76,13 @@ public class GraphEntry {
 				
 				if (!occupied[s] && drawn) {
 					if (c == '*' || c == '|') {	
-						GraphEntry previous = parent.getPrevious(this);
+						GraphEntry next = parent.getNext(this);
 						boolean draw = c == '*';
 						
-						if (!draw && previous != null) {
-							String parentData = previous.graphData;
+						if (!draw && next != null) {
+							String parentData = next.graphData;
 							
-							if (parentData.length() > s && (parentData.charAt(s) == '*' || parentData.charAt(s) == '|' || parentData.charAt(s) == '/')) {
+							if (parentData.length() > s && drawn) {
 								draw = true;
 							}
 						} else {
