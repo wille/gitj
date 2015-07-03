@@ -57,12 +57,12 @@ public class GraphEntry {
 				}
 				
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
-
-				if (!b[s]) {
+				
+				if (!b[s] && drawn) {
 					if (c == '*' || c == '|') {
 						g.drawLine(location, 0, location, height);
 					} else if (c == '/') {
-						g.drawLine(location, height / 2, location - SPACE, height);
+						g.drawLine(location, 0, location - SPACE, height / 2);
 					} else if (c == '\\') {
 						g.drawLine(location - SPACE, height / 2, location, height);
 					}
