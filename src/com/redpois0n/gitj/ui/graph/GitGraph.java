@@ -45,6 +45,19 @@ public class GitGraph {
 		return null;
 	}
 	
+	/**
+	 * Updates maximum branch depth for this graph
+	 * @param depth
+	 */
+	public void setDepth(int depth) {
+		this.depth = depth;
+		this.latestColor = new Color[depth];
+	}
+	
+	public Color[] getLatestColors() {
+		return this.latestColor;
+	}
+	
 	public GraphEntry getPrevious(GraphEntry entry) {
 		int index = list.indexOf(entry);
 		
@@ -64,5 +77,4 @@ public class GitGraph {
 		
 		return list.get(index + 1);
 	}
-
 }

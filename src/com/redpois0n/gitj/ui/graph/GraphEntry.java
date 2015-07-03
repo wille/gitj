@@ -67,16 +67,42 @@ public class GraphEntry {
 		for (int i = list.size() - 1; i >= 0; i--) {
 			String str = list.get(i);
 			
+			int realChar = 0; // counts chars draw
 			for (int s = 0; s < str.length(); s++) {
 				char c = str.charAt(s);
-				
-				g.setColor(Color.red);
+								
+				if (c == '[') {
+					if (str.charAt(s + 1) != 'm' && s + 3 >= str.length()) {
+						System.out.println("Setting default");
+						g.setColor(GitGraph.DEFAULT_COLOR);
+					} else {
+						StringBuilder sb = new StringBuilder();
+						sb.append(c);
+						char first = str.charAt(++s);
+						
+						if (first != 'm') {						
+							sb.append(first);
+							sb.append(str.charAt(++s));
+							sb.append(str.charAt(++s));
+							
+							System.out.println("Got ansi " + sb.toString());
+							g.setColor(GitGraph.COLORS.get(sb.toString()));
+						}
+					}
+					parent.getLatestColors()[i] = g.getColor();
+				} else if (realChar < parent.getLatestColors().length) {
+					g.setColor(parent.getLatestColors()[realChar]);
+				}
 				
 				if (c == '*') {
 					RenderUtils.drawCircle(g, g.getColor(), location - BALL_DIAMETER / 2 + 1, height / 2 - BALL_DIAMETER / 2 + 1, BALL_DIAMETER , BALL_DIAMETER);
 				}
 				
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
+				
+				if (drawn) {
+					realChar++;
+				}
 				
 				if (!occupied[s] && drawn) {
 					if (c == '*' || c == '|') {	

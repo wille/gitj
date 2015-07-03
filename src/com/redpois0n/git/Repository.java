@@ -75,7 +75,8 @@ public class Repository {
 			Enumeration<String> e = Collections.enumeration(raw);
 			
 			GraphEntry entry = null;
-			
+			int depth = 0;
+
 			while (e.hasMoreElements()) {
 				String s = e.nextElement();
 				
@@ -103,14 +104,29 @@ public class Repository {
 				}
 				
 				graphData = graphData.replace(" ", "").trim();
-				
+
 				if (c != null) {
 					entry = new GraphEntry(graph, graphData, c);
 					graph.add(entry);
 				} else if (entry != null) {
 					entry.addData(graphData);
-				}			
+				}
+								
+				int len = 0;
+				for (char ch : graphData.toCharArray()) {					
+					boolean valid = ch == '*' || ch == '|' || ch == '/' || ch == '\\';
+					
+					if (valid) {
+						len++;
+					}
+
+					if (len > depth) {
+						depth = len;
+					}
+				}
 			}
+
+			graph.setDepth(depth);
 		}
 		
 		return commits;
