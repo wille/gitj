@@ -55,7 +55,12 @@ public class LanguageBar extends JComponent implements MouseListener, MouseMotio
 		
 		for (Language l : languages) {
 			String s = l.getLanguage();
-			String percent = String.format("%.4g%n", (((float) l.getLineCount() / (float) max) * 100)) + "%";
+			float fp = (((float) l.getLineCount() / (float) max) * 100);
+			String percent = String.format("%.4g%n", fp) + "%";
+			
+			if (fp < 0.1F) {
+				continue;
+			}
 			
 			g.setColor(Color.black);
 			g.setFont(FONT_NORMAL);
