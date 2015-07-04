@@ -260,8 +260,17 @@ public class Repository {
 	}
 	
 
-	public List<Stash> getStashes() {
+	public List<Stash> getStashes() throws Exception {
 		List<Stash> stashes = new ArrayList<Stash>();
+		
+		for (String s : run("git", "stash", "list")) {
+			String stashName = s.substring(0, s.indexOf(":"));
+			String name = s.substring(s.indexOf(":") + 1, s.length());
+			
+			Stash stash = new Stash(stashName, name);
+			
+			stashes.add(stash);
+		}
 		
 		return stashes;
 	}
