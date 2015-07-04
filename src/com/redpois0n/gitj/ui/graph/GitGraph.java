@@ -10,6 +10,7 @@ import com.redpois0n.git.Commit;
 
 public class GitGraph {
 	
+	public static final String DEFAULT_GIT_COLOR = "[33m";
 	public static final Color DEFAULT_COLOR = Color.black;
 	
 	public static final Map<String, Color> COLORS = new HashMap<String, Color>();
