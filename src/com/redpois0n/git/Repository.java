@@ -259,6 +259,13 @@ public class Repository {
 		return diffs;
 	}
 	
+
+	public List<Stash> getStashes() {
+		List<Stash> stashes = new ArrayList<Stash>();
+		
+		return stashes;
+	}
+	
 	/**
 	 * Returns all tags from this repository
 	 * 

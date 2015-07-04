@@ -91,6 +91,16 @@ public class ObjectsPanel extends JScrollPane {
 			
 			treeModel.insertNodeInto(node, branchNode, 0);
 		}
+		
+		StashTreeNode stashNode = new StashTreeNode("Stashes", null);
+		treeModel.insertNodeInto(stashNode, root, 0);
+		
+		for (Stash stash : repo.getStashes()) {
+			StashTreeNode node = new StashTreeNode(stash.getName());
+			
+			treeModel.insertNodeInto(node, stashNode, 0);
+		}
+		
 		treeModel.reload(root);
 
 		tree.setRootVisible(false);
