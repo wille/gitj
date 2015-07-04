@@ -21,6 +21,7 @@ import javax.swing.tree.TreePath;
 import com.redpois0n.git.Branch;
 import com.redpois0n.git.Remote;
 import com.redpois0n.git.Repository;
+import com.redpois0n.git.Stash;
 import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
 
@@ -192,6 +193,33 @@ public class ObjectsPanel extends JScrollPane {
 		
 		public RemoteTreeNode(String text) {
 			super(text, IconUtils.getIcon("remote"));
+		}
+	}
+	
+	public class StashTreeNode extends IconTreeNode {
+		
+		private Stash stash;
+		
+		public StashTreeNode(String text, final Stash stash) {
+			super(text, IconUtils.getIcon("stash"), new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (stash != null) {
+						try {
+
+						} catch (Exception ex) {
+							ex.printStackTrace();
+							Main.displayError(ex);
+						}
+					}
+				}
+			});
+			
+			this.stash = stash;
+		}
+		
+		public Stash getStash() {
+			return this.stash;
 		}
 	}
 }
