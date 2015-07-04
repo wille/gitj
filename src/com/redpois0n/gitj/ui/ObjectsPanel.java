@@ -65,6 +65,15 @@ public class ObjectsPanel extends JScrollPane {
 		this.repo = repo;	
 		root.removeAllChildren();
 		
+		StashTreeNode stashNode = new StashTreeNode("Stashes", null);
+		treeModel.insertNodeInto(stashNode, root, 0);
+		
+		for (Stash stash : repo.getStashes()) {
+			StashTreeNode node = new StashTreeNode(stash.getName(), stash);
+			
+			treeModel.insertNodeInto(node, stashNode, 0);
+		}
+		
 		TagTreeNode tagsNode = new TagTreeNode("Tags", null);
 		treeModel.insertNodeInto(tagsNode, root, 0);
 		
@@ -90,15 +99,6 @@ public class ObjectsPanel extends JScrollPane {
 			BranchTreeNode node = new BranchTreeNode(branch.getName(), branch);
 			
 			treeModel.insertNodeInto(node, branchNode, 0);
-		}
-		
-		StashTreeNode stashNode = new StashTreeNode("Stashes", null);
-		treeModel.insertNodeInto(stashNode, root, 0);
-		
-		for (Stash stash : repo.getStashes()) {
-			StashTreeNode node = new StashTreeNode(stash.getName(), stash);
-			
-			treeModel.insertNodeInto(node, stashNode, 0);
 		}
 		
 		treeModel.reload(root);
