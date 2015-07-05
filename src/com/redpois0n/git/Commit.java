@@ -13,6 +13,7 @@ public class Commit {
 	private String comment;
 	private List<Diff> diffs;
 	private List<Tag> tags;
+	private List<String> graphData;
 	
 	public Commit(Repository repo) {
 		this.repo = repo;
@@ -90,6 +91,17 @@ public class Commit {
 	
 	public List<Tag> getTags() {
 		return tags;
+	}
+	
+	public void addGraphData(String s) {
+		if (graphData == null) {
+			graphData = new ArrayList<String>();
+		}
+		graphData.add(s);
+	}
+	
+	public List<String> getGraphData() {
+		return graphData;
 	}
 
 	/**

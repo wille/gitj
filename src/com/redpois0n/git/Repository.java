@@ -12,9 +12,10 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import com.redpois0n.git.Change.Type;
 import com.redpois0n.gitj.ui.graph.GitGraph;
-import com.redpois0n.gitj.ui.graph.GraphEntry;
 import com.redpois0n.oslib.OperatingSystem;
 
 public class Repository {
@@ -74,7 +75,6 @@ public class Repository {
 			List<String> raw = run("git", "log", "--color", "--pretty=format:Commit;%H;%an;%ae;%ar;%s", "--graph", all ? "--all" : "", !all ? branch.getName() : "");
 			Enumeration<String> e = Collections.enumeration(raw);
 			
-			GraphEntry entry = null;
 			int depth = 0;
 
 			while (e.hasMoreElements()) {
@@ -105,13 +105,12 @@ public class Repository {
 				
 				graphData = GitGraph.DEFAULT_GIT_COLOR + graphData.replace("[1;", "[").trim();
 
+				graph.add(graphData);
+				
 				if (c != null) {
-					entry = new GraphEntry(graph, graphData, c);
-					graph.add(entry);
-				} else if (entry != null) {
-					entry.addData(graphData);
+					c.addGraphData(graphData);
 				}
-								
+				
 				int len = 0;
 				for (char ch : graphData.toCharArray()) {					
 					boolean valid = ch == '*' || ch == '|' || ch == '/' || ch == '\\';
@@ -127,6 +126,7 @@ public class Repository {
 			}
 
 			graph.setDepth(depth);
+			graph.setHeight(20);
 		}
 		
 		return commits;

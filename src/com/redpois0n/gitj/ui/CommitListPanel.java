@@ -82,7 +82,7 @@ public class CommitListPanel extends JScrollPane {
 		table.setShowGrid(false);
 		table.setFillsViewportHeight(true);
 		table.setIntercellSpacing(new Dimension(0, 0));
-				
+						
 		panel = new JPanel();
 
 		panel.setLayout(new BorderLayout(0, 0));	
@@ -99,6 +99,8 @@ public class CommitListPanel extends JScrollPane {
 		        if (row != -1) {
 		        	TableEntry entry = (TableEntry) table.getValueAt(row, 0);
 		        	
+					//System.out.println(entry.getCommit().getRepository().getGraph().get(entry.getCommit()).getData().get(entry.getGraphIndex()));
+
 		        	if (entry.getGraphIndex() == 0) {
 		        		for (ICommitClickListener l : listeners) {
 			        		l.onClick(entry.getCommit());
@@ -223,9 +225,9 @@ public class CommitListPanel extends JScrollPane {
 		}
 		
 		for (Commit c : commits) {
-			List<String> data = c.getRepository().getGraph().get(c).getData();
+			List<String> data = c.getGraphData();
+			
 			for (int i = 0; i < data.size(); i++) {
-				
 				model.addRow(new Object[] { new TableEntry(c, i) });
 			}
 		}
@@ -308,7 +310,7 @@ public class CommitListPanel extends JScrollPane {
 				label.setIcon(null);
 
 				if (table.getColumnName(column).equals(COLUMN_GRAPH)) {
-					label.setIcon(c.getRepository().getGraph().get(c).renderIcon(entry.getGraphIndex(), table.getRowHeight()));
+					label.setIcon(c.getRepository().getGraph().getIcon(row * table.getRowHeight()));
 					label.setText("");
 				} else if (entry.getGraphIndex() != 0) {
 					return label;
