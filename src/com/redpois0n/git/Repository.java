@@ -77,10 +77,11 @@ public class Repository {
 			
 			int depth = 0;
 
+			Commit c = null;
+
 			while (e.hasMoreElements()) {
 				String s = e.nextElement();
 				
-				Commit c = null;
 				String graphData = null;
 				
 				if (s.contains("Commit;")) {
@@ -107,13 +108,12 @@ public class Repository {
 
 				graph.add(graphData);
 				
-				if (c != null) {
-					c.addGraphData(graphData);
-				}
+				c.addGraphData(graphData);
+				
 				
 				int len = 0;
 				for (char ch : graphData.toCharArray()) {					
-					boolean valid = ch == '*' || ch == '|' || ch == '/' || ch == '\\';
+					boolean valid = ch == '*' || ch == '|' || ch == '/' || ch == '\\' || ch == ' ';
 					
 					if (valid) {
 						len++;
@@ -127,6 +127,7 @@ public class Repository {
 
 			graph.setDepth(depth);
 			graph.setHeight(20);
+			graph.render();
 		}
 		
 		return commits;

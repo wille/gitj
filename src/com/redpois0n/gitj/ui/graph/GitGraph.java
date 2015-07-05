@@ -35,7 +35,7 @@ public class GitGraph {
 	public static final String ANSI_RESET = "\u001B[0m";
 
 	public static final int BALL_DIAMETER = 12;
-	public static final int SPACE = 12;
+	public static final int SPACE = 6;
 
 	private int depth;
 	private int height;
@@ -54,9 +54,10 @@ public class GitGraph {
 	}
 
 	public BufferedImage getImage(int y) {
-		BufferedImage i = new BufferedImage(depth * SPACE, height, BufferedImage.TYPE_INT_ARGB);
+		render();
+		BufferedImage i = new BufferedImage(depth * SPACE + SPACE, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = i.createGraphics();
-		g.drawImage(image, 0, 0, i.getWidth(), i.getHeight(), 0, y, depth * SPACE, y + height, null);
+		g.drawImage(image, 0, 0, i.getWidth(), i.getHeight(), 0, y, depth * SPACE + SPACE, y + height, null);
 		return i;
 	}
 
@@ -114,7 +115,7 @@ public class GitGraph {
 					// }
 				}
 
-				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
+				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\' || c == ' ';
 
 				if (drawn) {
 					realChar++;
@@ -122,23 +123,19 @@ public class GitGraph {
 				}
 
 				g.setColor(Color.red); // debug
-				System.out.println(c);
-				if (c == '*') {
-					RenderUtils.drawCircle(g, g.getColor(), location - BALL_DIAMETER / 2 + 1, y + height / 2 - BALL_DIAMETER / 2 + 1, BALL_DIAMETER, BALL_DIAMETER);
-				}
 
 				if (drawn) {
 					if (c == '*' || c == '|') {
 						g.drawLine(location, y, location, y + height);
 					} else if (c == '/') {
-						g.drawLine(location, y, location - SPACE, y + height);
-						// g.drawLine(location - SPACE, height / 2, location -
-						// SPACE, height);
+						g.drawLine(location + SPACE, y, location - SPACE, y + height);
 					} else if (c == '\\') {
-						g.drawLine(location - SPACE, y, location, y + height);
-						// g.drawLine(location - SPACE, 0, location - SPACE,
-						// height / 2);
+						g.drawLine(location - SPACE, y, location + SPACE, y + height);
 					}
+				}
+				
+				if (c == '*') {
+					RenderUtils.drawCircle(g, g.getColor(), location - BALL_DIAMETER / 2 + 1, y + height / 2 - BALL_DIAMETER / 2 + 1, BALL_DIAMETER, BALL_DIAMETER);
 				}
 
 				if (drawn) {
@@ -152,6 +149,20 @@ public class GitGraph {
 
 		return image;
 
+	}
+	
+	public String fix(String s) {
+		String s1 = "";
+		
+		for (char c : s.toCharArray()) {
+			boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\' || c == ' ';
+		
+			if (drawn) {
+				s1 += c;
+			}
+		}
+		
+		return s1;
 	}
 
 	public void setDepth(int depth) {
