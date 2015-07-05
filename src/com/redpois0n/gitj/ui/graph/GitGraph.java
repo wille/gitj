@@ -3,6 +3,7 @@ package com.redpois0n.gitj.ui.graph;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import java.util.Map;
 
 import javax.swing.ImageIcon;
 
-import com.redpois0n.git.Commit;
 import com.redpois0n.gitj.utils.RenderUtils;
 
 public class GitGraph {
@@ -68,6 +68,7 @@ public class GitGraph {
 	public BufferedImage render() {
 		image = new BufferedImage(100, height * list.size(), BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = image.createGraphics();
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		int location = SPACE;
 
