@@ -13,151 +13,103 @@ import com.redpois0n.git.Commit;
 import com.redpois0n.gitj.utils.RenderUtils;
 
 public class GraphEntry {
-	
+
 	public static final int BALL_DIAMETER = 12;
-	public static final int SPACE = 10;
-	
+	public static final int SPACE = 12;
+
 	private GitGraph parent;
 	private List<String> list = new ArrayList<String>();
 	private Commit commit;
-	
+
 	public GraphEntry(GitGraph parent, String graphData, Commit c) {
 		this.parent = parent;
 		list.add(graphData);
 		this.commit = c;
 	}
-	
+
 	public BufferedImage render(int colorIndex, int height) {
 		BufferedImage image = new BufferedImage(100, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = image.createGraphics();
-		
+
 		int location = SPACE;
-		
+
 		int depth = 0;
-		
+
 		for (String s : list) {
 			if (s.length() > depth) {
 				depth = s.length();
 			}
 		}
-		
-		boolean[] occupied = new boolean[depth];
-		
-		boolean[] dot = new boolean[depth];
-		
-		for (int i = list.size() - 1; i >= 0; i--) {
-			String str = list.get(i);
-			
-			for (int s = 0; s < str.length(); s++) {
-				char c = str.charAt(s);
-				
-				if (c == '*') {
-					dot[s] = true;
-				}
+
+		g.setStroke(new BasicStroke(2));
+
+		String str = list.get(colorIndex);
+
+		int realChar = 0; // counts chars draw
+		String realString = "";
+		for (int s = 0; s < str.length(); s++) {
+			char c = str.charAt(s);
+
+			if (c == '[') {
+				if (str.charAt(s + 1) != 'm' && s + 3 >= str.length()) {
+					g.setColor(GitGraph.DEFAULT_COLOR);
+				} else {
+					StringBuilder sb = new StringBuilder();
+					sb.append(c);
+					char first = str.charAt(++s);
+
+					if (first != 'm') {
+						sb.append(first);
+						sb.append(str.charAt(++s));
+						sb.append(str.charAt(++s));
+
+						g.setColor(GitGraph.COLORS.get(sb.toString()));
+						if (realChar < parent.getLatestColors().length) {
+							parent.getLatestColors()[realChar] = g.getColor();
+						}
+					}
+				}		
+			} else if (realChar < parent.getLatestColors().length) {
+				g.setColor(parent.getLatestColors()[realChar]);
 			}
-		}
-		
-        g.setStroke(new BasicStroke(2));
-
-		for (int i = list.size() - 1; i >= 0; i--) {
-			String str = list.get(i);
 			
-			int realChar = 0; // counts chars draw
-			for (int s = 0; s < str.length(); s++) {
-				char c = str.charAt(s);
-								
-				if (c == '[') {
-					if (str.charAt(s + 1) != 'm' && s + 3 >= str.length()) {
-						System.out.println("Setting default");
-						g.setColor(GitGraph.DEFAULT_COLOR);
-					} else {
-						StringBuilder sb = new StringBuilder();
-						sb.append(c);
-						char first = str.charAt(++s);
-						
-						if (first != 'm') {						
-							sb.append(first);
-							sb.append(str.charAt(++s));
-							sb.append(str.charAt(++s));
-							
-							System.out.println("Got ansi " + sb.toString());
-							g.setColor(GitGraph.COLORS.get(sb.toString()));
-						}
-					}
-					parent.getLatestColors()[i] = g.getColor();
-				} else if (realChar < parent.getLatestColors().length) {
-					g.setColor(parent.getLatestColors()[realChar]);
-				}
-				
-				if (c == '*') {
-					RenderUtils.drawCircle(g, g.getColor(), location - BALL_DIAMETER / 2 + 1, height / 2 - BALL_DIAMETER / 2 + 1, BALL_DIAMETER , BALL_DIAMETER);
-				}
-				
-				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
-				
-				if (drawn) {
-					realChar++;
-				}
-				
-				if (!occupied[s] && drawn) {
-					if (c == '*' || c == '|') {	
-						GraphEntry next = parent.getNext(this);
-						boolean draw = c == '*';
-						
-						if (!draw && next != null) {
-							String parentData = next.list.get(0);
-							
-							if (parentData.length() > s && drawn) {
-								draw = true;
-							}
-						} else {
-							draw = true;
-						}
+			boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\';
 
-						if (draw) {
-							g.drawLine(location, 0, location, height);
-						}
-					} else if (c == '/') {
-						if (dot[s]) {
-							g.drawLine(location, 0, location, height / 2);
-							g.drawLine(location, height / 2, location - SPACE, height);
-						} else {
-							g.drawLine(location, 0, location - SPACE, height / 2);
-							g.drawLine(location - SPACE, height / 2, location - SPACE, height);
-						}
-						
-						GraphEntry next = parent.getNext(this);
-						
-						if (next != null) {
-							String parentData = next.list.get(0);
-							
-							if (parentData.length() > s && parentData.charAt(s) == '|') {
-								g.drawLine(location, 0, location, height);
-							}
-						}
-					} else if (c == '\\') {
-						g.drawLine(location - SPACE, height / 2, location, height);
-						g.drawLine(location - SPACE, 0, location - SPACE, height / 2);
-					}
+			if (drawn) {
+				realChar++;
+				realString += c;
+			}
+			
+			g.setColor(Color.red); // debug
 
-					occupied[s] = true;
-				}
-				
-				if (drawn) {
-					location += SPACE;
+			if (c == '*') {
+				RenderUtils.drawCircle(g, g.getColor(), location - BALL_DIAMETER / 2 + 1, height / 2 - BALL_DIAMETER / 2 + 1, BALL_DIAMETER, BALL_DIAMETER);
+			}
+
+			if (drawn) {
+				if (c == '*' || c == '|') {
+					g.drawLine(location, 0, location, height);
+				} else if (c == '/') {
+					g.drawLine(location, 0, location - SPACE, height);
+					//g.drawLine(location - SPACE, height / 2, location - SPACE, height);
+				} else if (c == '\\') {
+					g.drawLine(location - SPACE, 0, location, height);
+					//g.drawLine(location - SPACE, 0, location - SPACE, height / 2);
 				}
 			}
 			
-			location = SPACE;
+			if (drawn) {
+				location += SPACE;
+			}
 		}
-		
+
 		return image;
 	}
-	
+
 	public ImageIcon renderIcon(int colorIndex, int height) {
 		return new ImageIcon(render(colorIndex, height));
 	}
-	
+
 	public Commit getCommit() {
 		return this.commit;
 	}
@@ -165,9 +117,9 @@ public class GraphEntry {
 	public void addData(String graphData) {
 		this.list.add(graphData);
 	}
-	
+
 	public List<String> getData() {
 		return this.list;
 	}
-	
+
 }
