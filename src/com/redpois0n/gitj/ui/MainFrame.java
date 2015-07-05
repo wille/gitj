@@ -44,6 +44,7 @@ import com.redpois0n.gitj.ui.dialogs.DialogNew;
 import com.redpois0n.gitj.ui.dialogs.DialogPull;
 import com.redpois0n.gitj.ui.dialogs.DialogPush;
 import com.redpois0n.gitj.ui.dialogs.DialogRemotes;
+import com.redpois0n.gitj.ui.dialogs.DialogStash;
 import com.redpois0n.gitj.ui.dialogs.DialogTags;
 import com.redpois0n.gitj.utils.GitIconUtils;
 import com.redpois0n.pathtree.FileFilter;
@@ -593,7 +594,11 @@ public class MainFrame extends JFrame {
 	 * Opens stash dialog
 	 */
 	public void stash() {
-		
+		Repository repo = getSelectedRepo();
+
+		if (repo != null) {
+			new DialogStash(repo).setVisible(true);
+		}
 	}
 	
 	/**
