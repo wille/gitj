@@ -277,6 +277,16 @@ public class Repository {
 	}
 	
 	/**
+	 * Creates a new stash
+	 * @param message stash message
+	 * @param keepstaged keep staged files
+	 * @throws Exception
+	 */
+	public void stash(String message, boolean keepstaged) throws Exception {
+		run("git", "stash", "save", message, keepstaged ? "--keep-index" : "");
+	}
+	
+	/**
 	 * Returns all tags from this repository
 	 * 
 	 * @return

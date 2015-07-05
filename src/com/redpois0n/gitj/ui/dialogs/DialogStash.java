@@ -20,6 +20,7 @@ import com.redpois0n.git.Repository;
 import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.ui.DefaultRenderer;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
@@ -98,7 +99,12 @@ public class DialogStash extends JDialog {
 	}
 	
 	public void stash() {
-		
+		try {
+			repo.stash(textField.getText(), chckbxKeepStagedChanges.isSelected());
+		} catch (Exception e) {
+			e.printStackTrace();
+			Main.displayError(e);
+		}
 	}
 	
 	public void cancel() {
