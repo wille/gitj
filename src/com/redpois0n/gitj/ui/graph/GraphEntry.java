@@ -18,25 +18,20 @@ public class GraphEntry {
 	public static final int SPACE = 10;
 	
 	private GitGraph parent;
-	private String graphData;
-	private List<String> additional = new ArrayList<String>();
+	private List<String> list = new ArrayList<String>();
 	private Commit commit;
 	
 	public GraphEntry(GitGraph parent, String graphData, Commit c) {
 		this.parent = parent;
-		this.graphData = graphData;
+		list.add(graphData);
 		this.commit = c;
 	}
 	
-	public BufferedImage render(int height) {
+	public BufferedImage render(int colorIndex, int height) {
 		BufferedImage image = new BufferedImage(100, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = image.createGraphics();
 		
 		int location = SPACE;
-		
-		List<String> list = new ArrayList<String>();
-		list.addAll(additional);
-		list.add(0, graphData);
 		
 		int depth = 0;
 		
@@ -110,7 +105,7 @@ public class GraphEntry {
 						boolean draw = c == '*';
 						
 						if (!draw && next != null) {
-							String parentData = next.graphData;
+							String parentData = next.list.get(0);
 							
 							if (parentData.length() > s && drawn) {
 								draw = true;
@@ -134,7 +129,7 @@ public class GraphEntry {
 						GraphEntry next = parent.getNext(this);
 						
 						if (next != null) {
-							String parentData = next.graphData;
+							String parentData = next.list.get(0);
 							
 							if (parentData.length() > s && parentData.charAt(s) == '|') {
 								g.drawLine(location, 0, location, height);
@@ -159,8 +154,8 @@ public class GraphEntry {
 		return image;
 	}
 	
-	public ImageIcon renderIcon(int height) {
-		return new ImageIcon(render(height));
+	public ImageIcon renderIcon(int colorIndex, int height) {
+		return new ImageIcon(render(colorIndex, height));
 	}
 	
 	public Commit getCommit() {
@@ -168,7 +163,11 @@ public class GraphEntry {
 	}
 
 	public void addData(String graphData) {
-		additional.add(graphData);
+		this.list.add(graphData);
+	}
+	
+	public List<String> getData() {
+		return this.list;
 	}
 	
 }
