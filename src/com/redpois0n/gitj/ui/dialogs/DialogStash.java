@@ -2,41 +2,36 @@ package com.redpois0n.gitj.ui.dialogs;
 
 import iconlib.IconUtils;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.table.DefaultTableModel;
-
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Repository;
-import com.redpois0n.git.Tag;
-import com.redpois0n.gitj.Main;
-import com.redpois0n.gitj.ui.DefaultRenderer;
-
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+import com.redpois0n.git.Repository;
+import com.redpois0n.gitj.tasks.StashTask;
+import com.redpois0n.gitj.ui.MainFrame;
 
 @SuppressWarnings("serial")
 public class DialogStash extends JDialog {
 
+	private MainFrame parent;
 	private Repository repo;
 	private JTextField textField;
 	private JCheckBox chckbxKeepStagedChanges;
 
-	public DialogStash(Repository repo) {
+	public DialogStash(MainFrame parent, Repository repo) {
 		setIconImage(IconUtils.getIcon("stash").getImage());
 		setTitle("Stash");
 		setAlwaysOnTop(true);
 		setModal(true);
+		this.parent = parent;
 		this.repo = repo;
 		setBounds(100, 100, 450, 137);
 
@@ -99,12 +94,7 @@ public class DialogStash extends JDialog {
 	}
 	
 	public void stash() {
-		try {
-			repo.stash(textField.getText(), chckbxKeepStagedChanges.isSelected());
-		} catch (Exception e) {
-			e.printStackTrace();
-			Main.displayError(e);
-		}
+		parent.runTask(new StashTask(repo, textField.getText(), chckbxKeepStagedChanges.isSelected()));
 	}
 	
 	public void cancel() {

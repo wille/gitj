@@ -597,7 +597,7 @@ public class MainFrame extends JFrame {
 		Repository repo = getSelectedRepo();
 
 		if (repo != null) {
-			new DialogStash(repo).setVisible(true);
+			new DialogStash(this, repo).setVisible(true);
 		}
 	}
 	
