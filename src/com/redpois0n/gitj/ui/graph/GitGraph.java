@@ -104,16 +104,15 @@ public class GitGraph {
 							sb.append(str.charAt(++s));
 
 							g.setColor(GitGraph.COLORS.get(sb.toString()));
-							// if (realChar < parent.getLatestColors().length) {
-							// parent.getLatestColors()[realChar] =
-							// g.getColor();
-							// }
+							//if (realChar < parent.getLatestColors().length) {
+							//	parent.getLatestColors()[realChar] = g.getColor();
+							//}
 						}
 					}
-					// } else if (realChar < parent.getLatestColors().length) {
-					// g.setColor(parent.getLatestColors()[realChar]);
-					// }
-				}
+				}/* else if (realChar < parent.getLatestColors().length) {
+					g.setColor(parent.getLatestColors()[realChar]);
+				}*/
+				
 
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\' || c == ' ';
 
@@ -121,8 +120,6 @@ public class GitGraph {
 					realChar++;
 					realString += c;
 				}
-
-				g.setColor(Color.red); // debug
 
 				if (drawn) {
 					if (c == '*' || c == '|') {
