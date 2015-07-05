@@ -103,7 +103,7 @@ public class Repository {
 					graphData = s;	
 				}
 				
-				graphData = GitGraph.DEFAULT_GIT_COLOR + graphData.replace(" ", "").trim();
+				graphData = GitGraph.DEFAULT_GIT_COLOR + graphData.replace("[1;", "[").trim();
 
 				if (c != null) {
 					entry = new GraphEntry(graph, graphData, c);
