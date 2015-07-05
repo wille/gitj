@@ -221,7 +221,11 @@ public class CommitListPanel extends JScrollPane {
 		}
 		
 		for (Commit c : commits) {
-			model.addRow(new Object[] { c });
+			List<String> data = c.getRepository().getGraph().get(c).getData();
+			for (int i = 0; i < data.size(); i++) {
+				
+				model.addRow(new Object[] { new TableEntry(c, i) });
+			}
 		}
 	}
 	
@@ -247,6 +251,25 @@ public class CommitListPanel extends JScrollPane {
 		listeners.remove(l);
 	}
 	
+	public class TableEntry {
+		
+		private Commit commit;
+		private int graphIndex;
+		
+		public TableEntry(Commit commit, int graphIndex) {
+			this.commit = commit;
+			this.graphIndex = graphIndex;
+		}
+		
+		public Commit getCommit() {
+			return this.commit;
+		}
+		
+		public int getGraphIndex() {
+			return this.graphIndex;
+		}
+	}
+	
 	public class CommitRenderer extends DefaultTableCellRenderer {
 		
 		private final Map<Commit, ImageIcon> cache = new HashMap<Commit, ImageIcon>();
@@ -257,8 +280,9 @@ public class CommitListPanel extends JScrollPane {
 			
 			Object obj = table.getValueAt(row, 0);
 			
-			if (obj instanceof Commit) {
-				Commit c = (Commit) obj;
+			if (obj instanceof TableEntry) {
+				TableEntry entry = (TableEntry) obj;
+				Commit c = entry.getCommit();
 				
 				ImageIcon icon = null;
 				
@@ -282,9 +306,13 @@ public class CommitListPanel extends JScrollPane {
 				label.setIcon(null);
 
 				if (table.getColumnName(column).equals(COLUMN_GRAPH)) {
-					label.setIcon(c.getRepository().getGraph().get(c).renderIcon(table.getRowHeight()));
+					label.setIcon(c.getRepository().getGraph().get(c).renderIcon(entry.getGraphIndex(), table.getRowHeight()));
 					label.setText("");
-				} else if (table.getColumnName(column).equals(COLUMN_DESCRIPTION)) {										
+				} else if (entry.getGraphIndex() != 0) {
+					return label;
+				}
+
+				if (table.getColumnName(column).equals(COLUMN_DESCRIPTION)) {										
 					label.setIcon(icon);
 					label.setText(c.getComment());
 				} else if (table.getColumnName(column).equals(COLUMN_DATE)) {
@@ -293,10 +321,7 @@ public class CommitListPanel extends JScrollPane {
 					label.setText(c.getDisplayAuthor());
 				} else if (table.getColumnName(column).equals(COLUMN_COMMIT)) {
 					label.setText(c.getDisplayHash());
-				} else {
-					throw new IndexOutOfBoundsException();
 				}
-				
 			} else if (obj == null) {
 				if (table.getColumnName(column).equals(COLUMN_DESCRIPTION)) {										
 					label.setText("Uncommitted changes");
