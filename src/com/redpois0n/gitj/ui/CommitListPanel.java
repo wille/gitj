@@ -97,10 +97,12 @@ public class CommitListPanel extends JScrollPane {
 		        int row = table.getSelectedRow();
 		        
 		        if (row != -1) {
-		        	Commit c = (Commit) table.getValueAt(row, 0);
+		        	TableEntry entry = (TableEntry) table.getValueAt(row, 0);
 		        	
-		        	for (ICommitClickListener l : listeners) {
-		        		l.onClick(c);
+		        	if (entry.getGraphIndex() == 0) {
+		        		for (ICommitClickListener l : listeners) {
+			        		l.onClick(entry.getCommit());
+			        	}
 		        	}
 		        }
 		    }
