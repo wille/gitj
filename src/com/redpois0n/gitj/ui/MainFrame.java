@@ -189,6 +189,15 @@ public class MainFrame extends JFrame {
 		btnCommit.setIcon(IconUtils.getIcon("commit"));
 		toolBar.add(btnCommit);
 		
+		JButton btnStash = new JButton("Stash");
+		btnStash.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				stash();
+			}
+		});
+		btnStash.setIcon(IconUtils.getIcon("stash-big"));
+		toolBar.add(btnStash);
+		
 		JButton btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -313,7 +322,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 	}
-	
+
 	public void addRepoToTree(final Repository repo, String dir) {
 		tree.setFilter(new FileFilter() {
 			@Override
@@ -578,6 +587,13 @@ public class MainFrame extends JFrame {
 		if (repo != null && panel instanceof MainPanel) {
 			addPanel("Commit", new CommitPanel(this, (MainPanel) panel, repo), IconUtils.getIcon("commit-small"));
 		}
+	}
+	
+	/**
+	 * Opens stash dialog
+	 */
+	public void stash() {
+		
 	}
 	
 	/**
