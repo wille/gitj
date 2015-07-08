@@ -19,14 +19,14 @@ import com.redpois0n.gitj.tasks.StashTask;
 import com.redpois0n.gitj.ui.MainFrame;
 
 @SuppressWarnings("serial")
-public class DialogStash extends JDialog {
+public class DialogCreateStash extends JDialog {
 
 	private MainFrame parent;
 	private Repository repo;
 	private JTextField textField;
 	private JCheckBox chckbxKeepStagedChanges;
 
-	public DialogStash(MainFrame parent, Repository repo) {
+	public DialogCreateStash(MainFrame parent, Repository repo) {
 		setIconImage(IconUtils.getIcon("stash").getImage());
 		setTitle("Stash");
 		setAlwaysOnTop(true);
