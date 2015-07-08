@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.redpois0n.git.Repository;
-import com.redpois0n.gitj.tasks.StashTask;
+import com.redpois0n.gitj.tasks.CreateStashTask;
 import com.redpois0n.gitj.ui.MainFrame;
 
 @SuppressWarnings("serial")
@@ -94,7 +94,7 @@ public class DialogCreateStash extends JDialog {
 	}
 	
 	public void stash() {
-		parent.runTask(new StashTask(repo, textField.getText(), chckbxKeepStagedChanges.isSelected()));
+		parent.runTask(new CreateStashTask(repo, textField.getText(), chckbxKeepStagedChanges.isSelected()));
 	}
 	
 	public void cancel() {

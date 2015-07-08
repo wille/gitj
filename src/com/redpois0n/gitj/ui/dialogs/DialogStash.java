@@ -16,7 +16,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Stash;
-import com.redpois0n.gitj.tasks.StashTask;
+import com.redpois0n.gitj.tasks.CreateStashTask;
 import com.redpois0n.gitj.ui.MainFrame;
 
 @SuppressWarnings("serial")
