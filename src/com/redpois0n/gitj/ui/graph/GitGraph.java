@@ -22,14 +22,14 @@ public class GitGraph {
 	public static final Map<String, Color> COLORS = new HashMap<String, Color>();
 
 	static {
-		COLORS.put("[30m", Color.black);
-		COLORS.put("[31m", Color.red.darker());
-		COLORS.put("[32m", Color.green.darker());
-		COLORS.put("[33m", Color.yellow.darker());
-		COLORS.put("[34m", Color.blue);
-		COLORS.put("[35m", Color.magenta.darker());
-		COLORS.put("[36m", Color.cyan.darker());
-		COLORS.put("[37m", Color.white);
+		COLORS.put("30m", Color.black);
+		COLORS.put("31m", Color.red.darker());
+		COLORS.put("32m", Color.green.darker());
+		COLORS.put("33m", Color.yellow.darker());
+		COLORS.put("34m", Color.blue);
+		COLORS.put("35m", Color.magenta.darker());
+		COLORS.put("36m", Color.cyan.darker());
+		COLORS.put("37m", Color.white);
 	}
 
 	public static final String ANSI_RESET = "\u001B[0m";
@@ -96,7 +96,7 @@ public class GitGraph {
 						g.setColor(GitGraph.DEFAULT_COLOR);
 					} else {
 						StringBuilder sb = new StringBuilder();
-						sb.append(c);
+
 						char first = str.charAt(++s);
 
 						if (first != 'm') {
@@ -105,15 +105,9 @@ public class GitGraph {
 							sb.append(str.charAt(++s));
 
 							g.setColor(GitGraph.COLORS.get(sb.toString()));
-							//if (realChar < parent.getLatestColors().length) {
-							//	parent.getLatestColors()[realChar] = g.getColor();
-							//}
 						}
 					}
-				}/* else if (realChar < parent.getLatestColors().length) {
-					g.setColor(parent.getLatestColors()[realChar]);
-				}*/
-				
+				}
 
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\' || c == ' ';
 
