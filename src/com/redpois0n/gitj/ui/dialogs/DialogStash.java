@@ -8,15 +8,13 @@ import java.awt.event.ActionListener;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import com.redpois0n.git.Repository;
 import com.redpois0n.git.Stash;
-import com.redpois0n.gitj.tasks.CreateStashTask;
+import com.redpois0n.gitj.tasks.ApplyStashTask;
+import com.redpois0n.gitj.tasks.DeleteStashTask;
 import com.redpois0n.gitj.ui.MainFrame;
 
 @SuppressWarnings("serial")
@@ -77,11 +75,11 @@ public class DialogStash extends JDialog {
 	}
 	
 	public void apply() {
-		
+		parent.runTask(new ApplyStashTask(repo, stash));
 	}
 	
 	public void delete() {
-		
+		parent.runTask(new DeleteStashTask(repo, stash));
 	}
 	
 	public void cancel() {

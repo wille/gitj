@@ -18,7 +18,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import com.redpois0n.git.CommitOption;
 import com.redpois0n.gitj.Main;
 import com.redpois0n.gitj.tasks.CommitTask;
-import com.redpois0n.gitj.tasks.Task;
 import com.redpois0n.gitj.utils.DialogUtils;
 
 @SuppressWarnings("serial")
