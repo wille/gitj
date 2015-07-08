@@ -24,10 +24,12 @@ import com.redpois0n.git.Repository;
 import com.redpois0n.git.Stash;
 import com.redpois0n.git.Tag;
 import com.redpois0n.gitj.Main;
+import com.redpois0n.gitj.ui.dialogs.DialogStash;
 
 @SuppressWarnings("serial")
 public class ObjectsPanel extends JScrollPane {
 
+	private MainFrame parent;
 	private MainPanel panel;
 	private Repository repo;
 	private JTree tree;
@@ -35,6 +37,7 @@ public class ObjectsPanel extends JScrollPane {
 	private DefaultMutableTreeNode root;
 
 	public ObjectsPanel(MainFrame parent) {
+		this.parent = parent;
 		tree = new JTree();
 		tree.setCellRenderer(new Renderer());
 		tree.setShowsRootHandles(true);
@@ -216,7 +219,7 @@ public class ObjectsPanel extends JScrollPane {
 				public void actionPerformed(ActionEvent e) {
 					if (stash != null) {
 						try {
-
+							new DialogStash(ObjectsPanel.this.parent, repo, stash);
 						} catch (Exception ex) {
 							ex.printStackTrace();
 							Main.displayError(ex);
