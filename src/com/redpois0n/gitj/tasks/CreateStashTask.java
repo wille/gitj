@@ -5,7 +5,7 @@ import com.redpois0n.git.Repository;
 public class CreateStashTask extends Task {
 
 	private String message;
-	boolean keepstaged;
+	private boolean keepstaged;
 	
 	public CreateStashTask(Repository repo, String message, boolean keepstaged) {
 		super("Saving stash...", repo);
