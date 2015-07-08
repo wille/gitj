@@ -12,8 +12,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
-import javax.imageio.ImageIO;
-
 import com.redpois0n.git.Change.Type;
 import com.redpois0n.gitj.ui.graph.GitGraph;
 import com.redpois0n.oslib.OperatingSystem;
@@ -284,6 +282,24 @@ public class Repository {
 	 */
 	public void stash(String message, boolean keepstaged) throws Exception {
 		run("git", "stash", "save", message, keepstaged ? "--keep-index" : "");
+	}
+	
+	/**
+	 * Applies stash
+	 * @param stash
+	 * @throws Exception
+	 */
+	public void applyStash(Stash stash) throws Exception {
+		run("git", "stash", "apply", stash.getStashName());
+	}
+	
+	/**
+	 * Deletes stash
+	 * @param stash
+	 * @throws Exception
+	 */
+	public void deleteStash(Stash stash) throws Exception {
+		run("git", "stash", "drop", stash.getStashName());
 	}
 	
 	/**
