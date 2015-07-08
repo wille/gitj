@@ -86,8 +86,6 @@ public class GitGraph {
 		for (int i = 0; i < list.size(); i++) {
 			String str = list.get(i);
 
-			int realChar = 0; // counts chars draw
-			String realString = "";
 			for (int s = 0; s < str.length(); s++) {
 				char c = str.charAt(s);
 
@@ -110,11 +108,6 @@ public class GitGraph {
 				}
 
 				boolean drawn = c == '*' || c == '|' || c == '/' || c == '\\' || c == ' ';
-
-				if (drawn) {
-					realChar++;
-					realString += c;
-				}
 
 				if (drawn) {
 					if (c == '*' || c == '|') {
