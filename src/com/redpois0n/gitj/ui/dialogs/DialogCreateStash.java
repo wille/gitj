@@ -27,7 +27,7 @@ public class DialogCreateStash extends JDialog {
 	private JCheckBox chckbxKeepStagedChanges;
 
 	public DialogCreateStash(MainFrame parent, Repository repo) {
-		setIconImage(IconUtils.getIcon("stash").getImage());
+		setIconImage(IconUtils.getIcon("stash-add").getImage());
 		setTitle("Stash");
 		setAlwaysOnTop(true);
 		setModal(true);
