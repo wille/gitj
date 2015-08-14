@@ -54,7 +54,6 @@ public class GitGraph {
 	}
 
 	public BufferedImage getImage(int y) {
-		render();
 		BufferedImage i = new BufferedImage(depth * SPACE + SPACE, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = i.createGraphics();
 		g.drawImage(image, 0, 0, i.getWidth(), i.getHeight(), 0, y, depth * SPACE + SPACE, y + height, null);
