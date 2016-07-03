@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import gitj.utils.FileUtils;
 
 public class Diff {
 	
@@ -54,7 +53,15 @@ public class Diff {
 	}
 
 	public String getLocalPath() {
-		return FileUtils.getRepoPath(file, parent.getRepository());
+		String path = file.getAbsolutePath();
+
+		path = path.replace(parent.getRepository().getFolder().getAbsolutePath(), "").replace("\\", "/");
+
+		if (path.startsWith("/")) {
+			path = path.substring(1, path.length());
+		}
+
+		return path;
 	}
 	
 	public void setDataType(DataType type) {
