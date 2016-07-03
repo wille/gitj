@@ -94,6 +94,8 @@ public class DiffPanel extends JPanel {
 				}
 				
 				prefHeight += image.getHeight();
+			} else {
+				prefWidth += 20;
 			}
 		}
 		

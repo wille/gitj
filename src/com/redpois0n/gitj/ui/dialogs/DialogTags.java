@@ -111,7 +111,7 @@ public class DialogTags extends JDialog {
 
 			for (int i = tags.size() - 1; i > 0; i--) {
 				Tag tag = tags.get(i);
-				
+
 				Commit c = repo.getCommit(tag.getHash());
 				String date = c == null ? null : c.getWhen();
 				
