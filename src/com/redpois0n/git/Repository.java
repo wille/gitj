@@ -13,7 +13,6 @@ import java.util.Enumeration;
 import java.util.List;
 
 import com.redpois0n.git.Change.Type;
-import gitj.ui.graph.GitGraph;
 import oslib.OperatingSystem;
 
 public class Repository {

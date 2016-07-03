@@ -1,4 +1,4 @@
-package gitj.ui.graph;
+package com.redpois0n.git;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
