@@ -2,8 +2,8 @@ package gitj.ui.components;
 
 import java.util.List;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Diff;
+import git.Commit;
+import git.Diff;
 
 public abstract interface IDiffSelectionListener {
 

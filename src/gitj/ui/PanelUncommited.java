@@ -15,9 +15,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
-import com.redpois0n.git.Change;
-import com.redpois0n.git.Diff;
-import com.redpois0n.git.Repository;
+import git.Change;
+import git.Diff;
+import git.Repository;
 import gitj.Main;
 import gitj.ui.components.IDiffSelectionListener;
 import gitj.ui.components.JFileList;

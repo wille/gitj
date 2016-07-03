@@ -17,8 +17,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Diff;
+import git.Commit;
+import git.Diff;
 import gitj.ui.components.IDiffSelectionListener;
 import gitj.ui.components.JFileList;
 import gitj.ui.components.JFileListEntry;

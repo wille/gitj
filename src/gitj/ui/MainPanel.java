@@ -12,9 +12,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.EmptyBorder;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Diff;
-import com.redpois0n.git.Repository;
+import git.Commit;
+import git.Diff;
+import git.Repository;
 import gitj.LanguageScanner;
 import gitj.Main;
 import gitj.ui.components.DiffHolderPanel;

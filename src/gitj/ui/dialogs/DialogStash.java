@@ -11,8 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.redpois0n.git.Repository;
-import com.redpois0n.git.Stash;
+import git.Repository;
+import git.Stash;
 import gitj.tasks.ApplyStashTask;
 import gitj.tasks.DeleteStashTask;
 import gitj.ui.MainFrame;

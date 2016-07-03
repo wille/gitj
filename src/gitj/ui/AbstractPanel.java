@@ -2,7 +2,7 @@ package gitj.ui;
 
 import javax.swing.JPanel;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 
 @SuppressWarnings("serial")
 public abstract class AbstractPanel extends JPanel {

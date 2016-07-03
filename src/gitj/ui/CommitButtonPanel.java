@@ -15,7 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.redpois0n.git.CommitOption;
+import git.CommitOption;
 import gitj.Main;
 import gitj.tasks.CommitTask;
 import gitj.utils.DialogUtils;

@@ -1,7 +1,7 @@
 package gitj.tasks;
 
-import com.redpois0n.git.Repository;
-import com.redpois0n.git.Stash;
+import git.Repository;
+import git.Stash;
 
 public class ApplyStashTask extends Task {
 

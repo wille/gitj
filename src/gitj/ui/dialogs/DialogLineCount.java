@@ -2,7 +2,7 @@ package gitj.ui.dialogs;
 
 import javax.swing.JDialog;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 
 @SuppressWarnings("serial")
 public class DialogLineCount extends JDialog {

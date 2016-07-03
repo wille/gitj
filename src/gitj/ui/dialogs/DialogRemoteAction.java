@@ -10,7 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 import gitj.ui.MainFrame;
 import gitj.ui.components.BranchComboBox;
 import gitj.ui.components.RemoteComboBox;

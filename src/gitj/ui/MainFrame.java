@@ -29,9 +29,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.InvalidRepositoryException;
-import com.redpois0n.git.Repository;
+import git.Commit;
+import git.InvalidRepositoryException;
+import git.Repository;
 import gitj.Bookmarks;
 import gitj.Language;
 import gitj.LanguageScanner;

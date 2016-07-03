@@ -15,8 +15,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Repository;
+import git.Commit;
+import git.Repository;
 import gitj.Main;
 
 @SuppressWarnings("serial")

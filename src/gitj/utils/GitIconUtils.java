@@ -8,8 +8,8 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import com.redpois0n.git.Change;
-import com.redpois0n.git.Diff;
+import git.Change;
+import git.Diff;
 
 public class GitIconUtils {
 

@@ -9,8 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import com.redpois0n.git.Remote;
-import com.redpois0n.git.Repository;
+import git.Remote;
+import git.Repository;
 
 @SuppressWarnings("serial")
 public class RemoteComboBox extends JComboBox<Remote> {

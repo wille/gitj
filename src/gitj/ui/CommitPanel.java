@@ -7,9 +7,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Diff;
-import com.redpois0n.git.Repository;
+import git.Commit;
+import git.Diff;
+import git.Repository;
 import gitj.Main;
 import gitj.ui.components.DiffHolderPanel;
 import gitj.ui.components.DiffPanel;

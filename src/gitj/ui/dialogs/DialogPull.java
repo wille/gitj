@@ -1,6 +1,6 @@
 package gitj.ui.dialogs;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 import gitj.tasks.PullTask;
 import gitj.ui.MainFrame;
 

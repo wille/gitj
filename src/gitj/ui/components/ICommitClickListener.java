@@ -1,6 +1,6 @@
 package gitj.ui.components;
 
-import com.redpois0n.git.Commit;
+import git.Commit;
 
 public abstract interface ICommitClickListener {
 

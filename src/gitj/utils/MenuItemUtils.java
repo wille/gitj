@@ -11,7 +11,7 @@ import java.io.File;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import com.redpois0n.git.Commit;
+import git.Commit;
 import gitj.Main;
 
 public class MenuItemUtils {

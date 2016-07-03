@@ -1,8 +1,8 @@
 package gitj.tasks;
 
-import com.redpois0n.git.Branch;
-import com.redpois0n.git.Remote;
-import com.redpois0n.git.Repository;
+import git.Branch;
+import git.Remote;
+import git.Repository;
 
 public class PushTask extends Task {
 

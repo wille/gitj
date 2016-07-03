@@ -12,8 +12,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 
-import com.redpois0n.git.Branch;
-import com.redpois0n.git.Repository;
+import git.Branch;
+import git.Repository;
 import gitj.Main;
 import gitj.ui.CommitListPanel;
 

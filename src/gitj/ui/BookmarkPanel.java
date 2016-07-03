@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 import gitj.utils.StatusUtils;
 
 @SuppressWarnings("serial")

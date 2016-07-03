@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 import gitj.tasks.CreateStashTask;
 import gitj.ui.MainFrame;
 

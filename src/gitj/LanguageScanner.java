@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 import gitj.utils.FileUtils;
 
 public class LanguageScanner {

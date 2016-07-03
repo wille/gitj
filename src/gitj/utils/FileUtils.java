@@ -11,7 +11,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 
 public class FileUtils {
 

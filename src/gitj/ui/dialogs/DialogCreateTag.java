@@ -17,9 +17,9 @@ import javax.swing.JTextPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Repository;
-import com.redpois0n.git.Tag;
+import git.Commit;
+import git.Repository;
+import git.Tag;
 import gitj.Main;
 
 @SuppressWarnings("serial")

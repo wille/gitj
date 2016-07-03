@@ -12,7 +12,7 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import com.redpois0n.git.Tag;
+import git.Tag;
 import gitj.ui.components.DiffPanel;
 
 public class IconGenerator {

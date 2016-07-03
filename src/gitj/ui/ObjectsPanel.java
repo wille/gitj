@@ -18,11 +18,11 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
-import com.redpois0n.git.Branch;
-import com.redpois0n.git.Remote;
-import com.redpois0n.git.Repository;
-import com.redpois0n.git.Stash;
-import com.redpois0n.git.Tag;
+import git.Branch;
+import git.Remote;
+import git.Repository;
+import git.Stash;
+import git.Tag;
 import gitj.Main;
 import gitj.ui.dialogs.DialogStash;
 

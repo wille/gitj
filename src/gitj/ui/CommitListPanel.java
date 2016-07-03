@@ -26,10 +26,10 @@ import javax.swing.JToolBar;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import com.redpois0n.git.Branch;
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Repository;
-import com.redpois0n.git.Tag;
+import git.Branch;
+import git.Commit;
+import git.Repository;
+import git.Tag;
 import gitj.Main;
 import gitj.ui.components.BranchComboBox;
 import gitj.ui.components.ICommitClickListener;

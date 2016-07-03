@@ -16,9 +16,9 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.Repository;
-import com.redpois0n.git.Tag;
+import git.Commit;
+import git.Repository;
+import git.Tag;
 import gitj.Main;
 import gitj.ui.DefaultRenderer;
 

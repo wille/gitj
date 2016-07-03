@@ -10,7 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.redpois0n.git.Repository;
+import git.Repository;
 
 @SuppressWarnings("serial")
 public class BookmarksPanel extends JPanel {

@@ -9,8 +9,8 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
-import com.redpois0n.git.Commit;
-import com.redpois0n.git.ResetMode;
+import git.Commit;
+import git.ResetMode;
 import gitj.Main;
 import gitj.utils.DialogUtils;
 

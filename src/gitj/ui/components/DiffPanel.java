@@ -13,9 +13,9 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import com.redpois0n.git.Chunk;
-import com.redpois0n.git.CodeLine;
-import com.redpois0n.git.Diff;
+import git.Chunk;
+import git.CodeLine;
+import git.Diff;
 import gitj.utils.GitIconUtils;
 
 @SuppressWarnings("serial")

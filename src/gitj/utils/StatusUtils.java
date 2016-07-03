@@ -7,8 +7,8 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
-import com.redpois0n.git.Change;
-import com.redpois0n.git.Repository;
+import git.Change;
+import git.Repository;
 
 public class StatusUtils {
 

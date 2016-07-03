@@ -1,7 +1,7 @@
 package gitj.tasks;
 
-import com.redpois0n.git.CommitOption;
-import com.redpois0n.git.Repository;
+import git.CommitOption;
+import git.Repository;
 
 public class CommitTask extends Task {
 
