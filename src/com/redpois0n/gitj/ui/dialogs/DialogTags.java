@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -106,7 +107,11 @@ public class DialogTags extends JDialog {
 		}
 		
 		try {
-			for (Tag tag : repo.getTags(true)) {
+			List<Tag> tags = repo.getTags(true);
+
+			for (int i = tags.size() - 1; i > 0; i--) {
+				Tag tag = tags.get(i);
+				
 				Commit c = repo.getCommit(tag.getHash());
 				String date = c == null ? null : c.getWhen();
 				

@@ -14,7 +14,7 @@ import java.util.List;
 
 import com.redpois0n.git.Change.Type;
 import com.redpois0n.gitj.ui.graph.GitGraph;
-import com.redpois0n.oslib.OperatingSystem;
+import oslib.OperatingSystem;
 
 public class Repository {
 
