@@ -19,7 +19,7 @@ Compile from source into an runnable JAR with [pyjar](https://github.com/redpois
 Put pyjar.py in the parent directory of the downloaded source and run
 
 ```
-$ python3 pyjar.py [--jdk /path/to/jdk/bin/] [--classpath graphslib.jar:pathtree.jar:oslib.jar:iconlib.jar] --input src --output gitj.jar --mainclass com.redpois0n.gitj.Main
+$ python3 pyjar.py [--jdk /path/to/jdk/bin/] [--classpath graphslib.jar:pathtree.jar:oslib.jar:iconlib.jar] --input src --output gitj.jar --mainclass gitj.Main
 ```
 _path separator depends on system, ; for Windows, : for *nix_
 

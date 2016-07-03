@@ -3,7 +3,7 @@ package com.redpois0n.git;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.redpois0n.gitj.Main;
+import gitj.Main;
 
 public class Change {
 	

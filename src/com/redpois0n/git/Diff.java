@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.redpois0n.gitj.utils.FileUtils;
+import gitj.utils.FileUtils;
 
 public class Diff {
 	
