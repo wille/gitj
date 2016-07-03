@@ -189,7 +189,7 @@ public class CommitListPanel extends JScrollPane {
 		int row = table.getSelectedRow();
 		
 		if (row != -1) {
-			return (Commit) table.getValueAt(row, 0);
+			return ((CommitListPanel.TableEntry) table.getValueAt(row, 0)).getCommit();
 		}
 		
 		return null;
@@ -209,7 +209,6 @@ public class CommitListPanel extends JScrollPane {
 	
 	/**
 	 * Reloads the commit list. If repository has unstaged changes, will add "null" to the top which is the row "Uncommited changes"
-	 * @param commits
 	 * @throws Exception
 	 */
 	public void reload() throws Exception {
